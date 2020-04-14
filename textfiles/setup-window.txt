@@ -1,0 +1,75 @@
+#Softwares Required:
+Eclipse developer version
+JMeter
+Skype
+Hipchat
+Mozilla > firebug, xpath checker, http headers, firepath
+Notepad++
+GIT https://git-scm.com/download/win
+7Zip
+Putty : remote connection
+
+
+#Java
+http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+install jdk |  jdk-7u79-windows-x64.exe
+
+Environment variable:
+JAVA_HOME=C:\Program Files\Java\jdk1.7.0_79
+PATH=;%JAVA_HOME%\bin
+
+To verify: open new cmd only
+C:\Users\sheetalsingh>java -version
+java version "1.7.0_79"
+Java(TM) SE Runtime Environment (build 1.7.0_79-b15)
+Java HotSpot(TM) 64-Bit Server VM (build 24.79-b02, mixed mode)
+
+C:\Users\sheetalsingh>javac -version
+javac 1.7.0_79
+
+C:\Users\sheetalsingh>echo %JAVA_HOME%
+C:\Program Files\Java\jdk1.7.0_79
+
+
+
+#TestNG plugin in Eclipse
+http://testng.org/doc/download.html
+
+
+#Maven on windows
+https://maven.apache.org/download.cgi
+apache-maven-3.3.3.zip   no src zip req
+Env Path=;C:\Users\sheetalsingh\Downloads\apache-maven-3.3.3-bin\apache-maven-3.3.3\bin
+
+Verify:  mvn -v
+
+#MD5 check
+CertUtil -hashfile C:\TEMP\MyDataFile.zip MD5
+
+#NPM, NODE
+http://blog.teamtreehouse.com/install-node-js-npm-windows
+
+
+#Appium:
+http://toolsqa.wpengine.com/mobile-automation/appium/download-and-install-appium-desktop-client/
+
+1. https://bitbucket.org/appium/appium.app/downloads/   | AppiumForWindows_1_4_13_1.zip
+2. https://developer.android.com/sdk/index.html    | Android studio
+Path:
+Android studio: C:\Program Files\Android\Android Studio
+Android SDK: C:\Android\sdk
+Add in system path: C:\Android\sdk\platform-tools;C:\Android\sdk\tools;
+
+3. https://www.genymotion.com/#!/download    | Get Genymotion (132.62 MB)
+4. Add device in genymotion
+5. drag and drop following zip in added device in genymotion
+gapps-kk-20140105-signed.zip  | sign up with gmail
+Genymotion-ARM-Translation_v1.1.zip  | for certificate acceptance
+apps-ct-release.apk  |  tribune app
+
+
+
+#Cucumber
+#Cucmber eclipse plugin
+http://www.toolsqa.com/cucumber/install-cucumber-eclipse-plugin/
+Help > Install new software > add location as : http://cucumber.github.com/cucumber-eclipse/update-site

@@ -1,0 +1,271 @@
+#Mac Setup
+brew, node, npm
+Xcode 6.4
+IntelliJ/ Eclipse developer version
+Skype
+Mozilla > firebug, xpath checker, live http headers, firepath, modify headers
+Atom text editor - https://atom.io/
+JMeter
+
+
+*******************************************************************************************************
+#Create ~/.bash_profile
+cd ~/
+touch .bash_profile
+
+*******************************************************************************************************
+#Brew, node
+http://brew.sh/
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew -v
+
+brew update
+Error: /usr/local/Cellar is not writable. You should change the ownership and permissions of /usr/local/Cellar back to your user account:
+In case of above error run foll command
+sudo chown -R $(whoami) /usr/local/Cellar
+
+
+brew install node   | it will install node and npm
+brew upgrade node
+node -v
+npm -v
+
+#Git
+brew install git
+git —-version
+
+
+*******************************************************************************************************
+#Java
+use brew for everything
+http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+double click downloaded .dmg file and its done
+java -version
+
+Set Java Home
+go to terminal
+echo export "JAVA_HOME=\$(/usr/libexec/java_home)" >> ~/.bash_profile
+restart
+echo $JAVA_HOME
+/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home
+
+*******************************************************************************************************
+#Maven Setup
+http://www.mkyong.com/maven/install-maven-on-mac-osx/
+
+Download maven https://maven.apache.org/download.cgi   |  link > -bin.tar.gz
+go to download folder
+tar -xvf apache-maven-3.3.9-bin.tar.gz
+vim ~/.bash_profile
+export M2_HOME=/Users/sheetalsingh/Downloads/apache-maven-3.3.9
+export PATH=$PATH:$M2_HOME/bin
+restart terminal
+mvn -version
+
+
+*******************************************************************************************************
+#Xcode + Simulator Setup
+1. Download Xcode | for old builds: http://adcdownload.apple.com/Developer_Tools/Xcode_7.2.1/Xcode_7.2.1.dmg
+2. Xcode > Preferences > Download
+Download simulator which are required e.g. 8.4
+3. Xcode > Open Developer Tools > Simulator > Hardware > device > Select which device require for testing e.g. iPhone 6
+
+Note: Also install Xcode command line tools OS X 10.10 for Xcode 7.2 https://developer.apple.com/downloads/
+
+
+For Xcode 8.2.1   | OS 10.11.5 or later is required.
+For Xcode 7.2.1  OS 10.10.5
+
+*******************************************************************************************************
+#Appium Setup:
+
+Appium UI
+1. Download appium dmg file from site and install it
+2. After xcode setup, click appium doctor, ios related setting should be fine
+
+
+#Appium Doctor not working after upgrading Mac to 10.12.3 from 10.10.5
+http://stackoverflow.com/questions/40129794/how-to-fix-error-could-not-detect-mac-os-x-version-from-sw-vers-output-10-12
+
+#Appium Inspector not working with OSX 10.12.3
+https://github.com/appium/appium-desktop/releases
+
+
+*******************************************************************************************************
+
+#Android Setup on Mac:
+  Note: removed studio if any previously downloaded https://gist.github.com/tahmidsadik112/f08356d14a85d898299a
+0. brew install gradle    |  /usr/local/Cellar/gradle/2.12  | can be skipped no idea
+1. brew cask install android-studio  |    /opt/homebrew-cask/Caskroom/android-studio/1.5.1.0_2456560
+2. get java path using
+echo $JAVA_HOME
+3. set studio jdk path
+echo export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk >> ~/.bash_profile
+4. install sdk
+brew install android-sdk
+android sdk available at   /usr/local/opt/android-sdk
+5. update path:
+echo export ANDROID_HOME=/usr/local/opt/android-sdk >> ~/.bash_profile
+
+6. Can skip this step, no idea whats the use
+cd /opt/homebrew-cask/Caskroom/android-studio/1.5.1.0_2456560/Android\ Studio.app/
+ln -s $ANDROID_HOME sdk
+ls -al
+
+7. Run command to get build-tools and platform-tools folder inside /usr/local/opt/android-sdk/
+android update sdk -u     |  to update sdk |    25.1.7
+
+refer above link: Now open android sdk > custom setting > uncheck performance > next > finish ....
+
+8. update bash_profile
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools
+
+9. open Appium app and click on doctor sign to verify installation
+
+10. close cmd and run following commands from root/any dir
+uiautomatorviewer
+adb devices
+android avd
+
+#System Paths  vi ~/.bash_profile
+export JAVA_HOME=$(/usr/libexec/java_home)
+export M2_HOME=/Users/sheetalsingh/Downloads/apache-maven-3.3.9
+export PATH=$PATH:$M2_HOME/bin
+
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
+export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk
+export ANDROID_HOME=/usr/local/opt/android-sdk
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools
+#export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+
+
+*******************************************************************************************************
+
+#Appium installation steps: (Old) use above one
+main link: https://hrnn.github.io/2015/02/11/installing-android-studio-on-mac-os-x-yosemite/
+other link: http://www.testlab4apps.com/testing-of-mobile-apps-with-appium-on-mac-os-x-part-1/
+
+echo $ANDROID_SDK        |  /usr/local/opt/android-sdk
+
+npm install appium-doctor -g
+npm install -g appium
+appium &
+
+#appium-doctor
+https://github.com/appium/appium-doctor
+
+
+Once all set to verify appium setup run this cmd in cmd:     appium-doctor
+
+#Appium WebApp Error because of Safari:
+Error:
+error: Failed to start an Appium session, err was: Error: We don't have write access to /Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 7.1.simruntime/Contents/Resources/RuntimeRoot/Applications/MobileSafari.app, please re-run authorize as sheetal
+
+Solution:
+-Go to mentioned path: ls -al
+drwxr-xr-x  195 root  admin  6630 Jan 20 17:15 MobileSafari.app
+-sudo chown sheetal:admin MobileSafari.app
+-chown 777 MobileSafari.app
+-sudo chown -R sheetal:admin Applications
+-drwxr-xr-x  195 sheetal  admin  6630 Jan 25 11:45 MobileSafari.app
+-drwxrwxrwx  38 sheetal  admin  1292 Jan 25 11:45 Applications
+Close appum and restart it
+
+ps -ef					| run this command and read title  e.g.   UID   PID  PPID
+ps -ef | grep appium   	| this will give uid pid info  e.g. 501  1237  1202 ,  appium is running as user 501 which is sheetal
+id -u sheetal 			| to get UID of sheetal i.e. 501
+id -u root 				| 0
+
+*******************************************************************************************************
+#Genymotion setup for Android emulator
+https://shankargarg.wordpress.com/2016/02/25/setup-genymotion-android-emulators-on-mac-os/#more-384
+http://inthecheesefactory.com/blog/how-to-install-google-services-on-genymotion/en
+credentials:  sheetalsingh@xebia.com  xebia@123
+
+1. Create account and download genymotion
+2. Oracle Virtual box setup - install from https://www.virtualbox.org/wiki/Downloads if auto download not start from above step
+3. Google ARM translation setup
+
+try this:
+https://z3ntu.github.io/2015/12/10/play-services-with-genymotion.html
+how to reboot genymotion device : kill player.exe process in task manager   | adb reboot may also work
+
+
+#Google play services is not installed error
+https://www.androidpit.com/process-com-google-process-gapps-has-stopped-fix
+Setting > Apps > clear cache + any other data from Google play services + other apps
+uninstall mobile app or clear its data
+
+
+*******************************************************************************************************
+# Grinder setup
+brew install groovy
+add this in bash_profile:
+export GROOVY_HOME=/usr/local/opt/groovy/libexec
+
+#python
+brew install python
+python --version
+
+You can install Python packages with
+pip install <package>
+
+They will install into the site-package directory
+/usr/local/lib/python2.7/site-packages
+
+
+#mitmproxy
+pip install mitmproxy
+mitmproxy --version
+
+to upgrade mitmproxy
+pip install --upgrade mitmproxy  | try with sudo if not works
+
+pip install "mitmproxy==0.18.2"
+
+>to start proxy:
+mitmproxy
+mitmproxy -p 9999   | to start on different port
+freeport 8080   |  if port is used by some other application
+sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist    | it will kill jenkin running on 8080 port
+ 
+
+sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist
+
+
+# pip
+Pip and setuptools have been installed. To update them
+pip install --upgrade pip setuptools
+pip --version
+
+sudo pip install --upgrade pip   | to upgrade pip
+
+
+*******************************************************************************************************
+#To view hidden files in finder
+1. Open terminal and execute following command one by one
+2. defaults write com.apple.finder AppleShowAllFiles YES
+3. killall Finder
+
+ls -a
+
+#style 2
+defaults write com.apple.finder AppleShowAllFiles YES
+press option key + right click > relaunch
+
+
+#To hide file again
+defaults write com.apple.finder AppleShowAllFiles NO
+killall Finder
+
+#Home directory
+Finder > Go (in top menu) > Home
+
+
+*******************************************************************************************************
+
+
+ip address in mac
+ipconfig getifaddr en1
+ipconfig getifaddr en0

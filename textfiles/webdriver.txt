@@ -1,0 +1,731 @@
+#WebDriver Waits
+http://www.toolsqa.com/selenium-webdriver/implicit-explicit-n-fluent-wait/
+
+#WebElement conditions:
+1. An element not being present at all in the DOM.
+2. An element being present in the DOM but not visible. - these element normally become visible using JavaScript (Implicit fail in these cases)
+3. An element being present in the DOM but not enabled. (i.e. clickable)
+
+code:
+public class FluentWait<T> extends java.lang.Object implements Wait<T>
+public class WebDriverWait extends FluentWait<WebDriver>
+
+
+#Implicit Wait:
+During Implicit wait if the Web Driver cannot find it immediately because of its availability, the WebDriver will wait for mentioned time say 10 sec and it will not try to find the element again during the specified time period. Once the specified time is over, it will try to search the element once again the last time before throwing exception.
+The default setting is zero second if not specified.
+
+driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+Disadv:
+-Once time specified say 10sec, then it attaches to WebDriver object i.e. driver and wait will be applicable for all web elements till browser/driver remain active.
+-Implicit wait only check webelement presence in DOM only. If element is invisible or not enabled then we get NoSuchElementException.
+
+
+#Explicit Wait:
+There can be instance when a particular element takes more than a minute to load. In that case you definitely not like to set a huge time to Implicit wait, as if you do this your browser will going to wait for the same time for every element.
+Here we can give some condition for wait.
+
+WebDriverWait by default calls the ExpectedCondition every 500 milliseconds until it returns successfully.
+
+Syntax:
+WebElement myDynamicElement = (new WebDriverWait(driver, 10))
+  .until(ExpectedConditions.presenceOfElementLocated(By.id("myDynamicElement")));
+
+Adv:
+- WebElement get visible by Javascripts can be easily handled by conditions
+e.g. ExpectedConditions.elementToBeClickable(locator)
+ExpectedConditions.visibilityOfElementLocated(locator)
+
+Disadv:
+WDW calls ExpectedCondition every 500ms,  but polling time cannot be specified
+Explicit wait can not mention if we need to ignore any particular exception
+
+ExpectedCondition class has lot of methods:
+public class ExpectedConditions extends java.lang.Object
+titleIs, visibilityOfAllElements, presenceOfAllElementsLocatedBy, frameToBeAvailableAndSwitchToIt, alertIsPresent
+
+#Fluent Wait:
+It defines the maximum amount of time to wait for a condition, as well as the frequency with which to check the condition. Furthermore, the user may configure the wait to ignore specific types of exceptions while waiting, such as NoSuchElementExceptions when searching for an element on the page.
+Let’s say you have an element which sometime appears in just 1 second and some time it takes minutes to appear. In that case it is better to use fluent wait, as this will try to find element again and again until it find it or until the final timer runs out.
+
+Default wait time is 500ms i.e. half seconds
+Default polling time is 500ms
+
+Syntax:
+Wait wait = new FluentWait(driver)
+    .withTimeout(30, SECONDS)
+    .pollingEvery(5, SECONDS)
+    .ignoring(NoSuchElementException.class);
+
+WebElement foo = wait.until(new Function() {
+    public WebElement apply(WebDriver driver) {
+	    return driver.findElement(By.id("foo"));
+    }
+   });
+
+Eg: passing webelement insode FW constructor
+WebElement ele = new FluentWait<WebElement>(WebElement e)
+     .withTimeout(10, TimeUnit.SECONDS)
+     .pollingEvery(100,TimeUnit.MILLISECONDS)
+     .until(new Function<WebElement  , Boolean>() {
+                    @Override
+                    public Boolean apply(WebElement element) {
+                        return element.getText().endsWith("04");
+                    }
+                });
+
+Adv:
+FW use of Generics means I don’t have to pass in a WebDriver, I could use a WebElement, or a By, or anything I want really.
+Good for Ajax elements
+Good for Elements whos load time fluctuate a lot
+Handle all disadv of Explicit wait
+
+
+#Timeouts:
+There are two timeouts supported: pageLoadTimeout and setScriptTimeout.
+1.pageLoadTimeout
+2.setScriptTimeout
+
+pageLoadTimeout: It sets the amount of time to wait for a page load to complete before throwing an error. If the timeout is negative, page loads can be indefinite.
+driver.manage().timeouts().pageLoadTimeout(100, SECONDS);
+
+setScriptTimeout: It sets the amount of time to wait for an asynchronous script to finish execution before throwing an error. If the timeout is negative, then the script will be allowed to run indefinitely.
+driver.manage().timeouts().setScriptTimeout(100,SECONDS);
+
+Sleeper:
+Using sleeper in your Selenium tests is not a good practice and should be avoided. Reason for this is, it forces browser to wait for specified amount of time. It unnecessarily delays other automation steps.
+thread.sleep(5000);
+
+
+********************************************************************************************************************************
+#JavaScriptExecutor
+
+JavaScriptExecutor is an interface which provides mechanism to execute Javascript through selenium driver. We can run java script in a page/browser using web driver and different func can be performed like button click, get title, generate alert box, send keys etc
+
+public interface JavascriptExecutor
+All Known Implementing Classes:
+ChromeDriver, EventFiringWebDriver, FirefoxDriver, HtmlUnitDriver, InternetExplorerDriver, OperaDriver, RemoteWebDriver, SafariDriver
+
+executeScript(String script,args) - Executes JavaScript in the context of the currently selected frame or window
+executeAsyncScript(String script,args) - Execute an asynchronous piece of JavaScript in the context of the currently selected frame or window
+
+Syntax:
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript(Script,Arguments);
+js.executeAsyncScript(Script,Arguments);
+
+********************************************************************************************************************************
+
+#Interview Questions:
+Q: Why to give firefox binary into system path?
+
+firefox.exe should present in env path
+
+System.setProperty("webdriver.firefox.bin", "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
+driver = new FirefoxDriver();
+
+or
+
+File pathToBinary = new File("path/to/firefox.exe");
+FirefoxBinary ffBinary = new FirefoxBinary(pathToBinary);
+FirefoxProfile firefoxProfile = new FirefoxProfile();
+FirefoxDriver _driver = new FirefoxDriver(ffBinary,firefoxProfile);
+
+Firefox driver is included in the selenium-server-stanalone.jar available in the downloads. The driver comes in the form of an xpi (firefox extension) which is added to the firefox profile when you start a new instance of FirefoxDriver.
+
+#Beta- load fast preference
+There is beta feature to make firefox not wait for the full page to load after calling .get or .click. This may cause immediate findElement's methods to break, so please be sure to use an implicit or explicit wait too. This is only available for Firefox and not other browsers.
+
+   FirefoxProfile fp = new FirefoxProfile();
+   fp.setPreference("webdriver.load.strategy", "unstable"); // As of 2.19. from 2.9 - 2.18 use 'fast'
+   WebDriver driver = new FirefoxDriver(fp);
+
+
+#Running with firebug
+Download the firebug xpi file from mozilla and start the profile as follows:
+
+   File file = new File("firebug-1.8.1.xpi");
+   FirefoxProfile firefoxProfile = new FirefoxProfile();
+   firefoxProfile.addExtension(file);
+   firefoxProfile.setPreference("extensions.firebug.currentVersion", "1.8.1"); // Avoid startup screen
+
+   WebDriver driver = new FirefoxDriver(firefoxProfile);
+
+
+
+#How to run testNG xml from maven
+http://howtodoinjava.com/2014/12/03/how-to-execute-testng-tests-with-maven-build/
+
+
+#Xpath types:
+A. General Xpath
+//input[@id='abc' and @name='xyz']   | used when we have two elements with same id
+//input[@type='submit' and @value='Submit']
+//input[@id='abc' OR @name='xyz'] 
+//input[contains(@name,'abc')]
+//*[contains(text(),'here')]
+//label[starts-with(@id,'message')]
+//td[text()='UserID']
+//li[contains(@class, 'myclassname')]/span
+
+//td[text()='Location was successfully updated']
+
+B. dynamic xpaths | used when on every refresh id of elements are changing
+//*[starts-with(@id,'yui_3_12_0_1_144585')]/a
+//[contains(@id,'ui_3_12_0_1_144585')]/a
+
+C. Following
+
+C.1.following-sibling
+//span[text()='UniqueText']/../following-sibling::td[1]//input			|  find span first > go to parent td using /../ > traverse on td level till td 1 > select input inside td 1
+//span[text()='UniqueText']/../following-sibling::td[1]/input			|  same meaning
+//*[text()='My Text']/../../following-sibling::tr[4]/td[1]/span   | go to grandparent > traverse to tr 4> then come to child
+ 
+ 
+ 
+C.2.following   |  sibling jump 
+//span[text()='UniqueText']/following::input[1]			|  find span first > select any 1st input coming after Unique text | but it will jump on sibling not child
+
+
+//span[@id='disputeCondition']/following::span
+//span[@id='disputeCondition']/span
+//span[@id='disputeCondition']/child::span
+
+D. Ancestor - parent and grandparent
+go to the top div rather just parent
+//*[text()='Enterprise Testing']//ancestor::div
+//span[contains(text(),'FP')]/ancestor::div[1]/span
+//span[contains(text(),'CP')]//ancestor::tr/td[1]/span/a
+
+E. Child
+//*[@id='java_technologies']/child::li
+//*[@id='java_technologies']/child::li[1]
+
+
+F. Preceding
+//*[@type='submit']//preceding::input
+//*[@type='submit']//preceding::input[1]
+
+
+G. Parent
+//*[@id='rt-feature']//parent::div
+
+
+H. Self
+//*[@type='password']//self::input
+
+I. Descendant
+//*[@id='rt-feature']//descendant::a
+
+
+#Handling List 
+List<WebElement> lstDrp = driver.findElements(By.xpath("//div[@name='expiryDate']/div/a/div[2]/i"));
+lstDrp.get(0).click();
+
+(//div[@name='expiryDate']/div/a/div[2]/i)[1]
+
+#Lazy loading concept
+- selenium find an element at  ele.findElel(By.xpath())
+	silk find ele at .click()  i.e. only when we interact with element. No use t find element if we don't want to interact with it
+see this logic lazy loading kind
+
+**************************************************************************************************************************************************
+
+Important Links:
+http://code.google.com/p/selenium/wiki/FrequentlyAskedQuestions
+http://www.qaautomation.net/?p=498
+http://selftechy.com/2011/06/02/parameterization-of-selenium-tests-with-microsoft-excel
+https://groups.google.com/forum/#!topic/webdriver/epjUTXi4peE
+
+
+Locating Element on a Page
+A.ID
+B.Class Name
+C.Tag Name
+D.Name
+E.Link Text
+F.Partial Link Text
+G.CSS
+H.XPATH
+I.JAVA Script
+
+
+
+Adv Xpaths:
+//header/div/button/span[contains(.,'Legal')]                  | to check if span node contains "Legal" text  |  . represent current node i.e. span
+//header/div/button/span[contains(./div/div,'Legal')]           |  to check if /div/div node under given span contains text
+//span[contains(.,'Indicative Monthly Rate')]/../../div/input    |  find a reference then go two level up and again find element
+//a[contains(text(),'Edit Profile')]
+//a[contains(text(),'Accounting')]
+//span[contains(text(),'Location')]
+//a[starts-with(@href, "mylink")]
+//span[starts-with(., 'Location')]/text()
+//span[starts-with(., 'Location')]
+//button[starts-with(., 'Authorise')]
+//h3[text()='Abc']/ancestor::div//iframe
+
+http://stackoverflow.com/questions/1006283/xpath-select-first-element-with-a-specific-attribute
+(//button[starts-with(text(),'Add')])[1]        |  retrun only 1 matching element from a list
+//button[starts-with(text(),'Add')][1]          |  return a matching list i.e. first element from group of small list ???
+(//button[starts-with(text(),'Assign')])[2]     | return second element from a matching list
+
+
+
+4. Selecting an OPTION,checkbox
+
+#WebElement select = driver.findElement(By.tagName( "select" ));
+List<WebElement> allOptions = select.findElements(By.tagName( "option" ));
+for (WebElement newoption : allOptions) {
+System.out.println(String.format( "Value is: %s" , newoption.getAttribute( "value" )));
+newoption.click();
+}
+
+#Better way since sel 1.0
+Select select = new Select(driver.findElement(By.tagName( "select" )));
+select.deselectAll();
+select.selectByVisibleText( "Edam" );
+
+#SelectElement select = new SelectElement(driver.FindElement(By.TagName( "select" )));
+select.DeselectAll();
+select.SelectByText( "Edam" );
+
+
+6. Swiching between Windows and Frames
+driver.switchTo().window( "windowName" );
+
+to find window name:
+<a href= "somewhere.html" target= "windowName" >Click here to open a new window</a>
+
+to iterate over windows:
+for (String handle : driver.getWindowHandles()) {
+driver.switchTo().window(handle);
+}
+
+To switch into frames:
+driver.switchTo().frame( "frameName" );
+
+To switch into 1st child frame:
+driver.switchTo().frame( "frameName.0.child" );
+
+
+7. Popup Dialogs
+Starting with Selenium 2.0 beta 1, there is built in support for handling popup dialog boxes. After you’ve
+triggered an action that opens a popup, you can access the alert with the following:
+
+Alert alert = driver.switchTo().alert();
+
+This will return the currently open alert object. With this object you can now accept, dismiss, read its
+contents or even type into a prompt
+
+
+8. Navigation:
+driver.navigate().to( "http://www.example.com" );
+driver.get("http://www.google.com");
+
+Both the above do the same thing but first has an edge over other i.e we can also move forward and backward
+driver.navigate().forward();
+driver.navigate().back();
+
+This may behave unexpected depending upon browser to browser.
+
+
+9. Drag And Drop
+Here’s an example of using the Actions class to perform a drag and drop. Native events are required to
+be enabled.
+WebElement element = driver.findElement(By.name( "source" ));
+WebElement target = driver.findElement(By.name( "target" ));
+(new Actions(driver)).dragAndDrop(element, target).perform();
+
+
+
+10.Select a value from the dropdown
+
+Declare a List and assign all the values of dropdown using findElements method
+Use a for loop to go through the elements one by one
+Using an IF condition match the required option
+Click the required option (.setSelected is deprecated)
+Use the below code and put that into a function which does the job.
+
+  public static void selectValue(String valToBeSelected){
+        List <WebElement> options = driver.findElements(By.tagName("option"));
+    for (WebElement option : options) {
+      if (valToBeSelected.equalsIgnoreCase(option.getText())){
+        option.click();
+      }
+        }
+  }
+call the static method wherever necessary – selectValue(“Texas”) will select the value Texas from the dropdown country.
+
+11.“Check / Uncheck “ a checkbox
+To “Check / Uncheck” a checkbox, the object needs to be identified using findElement method and then just click.
+To find out whether the checkbox is checked or not utilize the method – element.isSelected()
+
+        WebElement kancheck = driver.findElement(By.name("kannada"));
+        kancheck.click();
+        System.out.println(kancheck.isSelected());
+Above code snippet will first click the checkbox named kannada and then verifies whether it is clicked or not.
+
+12.Select a radio button
+Follow the same steps which are used in Checkbox to select a radio button and then verify the status using isSelected() method.
+
+        WebElement gender = driver.findElement(By.xpath("//input[@name='male']"));
+        gender.click();
+        System.out.println(gender.isSelected());
+
+
+
+
+
+#Does text exist in the entire page
+A:Search text in entire page -this is very slow way for large page.
+String laptops=driver.findElement(By.tagName("body")).getText();
+assertEquals("Element Not matching::", "Laptops", laptops);
+
+B:Other way to use JSoup - support only Java
+public String getPageContent() {
+ Document doc = Jsoup.parse(driver.getPageSource());
+ return doc.text();
+}
+
+
+
+#Types of Drivers in WebDrivers:
+1.HTML unit Driver
+WebDriver driver = new HtmlUnitDriver();
+
+Adv:
+-Most light weight and fastest driver among all.
+-This is java based implementation of a browser w/o UI.
+-Sel RC is req to use this driver if you are using lang other than Java. In java Sel RC is not req.
+-Suport Java Script(Rhino)
+-Platform Independent.
+
+Disadv:
+-No web browser use Rhino java script , each have there own.
+-If we use HtmlUnit Drivers javascript then we may get different result on diffrent browsers.
+
+To enable java script:
+HtmlUnitDriver driver = new HtmlUnitDriver(true);
+
+2.Firefox Drivers
+WebDriver driver = new FirefoxDriver();
+
+Adv:
+-Faster than IE Driver but slower than Html Unit drivers.
+-Runs in real browsers and support java script.
+-FF3.0 use Sizzles rather CSS.
+
+#To change mozilla default property
+
+ProfileIni allProfiles = new ProfilesIni();
+FirefoxProfile profile = allProfiles.getProfile( "WebDriver" );
+profile.setPreferences( "foo.bar" , 23);
+WebDriver driver = new FirefoxDriver(profile);
+
+#To enable native events of mozilla on linux [used if default setting are unstable on linux etc]
+FirefoxProfile profile = new FirefoxProfile();
+profile.setEnableNativeEvents(true);
+WebDriver driver = new FirefoxDriver(profile);
+
+3.Internet Explorer Drivers.
+WebDriver driver = new InternetExplorerDriver();
+
+Adv: -Support javascript.
+Disadv:
+-Slower than other browsers.
+-Xpath is not supported in most of IE versions.
+-CSS not supported natively in IE 6,7
+-CSS get supported natively in IE 8,9 but latest CSS3 is not fully supported in these versions.
+-Sizzles is injected automatically to counter xpath,css space but that is very slow.
+Sizzles???
+
+
+4.Chrome Drivers
+WebDriver driver = new ChromeDriver();
+
+-We need to have both chrome driver and chrome version installed on m/c to test it.
+-Chrome driver shd be defined in sys path so that web driver detects it.
+
+Adv:
+-Chrome use Webkit based browser so we can also test Safari browser using it.
+-runs in real browser and support java script.
+
+Disadv.
+-As chrome has own V8 javascript engine rather Nitro engine used by Safari so java script behaviour may differ for both.
+
+
+
+
+Internal working:
+(Shailendra xebia)
+Our code read by specific driver (say Chrome.exe) , driver convert this java code into json format
+json format read by driver and it execute it over chrome own java script engine.
+chrome java script engine then execute json and action happen in browser.
+
+Each browser has their own JS engine and same command can behave differently. hence we call webdriver uses native browser support
+
+Mozilla default installation path is already defined in Webdriver hence external path not reuired. But if we install Mozilla in an other
+location then selenium will not able to find it
+
+In Selenium RC, selenium convert code into JS and that JS get inserted into browser and action took place
+As converted JS is common and done by selenium itself thats why behaviour of each browser is same.
+
+Static html page require - html + css(for styling) for normal display
+Dynamic HTML where user interact with browser  then we require Javascript. Browser understand only HTML, CSS and JavaScript
+
+
+
+https://www.youtube.com/watch?v=5APJGmpQwoo  |  How json command work on browser
+
+********************************************************************************************************************************
+
+
+#Grid (Self Learning practice)
+
+Why Grid?
+1. Manage multiple environments from a central point. To test combination of different (browser + os) combination running parallelly
+2. To test huge test cases in parallel to finsih them faster
+3. It allows for running your tests in a distributed test execution environment.
+
+#Grid 1 vs Grid 2
+Grid 1
+Selenium Grid 1 has its own remote control that is different from the Selenium RC server. They are two different programs.
+You need to install and configure Apache Ant first before you can use Grid 1.
+Can only support Selenium RC commands/scripts.
+You can only automate one browser per remote control.
+
+Grid 2
+Selenium Grid 2 is now bundled with the Selenium Server jar file
+You do not need to install Apache Ant in Grid 2.
+Can support both Selenium RC and WebDriver scripts.
+One remote control can automate up to 5 browsers.
+
+#The Hub
+The hub will use the port 4444 by default
+The hub is the central point where you load your tests into.
+There should only be one hub in a grid.
+The hub is launched only on a single machine, say, a computer whose O.S is Windows 7 and whose browser is IE.
+The machine containing the hub is where the tests will be run, but you will see the browser being automated on the node.
+
+Hub parameters
+On the hub, setting the -timeout command line option to "30" seconds will ensure all resources are reclaimed 30 seconds after a client crashes. On the hub you can also set -browserTimeout 60 to make the maximum time a node is willing to hang inside the browser 60 seconds. This will ensure all resources are reclaimed slightly after 60 seconds. All the nodes use these two values from the hub if they are set. Locally set parameters on a single node has precedence, it is generally recommended not to set these timeouts on the node.
+
+
+
+#The Nodes
+Default port for node is 5555
+Nodes are the Selenium instances that will execute the tests that you loaded on the hub.
+There can be one or more nodes in a grid.
+Nodes can be launched on multiple machines with different platforms and browsers.
+The machines running the nodes need not be the same platform as that of the hub.
+
+#Nodes parameters:
+-port 4444   |  4444 is default
+-timeout 30 (300 is default i.e. 5min) The timeout in seconds before the hub automatically releases a node that hasn't received any requests for more than the specified number of seconds. After this time, the node will be released for another test in the queue. This helps to clear client crashes without manual intervention. To remove the timeout completely, specify -timeout 0 and the hub will never release the node.
+
+-maxSession 5	(5 is default) The maximum number of browsers that can run in parallel on the node. This is different from the maxInstance of supported browsers (Example: For a node that supports Firefox 3.6, Firefox 4.0  and Internet Explorer 8, maxSession=1 will ensure that you never have more than 1 browser running. With maxSession=2 you can have 2 Firefox tests at the same time, or 1 Internet Explorer and 1 Firefox test).
+
+-maxsession is not specific to browser name, it only caps total browser running on one node. If set to 3 then total 3 browser will run at a time, it can be 1 FF,2CH or 3FF or etc
+
+-maxInstance
+It is used to limit the number of browser initialization in a node. it is specific to browser e.g. maxinstance for firfox=2 and for chrome we set as 1. So even if we have multiple thread we can see 3 firefox and 1 chrome running on single node
+
+e.g.
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5556 -browser browserName=firefox,maxInstances=3 –maxSession 2
+
+
+Imp: maxSession override maxInstance setting
+
+-browser < params >	If -browser is not set, a node will start with 5 firefox, 5 chrome, and 1 internet explorer instance (assuming it’s on a windows box). This parameter can be set multiple times on the same line to define multiple types of browsers.
+
+browserName allowed ={android, chrome, firefox, htmlunit, internet explorer, iphone, opera}
+
+-registerCycle = how often in ms the node will try to register itself again.Allow to restart the hub without having to restart the nodes.
+
+
+
+
+#How grid works
+The hub receives a test to be executed along with information on which browser and ‘platform’ (i.e. WINDOWS, LINUX, etc) where the test should be run. It ‘knows’ the configuration of each node that has been ‘registered’ to the hub. Using this information it selects an available node that has the requested browser-platform combination. Once a node has been selected, Selenium commands initiated by the test are sent to the hub, which passes them to the node assigned to that test. The node runs the browser, and executes the Selenium commands within that browser against the application under test.
+
+driver = new RemoteWebDriver(hubUrl, capabilities);
+
+At this point hub will assign the test to a matching node.
+
+In testng we specify  parallel="tests" thread-count="2" and then we have different <test> tag. Here each thread will pick one <test> and execute it. Note that thread count and <test> tag should be same to work properly.
+Thread 1 will pick <test1> tag then based on <browser specified> capability will be read and matching node will be allocated.
+
+e.g.
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5558 -browser  browserName=firefox,version=41.0,platform=LINUX
+
+#exactly match
+capability.setBrowserName(“firefox” );
+capability.setPlatform(“LINUX”);
+capability.setVersion(“3.6”);
+
+#match
+capability.setBrowserName(“firefox” );
+capability.setVersion(“3.6”);
+
+#not matched and node will not be assigned, test fail
+capability.setBrowserName(“firefox” );
+capability.setPlatform(“LINUX”);
+capability.setVersion(“4.0”);
+
+Note: Whatever mentioned should match exactly, if anything missing that can be ignored.
+
+By default, this starts 11 browsers : 5 Firefox, 5 Chrome, 1 Internet Explorer.
+The maximum number of concurrent tests is set to 5 by default on one node means even if we run 11 parallel browsers on one node, only 5 at a time will run, once they start finish other thread will start running but at any point max open browsers(any) will be 5
+Note: To test run one node and create 11 thread and run 11 test parallely.
+
+multiple version of same browser can also be run on same remote node
+-browser browserName=firefox,version=3.6,firefox_binary=/home/myhomedir/firefox36/firefox,maxInstances=3,platform=LINUX -browser browserName=firefox,version=4,firefox_binary=/home/myhomedir/firefox4/firefox,maxInstances=4,platform=LINUX
+
+
+
+
+#Using JSON file
+#start hub
+java -jar selenium-server-standalone-2.47.1.jar -role hub -hubConfig hubconfig.json
+
+#start node
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -nodeConfig nodeconfig.json
+
+nodeconfig.json : this file contains all node specific script. start server and above command, no need to start node explicitly
+
+
+
+
+#Steps:
+Note: hub and node on same m/c for demo
+
+1. start hub and verify it
+java -jar selenium-server-standalone-2.47.1.jar -role hub
+
+verify hub(ip is:192.168.2.102)
+http://localhost:4444/grid/console
+http://192.168.2.102:4444/grid/console
+
+2. start node 1
+java -jar selenium-server-standalone-2.47.1.jar -role node -hub http://localhost:4444/grid/register -port 5556
+
+verify hub if node is attached to it or not | http://localhost:4444/grid/console
+Here we can see 5 Chrome, 5 Firefox and 1 IE browser means total max 11 browser can run on one node parallelly
+
+3. start node 2 with different port
+java -jar selenium-server-standalone-2.47.1.jar -role node -hub http://localhost:4444/grid/register -port 5557
+
+4. start node 3 with only IE browser
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5558 -browser browserName=iexplore
+
+5. start node 4 with 1 Firefox only
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5558 -browser browserName=firefox
+
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5558 -browser  browserName=firefox,version=41.0,platform=LINUX
+
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5558 -browser browserName=firefox,maxInstances=4 –maxSession 2
+
+6. start node 5 with 1 chrome only
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5558 -browser browserName=chrome
+
+path req for chrome and ie
+java -jar selenium-server-standalone-2.47.1.jar -role node -hub http://localhost:4444/grid/register -port 5557 -browser browserName=chrome -Dwebdriver.chrome.driver=/home/xebia/Downloads/jars/chromedriver
+
+
+java -jar selenium-server-standalone-2.47.1.jar -role node -hub http://localhost:4444/grid/register -port 5556 -browser browserName=firefox,maxInstances=5 -browser browserName=chrome,maxInstances=5 -Dwebdriver.chrome.driver=/home/xebia/Downloads/jars/chromedriver
+
+
+7. start node 6 with 1 chrome, 1 mozilla and 1 IE only
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5559 -browser browserName=iexplore -browser browserName=firefox -browser browserName=chrome
+
+8. start node 4 with   ????  only 1 firefox appearing
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5560 -browser browserName=firefox,maxInstance=3
+
+9. ???? start node 4 with   ????  only 1 firefox appearing
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5560 -browser browserName=firefox,maxInstance=3
+
+
+10. ???? only 1 firefox and 1 chrome visible
+java -jar selenium-server-standalone-2.47.1.jar -role webdriver -hub http://localhost:4444/grid/register -port 5561 -browser browserName=chrome,maxInstance=3 -browser browserName=firefox,maxInstance=3 –maxSession 4
+
+
+
+
+
+
+
+
+********************************************************************************************************************************
+********************************************************************************************************************************
+
+#Selenium grid (Web cases)
+-shankar mini xtr
+https://github.com/ShankarGarg/SeleniumGridDemo
+
+Selenium Grid
+mini XTR
+
+1. start server as hub
+java -jar selenium-server-standalone-2.53.1.jar -role hub
+
+note down:
+Nodes should register to http://192.168.58.1:4444/grid/register/
+  http://selenium-release.storage.googleapis.com/index.html?path=2.47/
+
+2. Open http://localhost:4444/grid/console#
+
+3. Run a mozilla node
+java -jar selenium-server-standalone-2.53.1.jar -role node -hub http://192.168.58.1:4444/grid/register/ -browser browserName="firefox,maxInstances=5" -maxSession 4
+java -jar selenium-server-standalone-2.53.1.jar -role node -hub http://0.0.0.0:4444/grid/register/ -browser browserName="firefox,maxInstances=5" -maxSession 5
+
+hub ui > mozilla node > config tab : timeout:300000
+first node will always get 5555
+
+4. start chrome node
+java -jar selenium-server-standalone-2.53.1.jar -role node -hub http://192.168.58.1:4444/grid/register/  -Dwebdriver.chrome.driver=chromedriver -browser browserName="chrome,maxInstances=5" -maxSession 4 -host 0.0.0.0 -port 5556
+java -jar selenium-server-standalone-2.53.1.jar -role node -hub http://0.0.0.0:4444/grid/register/  -Dwebdriver.chrome.driver=chromedriver -browser browserName="chrome,maxInstances=5" -maxSession 4 -host 0.0.0.0 -port 5556
+
+-host 0.0.0.0 : ip of node machine
+download chrome driver http://chromedriver.storage.googleapis.com/index.html?path=2.23/
+place in some folder
+
+5. start safari node
+java -jar selenium-server-standalone-2.47.1.jar -role node -hub http://192.168.58.1:4444/grid/register/ -browser browserName="safari,maxInstances=5" -maxSession 4 -host 0.0.0.0 -port 5557
+
+selenium has support for safari till 2.47.1 only hence used different standalone jar in command
+go to http://elementalselenium.com/tips/69-safari
+download SafariDriver.safariextz and doble click file
+
+6. start ie drive
+java -jar selenium-server-standalone-2.53.1.jar -role node -hub http://192.168.58.1:4444/grid/register/ -Dwebdriver.ie.driver=IEDriverServer.exe -browser browserName="ie,platform=WINDOWS" -port 5557
+
+download ie driver
+
+#Now lets start node using a json file
+java -jar selenium-server-standalone-2.53.1.jar -role node -nodeConfig configmulti.json
+java -jar selenium-server-standalone-2.53.1.jar -role node -nodeConfig nitin.json
+java -jar selenium-server-standalone-2.53.1.jar -role node -nodeConfig multi.json
+
+
+
+
+java -jar selenium-server-standalone-2.53.1.jar -role node -nodeConfig local_ff.json
+java -jar selenium-server-standalone-2.53.1.jar -role node -nodeConfig local_chrome.json
+java -jar selenium-server-standalone-2.53.1.jar -role node -nodeConfig local_ff_ch.json
+
+
+#To connect other hub machine as a node
+java -jar selenium-server-standalone-2.53.1.jar -role node -hub http://192.168.1.188:4444/grid/register/  -Dwebdriver.chrome.driver=chromedriver -browser browserName="chrome,maxInstances=100" -maxSession 4 -host 192.168.2.109 -port 5561
+java -jar selenium-server-standalone-2.53.1.jar -role node -hub http://192.168.1.188:4444/grid/register/ -browser browserName="firefox,maxInstances=1" -maxSession 4 -host 192.168.2.109 -port 5562
+java -jar selenium-server-standalone-2.47.1.jar -role node -hub http://192.168.3.82:4444/grid/register/ -browser browserName="safari,maxInstances=5" -maxSession 4 -host 192.168.2.109 -port 5557
+hub ip:  192.168.1.188
+node ip: 192.168.2.109 (my m/c)
+
+
+nitin 192.168.2.6
+my 192.168.2.109
+
+
+********************************************************************************************************************************
+********************************************************************************************************************************

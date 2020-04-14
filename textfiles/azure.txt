@@ -1,0 +1,895 @@
+
+=========== * ============= * ============= * ============= * ============= * ============
+Azure Foundation AZ 900
+=========== * ============= * ============= * ============= * ============= * ============
+
+#What is cloud computing?
+Cloud computing is renting resources, like storage space or CPU cycles, on another company's computers. You only pay for what you use. The company providing these services is referred to as a cloud provider
+
+Azure cloud service works on Virtualization. Using Hyperviser technology it separate CPU, memory, HDD , OS and they become loosely coupled.
+
+
+#Services:
+A. Compute power
+B. Storage
+C. Networking
+D. Analytics
+
+#Benifits:
+1. Cost Effective (Pay as you go / consumption-based ) pricing model.
+2. Scalable (Horizontal/Vertical)
+3. Elastic (Automatically resources added and removed based on traffic)
+4. Its Current : Always work on latest hardware, maintainance free, focus on core work
+5. Reliable: data backup, disaster recovery, and data replication, fault tolerance 
+6. Global : redundant datacenters located in various regions all over the globe
+7. Secure: physical/digital security
+
+
+#Capital expenditure (CapEx) vs Operational expenditure (OpEx)
+In standard business we need to put heavy CapEx upfront for heavy servers, config, security etc.
+In cloud upfront CapEx cost removed and instead OpEx cost comes i.e. Pay as You Go.
+If usage is higer then high OpEx and if usage is low then low bill 
+
+
+#Cloud deployment models
+1. Public cloud : Everything deployed on public cloud like Azure. Disadv: legal issue, high sensitive data cant be put on cloud etc. 
+2. Private cloud : Org setup own cloud and employee using it. Disadv: High CapEx, High Skills etc
+3. Hybrid cloud : Partially deployed on public and DB etc deployed on Private Cloud. Disadv: difficult to manage connectivity, configuration.
+
+
+#Types of cloud services (I < P < S)
+1. IaaS  
+Its a Shared Responsibility Model. Most flexible category, complete control over the hardware that runs your application. Helpfull in smaller req like creating env, db backup etc
+User is responsible for purchase, installation, configuration, and management of their own software, operating systems, application etc
+e.g. VMs creation
+2. PaaS
+PaaS provides an environment for building, testing, and deploying software applications.
+Used in Development framework and Analytics or business intelligence
+The user is responsible for the development of their own applications and not for infra, OS, etc
+e.g. Azure SQL DB
+3. SaaS
+SaaS is software that is centrally hosted and managed for the end customer.
+Users just use the application software. e.g. Office 365, Skype etc
+Note: In all three model, payment is "Pay as you go"
+
+
+
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+
+### Azure Service in Short ###
+https://docs.microsoft.com/en-us/learn/modules/welcome-to-azure/3-tour-of-azure-services
+
+A: Compute Domain (Servers):
+Using VMs, Containers and Serverless computing
+1. VMs : Is just like a desktop but on remote. It has all features like OS, HDD etc
+2. Containers: Like VMs but w/o OS. Env get ready as per App needs. Docker is one of the best platform
+3. Serverless computing lets you run application code without creating, configuring, or maintaining a server. E.g. sending email to customer on some purchase. Here billing comes for the time service is used.
+In VM,Container we get bill even if they are running and our app is idle
+
+
+Virtual Machine: Its a full computer we can do whatever we can do on actual physical computer 
+.Will get ip address, username and pwd to login into it. We can ask any type of VMs.
+App Service : HTTP-based service that enables you to build and host many types of web-based solutions without managing infrastructure
+Functions : For specific tasks like once a photo get upload, function will rename,compress etc
+Azure Kubernetes Service : management of a cluster of VMs that run containerized services
+Azure Service Fabric : Distributed systems platform. Runs in Azure or on-premises
+Azure Batch : Managed service for parallel and high-performance computing applications
+Azure Container Instances : Run containerized apps on Azure without provisioning servers or VMs
+
+
+B: Storage Domain (File System) IaaS Serivce
+1. Blob Storage : Storage service for very large unstructured data, such as video files or bitmaps
+2. Azure File storage : File shares that you can access and manage like a file server
+3. Azure Queue storage : Used in case of task to be done in particular sequence. eg. rename file > compress > store it
+4. Azure Table storage : A NoSQL store that hosts semi structured data independent of any schema
+Backup : Used to store infrequently used data e.g. Data from last year which cant be deleted 
+
+
+C: Mobile : To develop iOS, android apps
+D: DataBases: MySQL Service/ Any DB:
+E: Web : To host and develop web site
+F: IOT : Comes in three model : Central, Hub and Edge
+G: Big Data: Azure SQL Data Warehouse, HDInsigts, Databricks
+H: AI : Machine Learning Service, Machine Learning Studio, Vision, Speach, Map etc
+I: DevOps : CICD
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+# Azure Infrastructure 
+# Azure Geography
+It is a discrete market typically containing two or more regions that preserve data residency and compliance boundaries.
+
+Each region belongs to a single geography and has specific service availability, compliance, and data residency/sovereignty rules applied to it.
+
+
+#Region
+It is a geographical area on the planet containing at least one, but potentially multiple datacenters that are nearby and networked together with a low-latency network
+
+There are also some global Azure services that do not require you to select a particular region, such as Microsoft Azure Active Directory, Microsoft Azure Traffic Manager, and Azure DNS.
+
+#Data centre
+Data centre are physical locations which contains server racks. Every regions has one or more data centre.
+
+
+# Availability Zones 
+These are physically separate datacenters within an Azure region.
+Not all Region has multiple availability zone. 
+
+1 Geography = 2 or more region 
+1 Region = 1 or more Data Centeres
+1 Region = 3 or more Availability Zone
+
+Availability Zones fall into two categories:
+
+1. Zonal services – you pin the resource to a specific zone (for example, virtual machines, managed disks, IP addresses)
+2. Zone-redundant services – platform replicates automatically across zones (for example, zone-redundant storage, SQL Database).
+
+
+#Region Pair:
+Each Azure region is always paired with another region within the same geography at least 300 miles away. e.g. West US paired with East US.
+
+
+#Service-Level Agreements
+There are three key characteristics of SLAs for Azure products and services:
+1. Performance Targets
+2. Uptime and Connectivity Guarantees
+3. Service credits
+No SLA for free services, or Azure Adviser
+
+Composite SLA : Generally Web and DB SLA are different. So application SLA will be calculated as per both the SLA.
+
+Resiliency
+Resiliency is the ability of a system to recover from failures and continue to function. It's not about avoiding failures, but responding to failures in a way that avoids downtime or data loss
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+# Azure Management Servicem
+
+Common Tools:
+Azure portal(GUI) 
+Azure PowerShell : To execute commands from Window m/c
+Azure Command-Line Interface (CLI) : To execute commands from any OS
+Azure Cloud Shell : Interactive , browser accessible shell for managing resources
+Azure mobile app : 
+
+Azure Marketplace : App store having more than 8000 diff apps
+Subscription: Azure allows you to have more than one subscription associated with one directory
+
+Azure Advisor provides advice Best practices and security for your services
+Azure dashboard is stored as JSON file and can be changed/ sent very easily
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+### Azure Service in Detail ###
+
+# A # Azure compute #
+Azure compute is an on-demand computing service for running cloud-based applications. It provides computing resources like multi-core processors and supercomputers via virtual machines and containers. It also provides serverless computing to run apps without requiring infrastructure setup or configuration.
+
+#There are four common techniques for performing compute in Azure:
+1. Virtual machines (IaaS)
+2. Containers
+3. Azure App Service (PaaS)
+4. Serverless computing
+
+
+1. VMs:
+VMs best cases: test/dev build deployement, disaster recovery, extending data centre.
+
+Availability Set (AS)
+it is a logical grouping of two or more VMs that help keep your application available during planned or unplanned maintenance. So we need to make sure these VMs is part of diff Update domain.
+ 
+Update domains indicate groups of VMs and underlying physical hardware that can be rebooted at the same time. Update domains are logical part of every Data Centre. Azure keep sending latest patches to all servers in globe and soft get installed as per update domain.
+
+A fault domain is essentially a rack of servers. Each rack has diff power supply, connection etc. 
+In case of power outage only one rack get down. 
+
+Hence VM from AS are always chose from diff fault domain(unplanned event) and diff update domain(planned domain).
+
+"Azure Virtual Machine Scale Sets" let you create and manage a group of identical, load balanced VMs
+
+"Azure Batch" enables large-scale job scheduling and compute management with the ability to scale to tens, hundreds, or thousands of VMs.
+
+
+
+
+2. Container
+If you wish to run multiple instances of an application on a single host machine, containers are an excellent choice. The container orchestrator can start, stop, and scale out application instances as needed.
+
+A container is a modified runtime environment built on top of a host OS that executes your application. A container doesn't use virtualization, so it doesn't waste resources simulating virtual hardware with a redundant OS. This environment typically makes containers more lightweight than VMs. This design allows you to respond quickly to changes in demand or failure
+
+#To manage Containers in Azure
+1. Azure Container Instances (ACI)
+2. Azure Kubernetes Service (AKS)
+
+
+VM vs Container
+VM is virtualization of computer parts like CPU, Memory, Storage
+Container is virtualization of OS. In same machine we can create any number of diff OS container
+Container is more efficient and fast
+
+
+
+3. App Service (PaaS)
+Azure App Service enables you to build and host web apps, background jobs, mobile backends, and RESTful APIs in the programming language of your choice without managing infrastructure
+
+Types: Web Apps,API Apps,WebJobs(Backend jobs),Mobile Apps
+
+
+
+4. Serverless computing
+It encompasses three ideas:
+(a) the abstraction of servers: we simply deploy code and azure chose server themselfs
+(b) an event-driven scale: auto reply of mail, everyday job running at fix time etc
+(c) micro-billing: If code runs for 2 min/day then billing will be for 2 min only
+
+Serverless Types:
+1. Azure Functions : we write code for every step
+2. Azure Logic Apps : we define workflow in web UI and define task
+	
+	
+    ==================   *   ==================  *  ==================
+	
+	
+# B # Azure Storage #
+
+# Benefits of using Azure to store data
+Automated backup and recovery
+Replication across the globe
+Support for data analytics
+Encryption capabilities
+Multiple data types
+Data storage in virtual disks
+Storage tiers
+
+# Types of data
+1. Structured data : (relational)Data which has schema and stored as row/column e.g. sensor data or financial data.
+2. Semi-Structured data. (NOSQL/non-relational) : Uses tags and keys to store data
+3. Unstructured data : Data with no structure. Any kind of data.
+
+# DBs
+1. Azure SQL Database : Its a DaaS (Database as a Service) service for Relational DB
+2. Azure Cosmos DB : For Schema-less Data. Distributed globally. Good if your user base is spread across globe. User will get response from nearest azure region.
+3. Azure Blob storage : For unstructured ie any kind of data. For massive data, backup, disaster recovery, and archivingetc. e.g. Streammimg live video
+4. Azure Data Lake Storage : The Data Lake feature allows you to perform Big data analytics on your data usage and prepare reports. Data Lake is a large repository that stores both structured and unstructured data. (Enhanced version of Blob storage for analytics )
+5. Azure Files : Azure Files uses the Server Message Block (SMB) protocol that ensures the data is encrypted at rest and in transit. Used to store and share fiels. 
+6. Azure Queue : Azure Queue storage is a service for storing large numbers of messages that can be accessed from anywhere in the world.
+7. Disk Storage : Disk storage provides disks for virtual machines, applications.
+	types: solid-state drives (SSDs)(better for production servers) to traditional spinning hard disk drives (HDDs)
+
+Storage tiers
+1. Hot storage tier: optimized for storing data that is accessed frequently.
+2. Cool storage tier: optimized for data that are infrequently accessed. 
+3. Archive storage tier: for data that are rarely accessed.
+
+Encryption and replication
+Azure Storage Service Encryption (SSE): Azure encrypted data before storing them
+Client-side encryption: Save already encrypted data by user
+
+
+
+    ==================   *   ==================  *  ==================
+	
+# C # Azure Network #
+
+Region
+
+#Subnets
+Each different VMs can be divided into smaller network called subnet. Subnet can have different config like public private and VMs will behave accordingly
+
+One Virtual Networks contains mutiple Subnets and each subnet has one NSG
+
+VM : A ecommerce site can be easily deployed in Cloud. Under single VM three subnet with diff conf can be created for Web, Business Logic and DB layer. 
+Web subnet has both public ip and private ip address. Rest two subnet will have only private ip address.
+
+
+NSG: network security group
+A network security group, or NSG, allows or denies inbound network traffic to your Azure resources. Think of a network security group as a cloud-level firewall for your network.
+
+What is resiliency?
+Resiliency refers to a system's ability to stay operational during abnormal conditions.
+Like Natural disasters, System maintenance, both planned and unplanned, , Spikes in traffic, malicious attack DDoS
+
+# Load balancer
+A load balancer distributes traffic evenly among each system in a pool. A load balancer can help you achieve both high availability and resiliency.
+
+
+#Auto Scaling and Load Balancing
+Load Balancing: To equally distribute incomming data to currently running servers
+Auto Scaling : To Up/Down new server instances once CPU utilization increase/descrease by threshold
+
+Vertical scaling (scale up): when increasing the capacity/configuration of current server e.g. core i3 to core i7, memory up etc
+Horizontal scaling (scale out): when increasing number of server e.g. one to two to five etc
+
+
+Azure Application Gateway
+Application Gateway is a load balancer designed for web applications.
+
+What is a Content Delivery Network?
+A content delivery network (CDN) is a distributed network of servers that can efficiently deliver web content to users
+
+What is DNS?
+DNS, or Domain Name System, is a way to map user-friendly names to their IP addresses. 
+www.abc.com is mapped to some load balancer ip address XX.XX.XXX.XXX
+
+#Latency:
+Latency refers to the time it takes for data to travel over the network. Latency is typically measured in milliseconds. Distance matter the most for latency.
+
+#Bandwidth 
+Bandwidth refers to the amount of data that can fit on the connection. 
+Latency refers to the time it takes for that data to reach its destination.
+
+E.g.: Train is Bandwidth and Train Speed is Latency
+
+Better solution to reduce latency is to destribute azure region in globe.
+
+Azure Traffic Manager. 
+Traffic Manager uses the DNS server that's closest to the user to direct user traffic to a globally distributed endpoint/regions.
+
+# Traffic Manager vs Load Balancer
+Traffic Manager works at the DNS level, and directs the client to a preferred region/endpoint.
+Azure Load Balancer distributes traffic within the same region to make your services more highly available and resilient. 
+
+
+    ==================   *   ==================  *  ==================
+	
+# D # Azure Security #
+
+#Azure Event Hubs:
+It allow you to receive and process millions of events of real-time data each second via dynamic data pipelines. Event Hubs also integrates seamlessly with other Azure services.
+
+# Security responsibility
+IaaS : Security is Customer responsibility
+PaaS/SaaS : security is Azure responsibility
+
+Regardles of IaaS/PaaS or SaaS, following item are customer responsibility
+1. Data
+2. Endpoints
+3. Accounts
+4. Access management
+
+# Layered Security 
+1. Phisical Security : building security
+2. Identity and access : single sign-on and multi-factor authentication.
+3. Perimeter : Distributed DoS (DDoS) protection to filter large-scale attacks
+4. Networking : Limit communication between resources, Deny by default.
+5. Compute : Secure access to virtual machines.
+6. Application : Integrating security into the application development life cycle 
+7. Data
+
+
+# Azure Security Center
+Security Center is a monitoring service that provides threat protection across all of your services both in Azure, and on-premises
+ 
+Types:
+1. Free: limited to assessments and recommendations of Azure resources only
+2. Standard: continuous monitoring, threat detection, just-in-time access control for ports, and more.
+ 
+
+# Authentication and authorization
+Authentication AuthN: Who can access data
+Authorization  AuthZ: What level of data can be accessed
+
+
+
+
+# Azure Active Directory  (Azure AD)
+Your universal platform to manage and secure identities
+Enterprise identity service provides single sign-on and multi-factor authentication to help protect your users from 99.9 percent of cybersecurity attacks.
+
+AAD Services: 
+Authentication, Single-Sign-On (SSO), Application management, B2B identity services, B2C identity services, Device Management
+
+
+AAD audience:
+IT Admins : they need to do single login
+Application Developers: 
+Online Customer : 
+
+AAD Editions:
+https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-whatis
+1. Basic : Single sign in(single sign in req for multiple applicatioins) 
+2. Premium P1 : scaling up
+3. Premium P2 : adv security
+
+
+AAD Tenants: 
+Tenants means organizations
+Azure make sure all org use separate AD instances and dont mix data
+
+
+Multi-factor authentication
+Something you know  : Your password
+Something you possess : Device which receive token
+Something you are : Face recognition
+
+#Encryption
+Types:
+Symmetric encryption : uses single key to encrypt and decrypt
+Asymmetric encryption : uses private and public key
+
+Both abv use  two approaches:
+1. Encryption at rest : When data is present in some physical disk i.e. rest mode
+2. Encryption in transit : When data move from one place to another (TLS layer play role)
+
+Azure Storage Service Encryption : For Rest Data
+Azure Disk Encryption : For data in VMs
+Azure Key Vault : To store private/public keys, certificates
+
+
+# Types of certificates
+1. Service certificates are used for cloud services
+2. Management certificates are used for authenticating with the management API
+
+
+#Azure Firewall: Azure Firewall is a managed, cloud-based network security service that protects your Azure Virtual Network resources.
+Remote Desktop Protocol (RDP), Secure Shell (SSH), and File Transfer Protocol (FTP).
+
+#Azure Application Gateway : It is a web traffic load balancer that enables you to manage traffic to your web applications.
+
+#Network virtual appliances (NVAs) are ideal options for non-HTTP services ???
+
+Azure DDoS Protection Service: Stop traffic from attacker only
+Type: Basic/Standard
+
+# Microsoft Azure Information Protection (AIP)
+To classify and optionally, protect its documents and emails by applying labels. Labels can be applied automatically by administrators who define rules and conditions, manually by users
+If some .doc file has sesitive data then MS ask to save it as confidential
+
+# Azure Advanced Threat Protection (Azure ATP)
+ATP is capable of detecting known malicious attacks and techniques, security issues, and risks against your network.
+It leverages your on-premises Active Directory signals to identify, detect, and investigate advanced threats, compromised identities, and malicious insider actions directed at your organization.
+
+
+    ==================   *   ==================  *  ==================
+
+
+# Azure Infrastructure
+
+Azure Policy 
+AP is an Azure service you use to create, assign and, manage policies
+Here we define some set of rules like how many CPU VM can be created etc and azure keep a check to audit all infra as per defined policies.
+
+Role-based access control(RBAC) focuses on user actions at different level i.e. who can do what in azure. Like Admin, Normal User etc. But Policy defined as a given role what max you can do. Unlike RBAC, Azure Policy is a default-allow-and-explicit-deny system.
+
+What is a policy definition?
+A policy definition expresses what to evaluate and what action to take 
+
+Policy Initiative
+An initiative definition is a set or group of policy definitions to help track your compliance state for a larger goal.
+ 
+Like a policy assignment, an initiative assignment is an initiative definition assigned to a specific scope. Initiative assignments reduce the need to make several initiative definitions for each scope. This scope could also range from a management group to a resource group. 
+
+Azure Management Groups
+AMG  are containers for managing access, policies, and compliance across multiple Azure subscriptions.
+
+Azure Blueprints 
+AB enables cloud architects and central information technology groups to define a repeatable set of Azure resources that implements and adheres to an organization's standards, patterns, and requirements
+
+
+
+	
+# MS Compliance Sources:
+1. Microsoft Privacy Statement : explains what personal data Microsoft processes, how Microsoft processes it, and for what purposes.
+2. Microsoft Trust Center : Trust Center is a website resource containing information and details about how Microsoft implements and supports security, privacy, compliance, and transparency in all Microsoft cloud products and services
+3. Service Trust Portal : The Service Trust Portal (STP) hosts the Compliance Manager service, and is the Microsoft public site for publishing audit reports and other compliance-related information relevant to Microsoft’s cloud services
+4. Compliance Manager : Compliance Manager is a workflow-based risk assessment dashboard within the Service Trust Portal that enables you to track, assign, and verify your organization's regulatory compliance activities related to Microsoft professional services and Microsoft cloud services such as Office 365, Dynamics 365, and Azure.
+Compliance Manager is a dashboard that provides a summary of your data protection and compliance stature and recommendations for improvement.
+
+
+#Service Health:
+Azure provides two primary services to monitor the health of your apps and resources.
+1. Azure Monitor
+2. Azure Service Health
+
+Azure Monitor maximizes the availability and performance of your applications by delivering a comprehensive solution for collecting, analyzing, and acting on telemetry from your cloud and on-premises environments
+
+Azure Service Health is a suite of experiences that provide personalized guidance and support when issues with Azure services affect you. Azure Service Health can also help you prepare for planned maintenance and changes that could affect the availability of your resources.
+
+
+    ==================   *   ==================  *  ==================
+
+# Azure Resource Manager
+Use Azure Resource Manager to organize resources, enforce standards, and protect critical assets from deletion.
+
+
+# What are resource groups?
+Resource groups are a fundamental element of the Azure platform. A resource group is a logical container for resources deployed on Azure. These resources are anything you create in an Azure subscription like virtual machines, Application Gateways, and CosmosDB instances. All resources must be in a resource group and a resource can only be a member of a single resource group
+
+Resource groups are also a scope for applying role-based access control (RBAC) permission
+Tags can be used to better organize diff resources groups
+
+
+#What is Azure Policy?
+Azure Policy is a service you can use to create, assign, and manage policies. These policies apply and enforce rules that your resources need to follow.
+
+
+#How RBAC defines access
+RBAC uses an allow model for access. When you are assigned to a role, RBAC allows you to perform specific actions, such as read, write, or delete.
+
+#Resource Locks
+RC to ensure critical resources aren't modified or deleted 
+Resource locks can set to either Delete(cant be deleted) or Read-only.
+
+
+
+    ==================   *   ==================  *  ==================
+
+# Azure Pricing
+
+#Usage meters
+When you provision an Azure resource, Azure creates one or more meter instances for that resource. The meters track the resources' usage, and generate a usage record that is used to calculate your bill.
+
+Billing is as per Resource Type, Location, Service Type, Subscription Type. Some have high billing, some has low.
+
+#Usage Meter Examples:
+Compute Hours
+IP Address Hours
+Data Transfer In
+Data Transfer Out
+Standard Managed Disk
+Standard Managed Disk Operations
+Standard IO-Disk
+Standard IO-Block Blob Read
+Standard IO-Block Blob Write
+Standard IO-Block Blob Delete
+
+#Deallocating VMs
+De-allocating a VM is not the same as deleting a VM. De-allocation means the VM is not assigned to a CPU or network in a datacenter. However, your persistent disks remain, and the resource is present in your subscription. It's similar to turning off your physical computer.
+
+
+#Billing Zone
+Its a geographical grouping of Azure Regions for billing purposes. 
+Zone 1	United States, US Government, Europe, Canada, UK, France, Switzerland
+Zone 2	East Asia, Southeast Asia, Japan, Australia, India, Korea
+
+Billing zones aren't the same as an Availability Zone. In Azure, the term zone is for billing purposes only, and the full term Availability Zone refers to the failure protection that Azure provides for datacenters.
+
+
+#Azure pricing calculator
+https://azure.microsoft.com/en-us/pricing/calculator/
+
+#We have major 4 tabs in Pricing
+1. Products: This tab is where you'll do most of your activity. This tab has all the Azure services listed and is where you'll add or remove services to put together your estimate.
+2. Example Scenarios:  This tab has several examples of infrastructure involved in common cloud-based solutions. You can add all the components of the entire scenario to estimate the cost.
+3. Saved Estimates:  This tab has all of your previously saved estimates. We'll go through this process in a moment.
+4. FAQ Just as it says, this tab has answers to some frequently asked questions.
+
+#How to share estimate
+1. We can save estimate in "Saved Estimate" tab, so we can come back to it later and adjust it if necessary. 
+2. We can also export it to Excel for further analysis 
+3. Share the estimate via a URL.
+
+
+
+# What is Azure Advisor?
+Azure Advisor is a free service built into Azure that provides recommendations on high availability, security, performance, and cost. Advisor analyzes your deployed services and looks for ways to improve your environment across those four areas
+
+1. Reduce costs by eliminating unprovisioned Azure ExpressRoute circuits
+2. Buy reserved instances to save money over pay-as-you-go.
+3. Right-size or shutdown underutilized virtual machines.
+
+# Azure Cost Management
+Azure Cost Management is another free, built-in Azure tool that can be used to gain greater insights into where your cloud money is going. You can see historical breakdowns of what services you are spending your money on and how it is tracking against budgets that you have set. You can set budgets, schedule reports, and analyze your cost areas.
+
+# Total Cost of Ownership Calculator
+https://azure.microsoft.com/en-us/pricing/tco/
+If you are starting to migrate to the cloud, a useful tool you can use to predict your cost savings is the Total Cost of Ownership (TCO) calculator.
+Estimate the cost savings you can realize by migrating your workloads to Azure
+
+
+# Use Azure credits
+Visual Studio subscribers can activate a monthly credit benefit that allows you to experiment with, develop, and test new solutions on Azure
+Azure provide credits on using its products like VS Code
+
+
+#Spending limits
+By default, Azure subscriptions that have associated monthly credits (which includes trial accounts) have a spending limit to ensure you aren't charged once you have used up your credits
+Note: Azure spending limits are not the same as Subscription, Service, or Resource Group limits and quotas.
+The spending limit feature is specific to subscriptions that include a monthly Azure credit allotment. It is not available on pay-only subscriptions.
+
+# Reserved Instances
+If you have VM workloads that are static and predictable, particularly ones that run non-stop all year long, using reserved instances is a fantastic way to potentially save up to 70-80% of the pay-as-you-go cost. RI generally purchased for 1 to 3 yr term.
+
+
+# Resizing VMs
+Resizing a VM requires it to be stopped, resized, and then restarted. This may take a few minutes depending on how significant the size change is. Plan for an outage, or shift your traffic to another instance while you perform this task.
+
+# Autoshutdown / Deallocate virtual machines in off hours
+VMs can be set to turn off automatically in non office hours. Generally good for QA/Dev test envs
+
+# Migrate to PaaS or SaaS services
+PaaS are cheaper than IaaS services. e.g. You might be able to move a SQL Server database to Azure SQL Database easily (PaaS), but it might take substantially more effort to transfer your multi-tier application to a container or serverless-based architecture (IaaS)
+
+# Azure Hybrid Benefit for Windows Server
+If we have Win Server licence then that can also be used on Azure Win Server . But at a time only one licence can be used locally or on cloud.
+
+
+# Use Dev/Test subscription offers
+The "Enterprise Dev/Test" and "Pay-As-You-Go Dev/Test" offers are a benefit you can take advantage of to save costs on your non-production environments. For Dev/QA/Non Prodcution, cost are very minimal/free.
+
+
+
+#Pricing short
+1. The Azure free account includes free access to popular Azure products for 12 months
+2. $200 USD credit to spend for the first 30 days
+3. access to more than 25 products that are always free
+
+Azure support plans
+Developer	SLA 1day
+Standard	SLA 1 hr
+Professional Direct SLA 1hr + tech expert guys
+
+$200 Free for First 30 days and manually we need to set it to paid account
+Pay As You Go            | pay later
+6 month 12 month Plan    | pay in initial time
+	
+Free for life time:
+App service: upto 10 app service 
+Virtual Network : upto 50 network its free	
+
+
+Azure Advisor and Azure Cost Management 
+These are two services that help you optimize cloud spend. You can use these services to identify where you're using more than you need, and then scale back to the capacity you're actually using.
+
+
+
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+
+
+# Azure DevOps
+1. Azure Boards : Work Item(Stories, Epic, Tasks, Bugs), Boards, Backlogs, Sprint, Dashboard, Queries
+2. Azure Repos : To push all dev codes
+3. Azure Pipelines : To build code, running unit cases, To release build in Dev/Test/Prod environment
+4. Azure Artifacts : To store dependencies, common dll, jars as part of release
+5. Azure Test Plans :  Manual test cases, automation, exploratory test cases
+
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+#Azure Data Factory:
+Pipelines
+Activities
+DataSets
+Linked Services
+
+
+#Data Lake : 
+Store data of any kind(structured/unstructured) and of any size and do analytics on it
+Use schema while reading data
+We simply dump any random data
+Features:
+1. Analytics : HDInsigts
+2. Storage
+
+
+#Data Warehouse : 
+Store only filtered data
+Data write/read as per some schema
+Data can be fetched from Data lake
+
+
+=========== * ============= * ============= * ============= * ============= * ============
+# Azure Machine Learning
+
+Supervised Learning
+We know the final output, parameters etc
+Data is labelled and we know what we are giving
+Suppose we send diff birds, animals pics and asked machine to tell are they Ducks or not?
+
+Few Types:
+1. Regression : We compare two things. E.g. If someone smoke will person catch cancer. so we try to understand relation bet smoke and cancer.
+2. Classifications: To seggregate someone. Like how many kids, adults, male , female among a group
+
+
+Unsupervised Learning
+Final output is unknown
+Suppose we send diff birds, animals pics and asked machine to sort them based on diff algo
+
+Types:
+1. Clustering : To make grouping of large data set based on some algo
+2. Association : Help in predicting output. e.g. if we buy bread then we may buy egg too
+
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+#IOT
+Connect different devices over the internet without human intervention
+Device can interact with each other and collect data
+
+Azure IOT Central : SAAS kind of service. Give complete service as a package but we can modify it.
+Azure IOT solution Accelerator : PAAS kind of service. Standard template given so that we can develop accourding to us.
+Azzure IOT Hub : Central point of contact for all services.
+Azure Digital Twins: Help in create Models
+Azure Time Series Insight : Insight of how data changing as per time 
+Azure Sphere : some Microprocessor related thing which help to connect to devices 
+Azure Maps : Map related thing
+
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+#Chat Bots:
+
+Standard Chatbot - feeded with predefined data
+Self Learning Bot - they learn from data, youtube songs suggestions
+
+#Benefits:
+Perform better than Humans
+
+
+=========== * ============= * ============= * ============= * ============= * ============
+
+
+
+
+AZ 900 QnA
+
+Q 115 : https://www.exam-answer.com/microsoft/az-900/question1
+Q154 List : https://www.certlibrary.com/exam/AZ-900
+
+
+Q: When you are implementing a Software as a Service (SaaS) solution, you are responsible for configuring high availability. 
+A: Correct: Configuring SaaS Solution
+   Wrong: Installing SaaS Solution
+
+Q: Characterstick of public cloud 
+A: Correct: Metered Pricing, Self Service Management
+   Wrong: Dedecated Hardware
+
+Q: payment is generally Monthy
+
+Q: Common Services:
+IaaS: VMs, Azure Storage Account,
+PaaS: Azure App Service, Azure SQL databases
+SaaS: Office 365, Skype
+
+Q: Azure Data Brick.
+A: Used for Big data analysis
+
+Q: Azure Application Insights
+A: Detect and diagnoes anomalis in web apps
+
+Q: Which Azure service should you use to correlate events from multiple resources into a centralized repository?
+A: Azure Log Analytics. (Dont get confused with Event word.)
+
+Q: Each business unit requires 20 different Azure resources for daily operation. All the business units require the same type of Azure resources.
+You need to recommend a solution to automate the creation of the Azure resources.
+A: Azure Resource Manager templates.
+
+Q:Fill in the blank ,  ___________ a common platform for deploying objects to a cloud infrastructure and for implementing consistency across the Azure environment.
+A: Azure Resource Manager provides.
+Wrong: AZURE POLICIES PROVIDE, Resource groups or Management groups
+
+Q: App1 has low usage during the first three weeks of each month and very high usage during the last week of each month.
+Which benefit of Azure Cloud Services supports cost management for this type of usage pattern?
+A: Elasticity
+
+Q: For web application deployement
+A: PaaS is best
+
+Q: You plan to deploy several Azure virtual machines.
+You need to ensure that the services running on the virtual machines are available if a single data center fails.
+Solution: You deploy the virtual machines to two or more scale sets.
+A: No
+You need Availabilty Zone within Data centres
+
+
+Q: You plan to map a network drive from several computers that run Windows 10 to Azure Storage. You need to create a storage solution in Azure for the planned mapped drive.
+What should you create?
+A: A Files service in a storage account.
+ Wrong: An Azure SQL database. or Blob Storage etc
+
+Q: Your company plans to deploy an Artificial Intelligence (AI) solution in Azure.
+A: Azure Machine Learning Studio.
+
+
+Q: You need to create a new Azure virtual machine from an Android laptop.
+Solution: You use PowerShell in Azure Cloud Shell.Does this meet the goal?
+A: Yes
+
+Q: To ensure that a virtual machine named VM1 cannot connect to the other virtual machines, VM1 must *** BE DEPLOYED TO A SEPARATE VIRTUAL NETWORK ***.
+A: Yes
+
+Q: You plan to store 20 TB of data in Azure. The data will be accessed infrequently and visualized by using Microsoft Power BI.
+You need to recommend a storage solution for the data.
+Which two solutions should you recommend? Each correct answer presents a complete solution.
+A: Azure Data Lake. and Azure SQL Data Warehouse.
+
+Q: Which service show service failure notifications
+A: Azure Monitor
+
+Q: Remember:
+PowerShell script: Always need a Window m/c
+CLI : Any OS
+Cloud Shell : Browser based tool
+
+Q: You need to limit the amount of inbound traffic to all the Azure virtual networks.
+A: Azure firewall.
+
+Q: ou plan to implement a solution that enables the client computers on your on-premises network to communicate to the Azure virtual machines. Each correct answer presents part of the solution.
+A: A virtual network and Gateway Subnet both require
+https://www.exam-answer.com/microsoft/az-900/question21
+
+Q: The company’s compliance policy states that a server named FinServer must be on a separate network segment.
+A: A virtual network for FinServer and another virtual network for all the other servers.
+
+Q: A company policy states that administrators must only be allowed to create additional Azure resources in a region in the country where their office is located.
+A: Azure Policy
+
+Q: Secures websites from attacks. Generates reports that contain details of attempted attacks.
+A: DDoS not NSG
+
+Q: How to ensure company’s regional requirements compliance.
+A: Azure Trust Center.
+
+Q: Which two types of customers are eligible to use Azure Government to develop a cloud solution
+A: A United States government entity. and A United States government contractor.
+
+Q: Azure Active Directory Identity Protection enables organizations to configure automated responses to detected suspicious actions related to user identities.
+
+Q: To what should an application connect to retrieve security tokens?
+A: Azure Active Directory (Azure AD).
+
+Q: *** ______________ *** provide organizations with the ability to manage the compliance of Azure resources across multiple subscriptions.
+A: Azure policies.
+Incorrect: Azure App Service plans or Resource Group
+
+Q: What can Azure Information Protection encrypt?
+A: Documents and email messages.
+
+QD: to evaluate whether your company’s Azure environment meets regulatory requirements?
+https://www.exam-answer.com/microsoft/az-900/question35
+A: the Security Center blade from the Azure portal
+Incorrect : Compliance Manager from the Security Trust Portal (My Answer)
+
+Q: Your company implements *** _________________- *** to automatically add a watermark to Microsoft Word documents that contain credit card information.
+A: Azure Information Protection.
+Incorrect : Azure policies
+
+Q: From *** _________ ***, you can view which user turned off a specific virtual machine during the last 14 days.
+A: Activities Log
+Incorrect AZURE MONITOR
+
+Q: in case Azure policies applied to a exsiting resource group then all resources not following rules will be deleted automatically.
+
+Q: What is required to use Azure Cost Management?
+A: An Enterprise Agreement (EA). and A pay-as-you-go subscription.
+
+Q: Your Azure trial account expired last week. You are now unable to ___________
+A: Access your data stored in Azure.
+
+Q: You have several virtual machines in an Azure subscription. You create a new subscription. Now you can easily _________
+A: The virtual machines can be moved to the new subscription.
+
+Q: You attempt to create several managed Microsoft SQL Server instances in an Azure environment and receive a message that you must increase your Azure Subscription Limits.
+What should you do to increase the limits?
+A:Create a new support request.
+
+#Imp Questions Links:
+https://www.exam-answer.com/microsoft/az-900/question44
+https://www.exam-answer.com/microsoft/az-900/question45
+https://www.exam-answer.com/microsoft/az-900/question46
+https://www.exam-answer.com/microsoft/az-900/question47
+https://www.exam-answer.com/microsoft/az-900/question48
+https://www.exam-answer.com/microsoft/az-900/question49
+https://www.exam-answer.com/microsoft/az-900/question51
+https://www.exam-answer.com/microsoft/az-900/question53
+https://www.exam-answer.com/microsoft/az-900/question57
+https://www.exam-answer.com/microsoft/az-900/question58
+https://www.exam-answer.com/microsoft/az-900/question59
+https://www.exam-answer.com/microsoft/az-900/question61
+
+
+
+
+
+
+
+
+
+
+
+

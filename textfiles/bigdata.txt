@@ -1,0 +1,197 @@
+
+
+#AWS Class:
+
+#What is Cloud
+-Large pool of resources - CPU, disk, RAM with rapid elasticity
+-ability for user to access it
+-flixible pricing i.e. pay only for what user used
+
+Cloud has all three services
+IAAS Infrastructure as a service |  shared physical resources cpu ram , use infra through virtual env
+PAAS Platform as a service | provide load balancer, running environment, jre etc no need for actual machine or os
+SAAS Software as a service | application as a service
+
+AWS services:
+1. EC2(ECC) Elastic Cloud Computing
+
+
+
+**************************
+
+
+Big data training , 2016, Bhavuk
+
+Big Data Day 1
+
+Why relational
+Powerful SQL query
+Data integrity
+High response time
+Single server/ vertical scalable (adding new feature in single m/c)
+structure data
+ACID - Atomicity Consistence I  D
+Transaction - either complete work or rollback
+
+Limitation
+Volume, Rigid schema, not suitable for semi unstructured data, license cost
+
+
+Big data:
+4 V - Volume, Velocity, Variety semi unstructured , Veracity - unstructure + messyness, Value
+
+
+Big Data Problem
+Ingestion - how to bring large data, extraction
+Storage  - how to store and retrive data , loading
+Processing problem - CPU + memmory , transformation, sorting data etc
+Analysis -
+Exploration - using natural lang and then getting data
+
+
+Data Science - Mathematics + Programming + BA
+
+
+Hadoop
+by Doug Cutting
+Combination of multiple open source project
+Framework
+Free*
+Kernel of big data project - old understanding
+horizontal scalable
+fault tolerant
+commodity hardware - easily available hardware
+no low level programming
+distributed system
+
+
+polyglot persistense - shekhar gulati
+
+
+
+#Storage Layer
+
+mongo db good for geo spatial feature
+grindr use mongo db
+
+
+row oriented - pdt page
+column oriented  - for BI tool
+
+
+columnal store = hbase
+graph  = Neo4J
+
+
+random read/write  - adding reading small data on large volume data e.g chat
+rdbms is good in this
+
+
+file system good in sequencial access pattern
+
+hbase - hadoop DB | FB messaging
+
+
+HDFS - hadoop distributed file system
+file system
+no update allowed
+sequencial access
+append is allowed not update
+large block size
+
+HBase
+NoSQL DB
+Random read/write
+data block size 128MB
+
+block - unit of data which can read/write in one go
+
+
+#Processing Layer
+
+framework:
+Map reduce
+Spark
+
+
+
+yuda city
+
+
+
+Session 2:
+
+HDFS
+it has two daemon
+
+NameNode - holistic knowlegde, if goes down cant access anythig
+Data NOde
+
+Data locality : hadoop process data where it is present
+
+
+YARN :
+
+
+Sqoop : ingest RDBMD into cluster SQL to Hadoop
+all table will be imported as .csv file
+for every table it will create a new directoty
+no forenign key etc info will be stored
+sqoop read table in chunks with parallel processes usning mapper/ thread
+
+
+Flume: used for ingesting log data
+data is generating on runtime and flume is reading e.g. tweets
+Source  - generte data
+Sink  - dump data
+Channel - channel connecting src to sink
+Agent - daemon  running on bkgrnd
+
+
+#Processing - cleaning the data to get some rich data
+over processed data we can do analytics using impala
+
+MapReduce
+Spark
+
+MapReduce
+only Java based
+not suited for real time, not much fast
+
+
+Spark , 2009
+run in RAM rather disk
+api ready to use
+less code
+can use java, python etc more lang support
+written in scala
+
+
+
+#
+Hive
+Run top of Mapreduce
+for non java ppl i..e for sql ppl
+
+
+Impala
+
+see shekhar youtube video:
+
+NO SQL DB Type:
+designed for particular problem
+horizontal scalable
+
+models
+key value based | e.g. reac,redis  | map like | search on key
+column | casandra, hbase | good for write operation, all node are master, to process logs
+Document Store |  MongoDB | closest to relational DB | can search on values also
+Graph | not scalable, single m/c | Neo4j | i follow person, friend follow same kind of scenario | recommendations
+
+
+
+Polyglot Persistence
+Use different DB for different purposes in same application
+
+
+MOngoDB

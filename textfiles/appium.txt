@@ -1,0 +1,814 @@
+#What is Appium
+Appium is an open-source tool for automating native, mobile web, and hybrid applications on iOS and Android platforms.
+Native apps are those written using the iOS or Android SDKs. Mobile web apps are web apps accessed using a mobile browser
+(Appium supports Safari on iOS and Chrome or the built-in �Browser� app on Android). Hybrid apps have a wrapper around a �webview� � a
+native control that enables interaction with web content. Projects like Phonegap, make it easy to build apps using web technologies
+that are then bundled into a native wrapper, creating a hybrid app.
+....
+Importantly, Appium is �cross-platform�: it allows you to write tests against multiple platforms (iOS, Android), using the same API.
+This enables code reuse between iOS and Android test suites.
+
+Appium is an open source, cross-platform test automation tool for native, hybrid and mobile web apps, tested on simulators (iOS, FirefoxOS), emulators (Android), and real devices (iOS, Android, FirefoxOS).
+SUPPORTED PLATFORMS - iOS, Android, FirefoxOS
+
+
+#Framework used by Appium provided by vendors(Apple and Google)
+iOS: Apple�s UIAutomation
+Android 4.2+: Google�s UiAutomator
+Android 2.3+: Google�s Instrumentation. (Instrumentation support is provided by bundling a separate project, Selendroid)
+
+Here appium wraps the vendor-provided frameworks in one API, the WebDriver API. WebDriver specifies a client-server protocol
+(known as the JSON Wire Protocol). Given this client-server architecture, a client written in any language can be used to send the appropriate
+HTTP requests to the server. Appium & WebDriver clients are not technically �test frameworks� � they are �automation libraries�.
+
+If you use Apple�s UIAutomation library without Appium you can only write tests using JavaScript and you can only run tests through the
+Instruments application.
+Similarly, with Google�s UiAutomator you can only write tests in Java. Appium opens up the possibility of true cross-platform native mobile automation.
+
+
+************************************************************************************************
+#APPIUM CONCEPTS
+1.Client/Server Architecture
+Appium is a webserver that exposes a REST API. It receives connections from a client, listens for commands, executes those commands on a mobile device,
+and responds with an HTTP response representing the result of the command execution
+We can put the server on a different machine than our tests are running on. We can write test code and rely on a cloud service like Sauce Labs
+ to receive and interpret the commands.
+
+2. Session
+Automation is always performed in the context of a session. Clients initiate a session with a server in ways specific to each library,
+but they all end up sending a POST /session request to the server, with a JSON object called the �desired capabilities� object.
+ At this point the server will start up the automation session and respond with a session ID which is used for sending further commands.
+
+3. Desired Capabilities
+Desired capabilities are a set of keys and values (i.e., a map or hash) sent to the Appium server to tell the server what kind of
+automation session we�re interested in starting up. There are also various capabilities which can modify the behavior of the server
+ during automation. For example, we might set the platformName capability to iOS to tell Appium that we want an iOS session,
+ rather than an Android one. Or we might set the safariAllowPopups capability to true in order to ensure that, during a Safari automation
+ session, we�re allowed to use JavaScript to open up new windows.
+
+4. Appium Server
+Appium is a server written in Node.js language. It can be built and installed from source or installed directly from NPM.
+
+5. Appium Clients
+There are client libraries (in Java, Ruby, Python, PHP, JavaScript, and C#) which support Appium�s extensions to the WebDriver protocol.
+When using Appium, you want to use these client libraries instead of your regular WebDriver client.
+
+6. Appium.app, Appium.exe
+There exist GUI wrappers around the Appium server that can be downloaded. These come bundled with everything required to run the Appium server,
+ so you don�t need to worry about Node. They also come with an Inspector, which enables you to check out the hierarchy of your app.
+ This can come in handy when writing tests.
+************************************************************************************************
+
+- Appium server default start on 4723 port
+xebia@xe-tu-sheetal:~$ appium
+info: Welcome to Appium v1.4.13 (REV c75d8adcb66a75818a542fe1891a34260c21f76a)
+info: Appium REST http interface listener started on 0.0.0.0:4723
+info: Console LogLevel: debug
+
+************************************************************************************************
+#ADB
+Android Debug Bridge (adb) is a versatile command line tool that lets you communicate with an emulator instance or connected Android-powered
+device. It is a client-server program that includes three components:
+
+A client, which runs on your development machine. You can invoke a client from a shell by issuing an adb command.
+A server, which runs as a background process on your development machine. The server manages communication between the client and the
+adb daemon running on an emulator or device.
+A daemon, which runs as a background process on each emulator or device instance
+
+#adb commands:
+
+adb devices  | list all connected devices
+adb kill-server   |  reset the connection, used when devices is not recognized by system
+adb kill-server && adb devices
+************************************************************************************************
+
+Architecture:
+
+			----------------------->                           -----UIAutomator------> Android device
+Test Code 		Wire(JSON/HTTP)			[Appium server]
+			----------------------->                           -----Instruments------> iOS Apple device
+
+
+Genymotion - fast android emulator
+
+
+#Saucelabs adv over jenkin
+https://saucelabs.com/resources/articles/selenium-jenkins-how-to-do-it-yourself-and-the-sauce-labs-advantage
+
+************************************************************************************************
+
+#Imp Links:
+#JSON WP REST Endpoints: Selenium WebDriver -
+https://code.google.com/p/selenium/wiki/JsonWireProtocol
+
+Appium -
+https://code.google.com/p/selenium/source/browse/spec-draft.md?repo=mobile
+http://appium.io/slate/en/v1.2.0/?java#appium-server-capabilities
+
+Understanding Appium by Execute Automation -
+https://www.youtube.com/watch?v=jKT6QNXl7fM&list=PL6tu16kXT9PrwN6kbGvGt3hbrmE9nPgro
+
+Appium For Java by Execute Automation -
+https://www.youtube.com/watch?v=HwcJhUVbkfk&list=PL6tu16kXT9PqE5Z05cqs-nnnBaVhNDP5z
+
+#Notes:
+-code we write in eclispe is called as Client Library
+-client send POST /session (endpoints) request to appium server with desired capability
+-GSON Jar : To covert java object into JSON string and vice versa
+
+************************************************************************************************
+
+#Android AVD Understanding
+#Target
+In Android AVD > Target > We have two type "Android 5.1.1 API 22" and "Google API 22".
+Google API is bigger thing and include Android API + Google Maps + Google other libraries
+If we dont need Google specific services then Android API can be used else otherwise
+
+#CPU/ABI:
+option: Google api intel atom x86, Google api intel atom x64_86 and Google api Armeabiv7a etc
+
+system image: used to create different AVD devices
+ARM based: Slow as ARM instruction need to be emulated also. Coming prior to API 15
+Intel X86: Faster than ARM. Available from API 15
+
+************************************************************************************************
+
+xpaths:
+http://software-testing-tutorials-automation.blogspot.in/2015/10/ui-automator-viewer-get-android-app.html
+
+//android.widget.FrameLayout[@id='activity_fragment_container']/android.widget.FrameLayout/android.view.View[2]/android.widget.LinearLayout
+//android.widget.TextView[contains(@resource-id,'title') and @text='Block User']   Report User
+//android.widget.TextView[contains(@resource-id,'profile_extended_field_value') and @index='1']
+//android.widget.TextView[@text='Height']/following-sibling::android.widget.TextView               to get sibling element, both are under same parent
+
+//android.widget.TextView[@text='Facebook']/following-sibling::android.widget.EditText
+
+
+//TextInputLayout[contains(@id='email_input_layout')]/android.widget.LinearLayout/android.widget.TextView
+
+
+//android.widget.TextView[@id='settings_show_distance']/following-sibling::android.widget.FrameLayout/android.widget.Switch[@id='grindr_switch_toggle']
+//android.widget.Switch[@id='grindr_switch_toggle']
+//android.widget.Switch[3]
+//android.widget.Switch[@id='grindr_switch_toggle'][2]
+
+//android.widget.ScrollView[@scrollable='true']    |  used to scroll
+
+Hmm... these passwords don't match
+Hmm… these passwords don't match
+
+//TextInputLayout[3]/android.widget.LinearLayout[1]/android.widget.TextView[1]
+//TextInputLayout[@id='confirm_password_input_layout']/android.widget.LinearLayout[1]/android.widget.TextView[1]
+
+//android.view.ViewGroup[@resource-id='fragment_toolbar']/following-sibling::android.webkit.WebView[@resource-id='webview']
+//UIANavigationBar[last()]/following-sibling::UIATableView/UIATableCell
+//UIAElement[contains(@name, 'Relationship') and contains(@name, 'Status')]
+//android.widget.LinearLayout[@resource-id='com.grindrapp.android:id/edit_my_type_relationshipStatus']/android.widget.CheckBox[1]
+//UIANavigationBar[@name = 'EDIT MY TYPE']/UIAButton[@name = 'Done']
+
+
+
+//android.widget.TextView[@id='toolbar_title']
+//android.widget.TextView[@text='Settings']
+
+xpath("//android.widget.Button[contains(@resource-id,'digit5') and @text='5']") - See more at: http://software-testing-tutorials-automation.blogspot.in/2015/10/ui-automator-viewer-get-android-app.html#sthash.U6LSmTHm.dpuf
+//android.view.View[@content-desc='Blog']
+//android.view.View[contains(@content-desc='Blog')]
+
+//UIAApplication[1]/UIAWindow[1]/UIAStaticText[1][@label="Thank you for your report."]  (@value/label = "Thank you for your report.")
+
+# Find Element
+Android
+Appium Node details	|		Code to be used
+name 			 					|   ByAccId,ById, ByName(depricated)
+resource-id					|		ByAccId,ById
+content-desc				| 	ByAccId,ById     |  imp:  getAttribute("content-desc") will never work use getAttribute("name") to get "content-desc" text
+class								|		ByClassName
+Xpath 							|   ByXpath
+text								|		na
+label								|   not exists in android
+
+Note:
+Use findbyID for  name, content-desc and resource-id
+
+#Find element using ui automator
+refer: https://developer.android.com/reference/android/support/test/uiautomator/UiObject.html
+@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").index(0)")
+@AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.widget.TextView\").textContains(\"valid password\")")
+((io.appium.java_client.android.AndroidDriver)driver).findElementByAndroidUIAutomator("new UiSelector().className(\"android.widget.TextView\").textContains(\"valid password\")").getText()
+
+
+capabilities.setCapability("newCommandTimeout","120000")
+
+adb commands:
+ddms   : to check logs + screen shots etc
+adb logcat  : to check logs
+adb logcat -d > logcat.txt   : to save into a file in same dir
+monitor : to check logs, screenshot, locators everything
+adb -s ZX1G429MDC logcat   | if multiple devices connected
+
+iOS
+Appium Node details	|	Code to be used
+name 				|   ByName, ByAccId, ById
+label				|   ByName, ByAccId, ById
+value   		|   Cant use any locator on value, use in xpath
+class				|
+xpath				|
+text				|
+
+notes:
+accessibilityID , replaced name property
+tag name replaced class name
+class name , shd be fully qualified like android.widget.button
+
+
+#What if xpath in iOS is slow because of large page source
+Try Apple backed native JS locator strategies
+iOS Predicate https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/ios_predicate.md
+iOS Predicate with Page Factory https://github.com/appium/java-client/blob/master/src/test/java/io/appium/java_client/pagefactory_tests/iOSPageObjectTest.java
+
+@iOSFindBy(xpath = "//UIAButton[@name='Back']")
+@iOSFindBy(xpath = buttons().firstWithPredicate("name BEGINSWITH 'Back' ")
+
+#Predicate with page factory - vipul
+.buttons().firstWithPredicate("lable='Login'")
+@iOSFindBy(uiAutomator = ".textFields().withPredicate(\"name='Email'\")")
+private MobileElement emailInput;
+
+#Setting page
+	//@iOSFindBy(uiAutomator=".buttons().firstWithPredicate(\"name BEGINSWITH 'Back' \") ")
+  //@iOSFindBy(uiautomation=".buttons().firstWithPredicate(\"name BEGINSWITH 'Back' \") ")
+
+
+//XCUIElementTypeButton[contains(@label, 'Delete Profile')]
+
+
+	@Hacked( hackReason ="Application bug, feature not implemented yet", pivotalTicket = "116954049")
+	 // @Grindr(pivotalTrackerId = "116954049", testRailId = "58404")
+	 @Test(enabled = false)
+	 public void verifyDistanceIsVisibleOnOtherProfile() throws Exception{
+			 throw new SkipException("Distance feature is not currently implemented.");
+	 }
+
+	 @Hacked( hackReason ="Application bug, feature not implemented yet", pivotalTicket = "116954049")
+	 // @Grindr(pivotalTrackerId = "116954049", testRailId = "58405")
+	 @Test(enabled = false)
+	 public void verifyDistanceIsNotVisibleOnOtherProfile() throws Exception{
+			 throw new SkipException("Distance feature is not currently implemented.");
+	 }
+
+
+java.lang.IllegalArgumentException: @$Proxy15: one of
+[uiAutomator, accessibility, className, id, tagName, name, xpath, linkText, partialLinkText] should be filled
+
+
+*****************************************************************************************************
+ANDROID
+
+#To start AVD Manager | Not require if Genymotion is installed
+1. Android Studio > AVD Manager Icon
+2. /usr/local/opt/android-sdk/tools    |    android avd
+
+#To start UI Automator for android (to find element locators)
+/usr/local/opt/android-sdk/tools/
+uiautomatorviewer
+
+
+#Android Web Testing
+1. Android Studio > AVD Manager > Create a avd
+2. Appium: select Browser, Platform name, version, device name
+3. Run code WebAndroidTest.java
+
+
+#Android Native App
+For inbuilt app - Calculator or Dial pad etc
+1. Android Studio > AVD Manager > Create a avd
+2. Appium server: Platform name, version, device name
+3. Run code NativeAndroidTest.java
+
+With External .apk file - ??? pending
+
+
+
+*****************************************************************************************************
+iOS
+
+#iOS - Native App
+1. XCode > Open Developer Tool > iOS Simulator
+2. Appium server setting
+	a. App path - /Users/sheetal/Documents/appiumapps/TestApp.app
+	b. Force Device - iPhone5
+	c. Platform version - 7.1
+	d. Show Simulator Log
+3. Run code using testng - NativeiOSApp.java
+
+Appium Inspector:
+Start Appium server > click on Inspector : It will open app inside ios simulator
+
+
+#iOS - Web Testing
+1. XCode > Open Developer Tool > iOS Simulator
+2. Appium server setting
+a. tick Use Mobile Safari
+b. Force Device - iPhone5
+c. Platform version - 7.1
+d. Show Simulator Log
+3. Run code using testng - WebiOSTest.java
+
+#iOS Native app on real device
+not able to run need higher xcode version:
+
+Appium Setting:
+App Path: specify app path
+Force Device: tick checkbox + select phone
+platform version
+UDID:   Xcode > Window > Device > Select connected phone > Copy 'Identifier'
+Full reset + Show Simulator logs
+Advance: Xcode path shd be correct : HDD > Application > Xcode
+
+rest i dont know
+
+
+
+*****************************************************************************************************
+
+Android Activity
+Activity is a compoent of an application on which user can perform some action like home page, contact list etc
+
+http://developer.android.com/guide/components/activities.html
+http://www.tutorialspoint.com/android/android_acitivities.htm
+
+App Intent:
+http://developer.android.com/reference/android/content/Intent.html
+App intent is a glue code b/w different activities, used with activities. It holds abstract description of an action to be performed in activity
+
+In android an app can be started with following combinations:
+1. Apk file only
+2. Apk + any activity
+3. Apk + any activity + activities intent
+
+How to define activity
+absolute way: appActivity: ‘com.mycompany.package.MainActivity
+relative way: appPackage: ‘com.mycompany.package’, appActivity=‘.MainActivity
+e.g.
+capabilities.setCapability(MobileCapabilityType.APP_PACKAGE: "com.mycompany.package");
+capabilities.setCapability(MobileCapabilityType.APP_ACTIVITY: ".MainActivity");
+
+appWaitPackage, appWaitActivity | If these two parameter defined in capabilities then Appium will wait till mentioned package and activity launched in device
+
+If not sure what activity defined in device then run fol command
+adb shell dumpsys window windows | grep mFocusedApp
+
+*****************************************************************************************************
+
+Appium Issue on Mac:
+Q 1. Appium is not invoking simulators and tried all thing:
+Sol:
+1. Try to install app manually using foll command to verify if simulator is working fine or not
+xcrun simctl install booted /Users/sheetal/Documents/workspace/grindr-platform-qa/src/test/resources/fixtures/grindrx.app
+2. Clean your project
+mvn clean install -DskipTests
+
+3. verify general details - device list in ios
+# verify instrument
+cd /usr/bin/
+instruments -s
+instruments -s devices
+
+#instrument lists
+xcrun simctl list
+iPhone 6 (44A96D93-416C-439F-80B9-271C9731E146) (Shutdown)
+iPhone 6 (6DE5A1C0-0952-47F5-98BB-452DA3A57787) (Shutdown)
+
+# delete a instrument
+xcrun simctl delete uuid
+xcrun simctl delete 44A96D93-416C-439F-80B9-271C9731E146
+xcrun simctl delete 6DE5A1C0-0952-47F5-98BB-452DA3A57787
+
+#To again add a device:
+Xcode > open dev tools > simulator > hardware > device > manage device > click '+' bottom left > add a new device from here
+
+#
+which instruments
+xcrun -find instruments
+
+4. Appium can be run in remote mode
+5. Appium in non remote mode
+   basic: mention path, force device, platform version
+   adv: "tick use native instrucment lib"
+
+6. update xcode + ios version - can be risky
+7. remove xcode completly and reinstall it
+
+8. Following can be try
+/Applications/Xcode.app/Contents/Developer/usr/bin/instruments
+~/.bash_profile
+export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer
+
+https://discuss.appium.io/t/getting-an-error-i-did-not-before-around-instruments-crashing/3714/10
+http://stackoverflow.com/questions/18428781/how-can-i-set-the-path-to-instruments-on-appium
+https://discuss.appium.io/t/appium-not-running-ios-simulator-mac-osx-el-capitan/7635
+
+
+Q: Appium bug in 1.4.13, good catch
+
+There is an element  with  name = looking for
+There is one more element with id = "ok"
+Both are in different page
+When we are on page then somehow appium try to find ele with id=ok and test failed
+Sol: later we find its because appium thinks "ok" is present in "looking for" and try to click
+
+
+*****************************************************************************************************
+
+#Xcode compatibility with iOS SDK
+Xcode 4.6.3 =  iOS 6.1 and below
+Xcode 5.0 = iOS 7.0 and above
+Xcode 6.0 = ?
+Xcode 7.0 = ?
+
+To test on multiple iOS SDK we need to install different Xcode and switch xcode before running Appium
+sudo xcode-select -switch /Applications/Xcode-4.6.app/Contents/Developer/
+sudo xcode-select -switch /Applications/Xcode-5.0.app/Contents/Developer/
+
+
+*****************************************************************************************************
+
+#Parallel Appium Test
+1. iOS - Not possible, use sauselabs services
+2. Android
+
+start two appium on diff port + start two bootstrap port
+node . -p 4492 -bp 2251 -U 32456
+node . -p 4491 -bp 2252 -U 43364
+
+-p: appium port
+-bp: bootstrap port
+-U: for device name
+
+******************************************************************************************************************************
+******************************************************************************************************************************
+#Appium Documentation:
+
+#Classes:
+http://appium.github.io/java-client/
+http://appium.github.io/java-client/io/appium/java_client/AppiumDriver.html
+http://appium.github.io/java-client/io/appium/java_client/MobileElement.html
+
+Webdriver/Selenium 3: Mobile automation
+https://w3c.github.io/webdriver/webdriver-spec.html#list-of-endpoints
+https://seleniumhq.wordpress.com/2013/08/28/the-road-to-selenium-3/
+
+#Set 1:
+class AppiumDriver extends RemoteWebDriver extends Object implements WebDriver, MobileDriver
+methods: closeApp(), context(), execute(), getOrientation(), hideKeyboard(), launchApp(), resetApp(), scrollTo(), scrollToExact(),
+swipe(), tap(), zoom()
+
+class AndroidDriver extends AppiumDriver implements StartActivity, FindsByAndroidUIAutomator, MobileDriver
+methods: scrollTo(), scrollToExact(), pressKeyCode(), longPressKeyCode(), unlockDevice(), lockDevice(), execute()
+
+class IOSDriver implements MobileDriver
+scrollTo(), scrollToExact(), shake(), hideKeyboard(), findElementByIosUIAutomation(), lockDevice()
+
+#Set 2:
+class MobileElement extends RemoteWebElement extends Object implements WebElement, TouchableElement
+methods: execute(), getCenter(), pinch(), swipe(), zoom(), tap()
+
+class AndroidElement extends MobileElement implements FindsByAndroidUIAutomator, TouchableElement
+methods: execute(), submit()
+
+class IOSElement extends MobileElement implements FindsByIosUIAutomation, ScrollsTo, TouchableElement
+methods: execute(), submit()
+
+#Set 3:
+class MobileBy extends By extends Object
+methods: AccessibilityId(), AndroidUIAutomator(), IosUIAutomation()
+
+Nested class under MobileBy
+MobileBy.ByAccessibilityId        methods: findElement/s
+MobileBy.ByAndroidUIAutomator     methods: findElement/s
+MobileBy.ByIosUIAutomation        methods: findElement/s
+
+
+class TouchAction extends Object  : its a chain of individual actions
+methods: longPress(), press, release, moveTo, tap, waitAction, perform (send all action in one go)
+e.g. drag and drop with one finger
+TouchAction action = new TouchAction(driver); action.press(element).waitAction(300).moveTo(element1).release().perform();
+
+class MultiTouchAction extends Object : its a combination of TouchAction objects
+methods: add(TouchAction obj), getParameters(), perform()
+e.g. drag and drop with 2 finger
+One TouchAction object corresponds to one finger
+
+
+
+************************************************
+
+#Interfaces:
+http://appium.github.io/java-client/io/appium/java_client/TouchableElement.html
+http://appium.github.io/java-client/io/appium/java_client/remote/MobileCapabilityType.html
+
+#Set 1:
+interface WebDriver
+methods: close, get, getCurrentUrl, getPageSource, getTitle, getWindowHandle, getWindowHandles, manage, navigate, quit, switchTo
+
+interface WebElement
+methods: clear, click, findElement, findElements, getAttribute, getCssValue, getLocation, getRect, getSize, getTagName, getText,
+isDisplayed, isEnabled, isSelected, sendKeys, submit
+
+#Set 2:
+interface TouchableElement extends WebElement
+methods: swipe(), zoom(), tap(), pinch()
+
+interface FindsByAndroidUIAutomator extends WebElement
+interface StartActivity
+
+#Set 3:
+Interface MobileCapabilityType extends selenium.remote.CapabilityType
+fields: APP, APP_ACTIVITY, BROWSER_NAME, AUTOMATION_NAME, DEVICE_NAME, PLATFORM_NAME, PLATFORM_VERSION, UDID
+
+interface MobileDriver
+methods: execute()
+
+****************************************************
+#Page Factory Annotations:
+http://appium.github.io/java-client/
+
+@AndroidFindBy, @AndroidFindBys, @AndroidFindAll,
+@iOSFindBy, @iOSFindBys, @iOSFindAll
+@OverrideWidget, @WithTimeout
+
+
+
+
+
+*****************************************************************************************************
+
+#Appium Functions:
+https://github.com/appium/java-client
+http://appium.github.io/java-client/
+
+#Touch actions: TouchAction()
+The available events from the spec are: * press * release * moveTo * tap * wait * longPress * cancel * perform
+e.g. TouchAction().press(el0).moveTo(el1).release()
+Appium action execute in sequence they appear
+Client library such as java, ruby modify the function a per their implementation
+
+perform(): it sends complete event action sequence to appium and event get executed on device
+Client library allows driver to directly send event action to appium w/o using perform()
+
+e.g. both are same
+TouchAction().tap(el).perform()
+driver.perform(TouchAction().tap(el))
+
+e.g.
+WebElement zero=driver.findElement(By.id("com.android.dialer:id/zero"));
+TouchAction action=new TouchAction(driver);
+action.longPress(zero).perform(); //type +
+
+**********************************************************
+#Multitouch Action: MultiAction()
+-These are collections of TouchAction()
+-It has only two methods:
+	add() : to add multiple touch actions
+	perform() : to send all action to appium, here all action will run parallelly rather sequencially as in TouchActions
+
+e.g. tapping with two finger on device
+action0 = TouchAction().tap(el)
+action1 = TouchAction().tap(el)
+MultiAction().add(action0).add(action1).perform()
+
+
+**********************************************************
+#Swipe
+https://discuss.appium.io/t/screen-orientation-and-element-relative-swiping-tutorial/52
+
+
+String orientation = driver.getOrientation().value();   // portrait or landscape
+int leftX = el.getLocation().getX();
+int rightX = leftX + el.getSize().getWidth();
+int upperY = el.getLocation().getY();
+int lowerY = upperY - el.getSize().getHeight();
+int middleY = (upperY - lowerY) / 2;
+
+if (orientation.equals("portrait")) {
+    // Swipe from just inside the left-middle to just inside the right-middle of the element over 500ms
+      driver.swipe(leftX + 5, middleY, rightX - 5, middleY, 500);
+ }
+
+
+**********************************************************
+#Slider - like price range slide filter
+"0.1" is 10%, "1.0" is 100%
+WebElement slider =  driver.findElement(By.xpath("//window[1]/slider[1]"));
+slider.sendKeys("0.5");   // move slider by 50%
+
+
+#Imp: Verify this???
+Android: Only port view get loaded in appium, so to interact with other non visible element we have to scroll down/up
+iOS: Complete page get loaded in appium, so ele can be clicked w/o scrolling even if its not present in web view
+
+**********************************************************
+#Scroll
+
+JavascriptExecutor js = (JavascriptExecutor) driver;
+HashMap<String, String> scrollObject = new HashMap<String, String>();
+scrollObject.put("direction", "down");
+scrollObject.put("element", ((RemoteWebElement) element).getId());
+js.executeScript("mobile: scroll", scrollObject);
+
+
+Try:
+Scroll for vertical -
+https://discuss.appium.io/t/how-the-scrollto-and-scrolltoexact-methods-are-working/1477/3
+driver.swipe(100,driver.scrollTo("").getLocation().getY(),200,driver.scrollTo("").getLocation().getY(),500);
+
+**********************************************************
+
+#lockScreen(seconds) - depricated in java-client 3.4.0
+
+driver.lockDevice(int seconds)
+driver.unlockDevice(int seconds)
+
+**********************************************************
+
+# key events
+using keycode we can send input to devices - not tested practically
+
+adb shell input keyevent 29
+adb shell input text "KEYCODE_A"
+
+**********************************************************
+
+# To send running app in background for specified time
+driver.runAppInBackground(5);
+
+**********************************************************
+adb connect 192.168.2.203
+
+#Hide keyboard
+driver.hideKeyboard();
+
+**********************************************************
+
+#To install apk in android device:
+adb -s ZX1G429MDC install app-prod-release-23085.apk    | Nexux 6
+adb -s 05f2ae880ac978ed app-prod-release-23085.apk				| Nexus 5
+adb -s 9f6c5675 install app-dev-debug-8653.apk										| MI 2
+adb -s d19dc803 install app-unpinned-release-16491.apk								| MI 3
+
+adb -s ZX1G429MDC install app-dev-debug-11085.apk
+adb -s ZX1G429MDC install app-dev-debug-85.apk
+
+
+#To upgrade app
+adb -s ZX1G429MDC install -r app-dev-debug-8653.apk
+
+
+adb -s 9f6c5675 install
+#install on emulator
+adb -s 192.168.58.101:5555 install grindr_android_dev1.apk
+
+#To install app file on ios simulator
+xcrun simctl install BD72EC2C-59DC-4B5F-9CA1-3482AAA18595 grindrx.app
+note: mention simulator udid
+
+#To install .ipa file on real device
+connect iPhone to Mac, should show device in iPhone
+double click on .ipa file
+install using itunes
+
+# To connect mobile using wifi | all adb command can be run like adb logcat
+https://developer.android.com/studio/command-line/adb.html
+adb tcpip 5555
+adb connect 192.168.2.203    |  this is mobile ip  , about phone > status
+adb devices
+
+adb usb		| to kill tcp mode and reset to usb mode, adb has two mode: tcp wireless and usb wired mode
+adb kill-server  | to reset device
+
+
+#To capture screenshot on mobile
+
+#To capture video on mobile
+open cmd
+adb shell screenrecord /sdcard/abc.mp4
+Ctrl+C                              | to stop video
+adb pull /sdcard/abc.mp4					| video will pull from mobile to pc
+note: video will be saved in same dir from where command has been run
+
+
+*****************************************************************************************************
+
+prob:
+Q: Android Web:  Appium inspector and UI automator not capturning screen
+Q: iOS Web:  Appium inspector not capturing elements
+Q: How to use IOS Automation for Web and App
+
+
+
+#Next:
+1. grid in appium how??
+2. Xpath and new xpath format
+
+
+
+
+
+#My Env
+export JAVA_HOME=$(/usr/libexec/java_home)
+export M2_HOME=/Users/sheetal/Downloads/apache-maven-3.3.9
+export PATH=$PATH:$M2_HOME/bin
+export STUDIO_JDK=/Library/Java/JavaVirtualMachines/jdk1.8.0_71.jdk
+export ANDROID_HOME=/usr/local/opt/android-sdk
+export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools
+
+#Shailendra
+export ANDROID_HOME=/Users/shailendrasingh/Library/Android/sdk
+export ANDROID_SDK=$ANDROID_HOME
+export PATH=$PATH:$ANDROID_HOME/build-tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/tools
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_45.jdk/Contents/Home
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/Cellar/php56/5.6.12/sbin:$PATH"
+export PATH="/usr/local/Cellar/curl/7.44.0/bin:$PATH"
+
+
+#Setup
+C:\Users\xxx\AppData\Local\Android\Sdk\platform-tools
+
+ANDROID_HOME=C:\Users\e075583\AppData\Local\Android\Sdk
+%ANDROID_HOME%\tools
+%ANDROID_HOME%\platform-tools
+%ANDROID_HOME%\build-tools
+
+
+____________________________________________________________________________________________________________________________________
+
+# XTR
+
+android adb
+need to install only 3 pkg inside Tools folder : Android SDK Tools, Android SDK Platform Tools, Android SDK Build Tools
+
+android avd  , better try genymotion | Adv: Faster, Easy to install Google play store,
+
+
+For android we have two options:
+android studio: to develop
+android sdk: to run android
+
+For iOS we have one bundle
+XCode, Xcode command line tools
+
+#To install a app in iOS device manually
+cd till the dir of app
+xcrun simctl install booted <name of .app/.ipa file>
+
+
+#To install core appium not ui appium
+Appium has two team : appium core + appium Ui
+appium core is generally ahead of appium ui team verison  | we can install both appium, better dont do
+
+npm install -g appium                 | to download latest build  | g: global setup, appium can run from anywhere
+npm install -g appium@1.4.13         | to download specific build
+
+appium -v  							| to check version
+appium									| to start appium
+appium-doctor				   	| to check all installation
+appium -help						| to see all commands
+
+
+#Capability
+
+#
+adb -s 192.168.58.101:5555 install ApiDemos-debug.apk
+adb install ApiDemos-debug.apk
+
+#Locators
+accID = content-desc or text   | text is name in web
+accID = name (ios)
+
+
+#How to identify loc for browser
+In side chrome browser > mobile
+
+#pending:
+uiautomator: how to use 2nd screenshot
+predicate practice
+how to open ioS app using appium locator
+
+
+# New Appium Locator strategies
+Version 1.0.2-beta.2 (1.0.2-beta.2)
+Xcode - Version 8.3.2 (8E2002)
+Java - 1.8
+Mac OS - 10.12.3 Sierra
+
+Locator strategies:
+Android - uiautomatorviewer
+Both - Appium prelaunch + Appium Post launch + XML style
+
+XML : get page source > save as login.xml > open in mozilla/chrome > write xpath and verify in chrome/mozilla inspect element
+Appium post launch :  while running automation > get current session id > go to appium > attach to session tab > enter session id > click 'attach to session' > appium locator window will come up
+Appium prelaunch : open appium server > start server > start new session > saved capabilities > start session > appium locator window will come up

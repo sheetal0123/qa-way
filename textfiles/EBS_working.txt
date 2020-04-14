@@ -1,0 +1,44 @@
+How EBS Works
+
+How an online Transaction takes place.
+Step 1: 	Customer select and adds item in the shopping cart And places the order on your (merchant) website.
+Step 2: Customer selects to pay via credit card .
+Step 3: 	Customer is redirected through EBS Payment Gateway to Transaction Processing Bank.
+Step 4: 	Customer enters credit card details on Secured Payment page.
+Step 5: 	Credit card information is transmitted securely to the corresponding bank for approval.
+Step 6: 	Corresponding bank sends appropriate information to the transaction Processing bank .
+Step 7: 	The result is forwarded to EBS (via the Transaction Processing Bank).
+Step 8: 	Customer receives a confirmation and is redirected to your (merchant) website.
+
+How EBS Payment Gateway works
+
+HOW TO RECEIVE ONLINE PAYMENTS ?
+All transactions selected to be paid online by your customers and communicated to the EBS Merchant module are enlisted under Pending Orders.  Every successful transaction processed will be displayed in your EBS Merchant Module under 'PENDING TRANSACTIONS'. You must request payments for these transactions within 7 days by selecting the 'Authorize' button and providing the proof of delivery information.
+
+All payment amounts acquired will be credited to your IPG account with EBS after deducting the transaction discount payable to EBS.  It is imperative for the merchant to access this module regularly (at least 4 times a day) to acquire orders since these amounts can be acquired within 7 days only. On the every 8th day the transaction will be automatically cancelled by the system.
+
+EBS follows T + 2 settlements, where funds would be transferred after 2 days of capture of transaction..
+
+For merchants with account HDFC, ICICI, Citibank, IDBI or other banks with NEFT facility activated) the funds can alternatively be directly transferred to the specified merchants account with credit for the same reflecting on the next Monday (Or next Banking day.)
+
+What is Authorise and Capture?
+You will be aware that, if a transaction of Rs. 5000/- is received from your site and forwarded to the gateway and authorized in real time, it means that the amount of Rs. 5,000/- is blocked from your customer's credit card limit for a period of 8 days. For eg. If customer's Credit Card credit limit is Rs. 25,000/-, Rs.5,000 will be blocked for your transaction with Rs.20,000 credit balance for a period of 8 days from time of authorization of the transaction.  This Rs. 5,000 which is blocked for 8 days will not be reflected in their Credit Card statement until the amount is captured from your EBS account module.
+
+Therefore it is vital that the merchant ships the order within 7 days and capture the transaction amounts from your EBS account. If your business model requires capture of the amount before you actually provide the service/product and subject to your customer agreeable for the same, only then you may do so. In case the transaction is not captured within 7 days, the transaction automatically be cancelled from the payment gateway system on the 8th day and the credit card limit of Rs. 25,000/- is restored to your customer's Credit Card.  As this system ensues that the amount cannot be blocked from customer's card forever it also facilitates Merchants to cancel a transaction if it cannot be fulfilled for some reason or capture a partial amount within 7 days from receipt of the order.  Also cancellation charges of 6% on the cancelled amounts are not payable for such cancellations.   However, when a customer has selected net banking option for paying a transaction amount, the customer’s account will be instantly debited for every successful transaction.
+
+The EBS Payment Gateway system requires that you view details of orders placed by your customers and capture the transaction amount within 7 days in order to credit the said amount to the merchant’s account.
+
+The following steps can be taken 'To Capture transactions as enlisted below:
+STEP 1: Click on the 'Authorized' (Payments).
+
+STEP 2: To see the details of the transactions click on the 'Payment ID Number’ 
+
+STEP 3: Click on the Capture button for the transaction you want to capture.  You may change amount to lower than the authorized amount if required for in case a partial amount is required to be captured
+
+STEP 4: For each transaction captured will be reflected in the Processing list.
+
+STEP 5: All successfully captured transactions
+
+Please note that it is recommend that the merchant accesses this Module regularly (at least 4 times a day) to capture orders as transactions are kept pending for only 7 days from authorization of the transaction. After of the 7th day (i.e. on the 8th day) the order is automatically cancelled by the system.
+
+Note: When an transaction paid through credit card is cancelled within 7 day period of capture then transaction charges will not be applied to that order. However in case of transactions paid using the net banking option the TDR will still be applicable as the cancellation of that order amounts to a refund.

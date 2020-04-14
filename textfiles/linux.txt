@@ -1,0 +1,71 @@
+git clone https://sheetal_singh@bitbucket.org/grindr/grindr-platform-qa.git
+
+Putty commands:-
+
+
+echo $   : it will show all env path set in ubuntu system
+/etc/init.d/   : running services
+
+
+#DNS testing Facebook ip maps to google
+#173.252.120.68  www.google.com
+
+
+cd     : to move inside eg cd /var/www/html/
+cd ..  : to come back just one directory
+cd     :to move back root directory
+pwd    : to see present directory path
+
+ls    :to list all files
+ls -l  :list all files with all details like date,type,etc
+ls -a  : show all files including hidden files
+
+
+zip -r abc.zip var/    : compress var folder and save it into abc.zip
+zip abc.zip xyz.html    :compress the xyz file into abc
+
+chmod 755 file.html     :changes the file.html file permissions, same for a folder.
+
+chmod -r 755 myfolder     :changes permissions for that folder and all folders and files inside it recursively.
+
+Here are the chmod octal numeric values
+
+700: only owner can read
+755: everyone can read but not write
+775: only group can read and write
+770: no-one but group can read
+666: everyone can read and write
+777: everyone can read,write,execute
+
+
+chown user:myself file.html    :changes the ownership of file.html to the user called 'myself'.
+
+
+#To check md5 checksome if download is correct
+go to download folder in terminal
+md5sum <downloaded pkg>
+o/p will be :  7fc733fc97d4237efba03b4cdbec18f6  <download pkg>
+match this checksome with given checksome 
+
+
+#To free any port
+pip install freeport
+freeport 8080
+
+
+#Linux Commands
+
+1. alias : we can create some shortcuts for big commands for our ease.
+alias p="pwd"
+now if we type 'p' and hit enter it will work as 'pwd' i.e. present working directory
+
+2. apt-get : Apt-get is a tool to automatically update a Debian machine and get and install Debian packages/programs.
+3. awk,nawk,gawk :  A programming-language tool used to manipulate text
+4. cat
+cat abc.txt :  show the content of abc.txt on screen, vim abc.txt will also show content but we can go into edit mode
+cat a.txt b.txt > c.txt  : content of a and b will be concatenate and saved into c.txt
+cat e.txt > c.txt : append e content into c.txt
+5. cd
+cd /home/xebia/workspace  : move to workspace dir
+cd ..  :  move to xebia dir
+cd ~   :  move to home dir from whereever we are  (~ : tilde)

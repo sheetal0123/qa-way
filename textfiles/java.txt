@@ -1,0 +1,187 @@
+
+
+#Java Memory Management
+OutofMemory exception comes because of any of below 6 memory locations
+Types of Java JVM Run-time Memory Areas
+A. Managed per-thread – memory allocated to single thread
+A.1: Program Counter (PC) Register  | It points to code where thread is currently pointing
+A.2: Java Virtual Machine Stacks | JVM stacks are used to store Java virtual machine frames i.e. when methods are called
+A.3: Native Method Stacks | JVM that supports native methods will have native method stacks. It is used for native methods, and created per threa
+
+B. Shared with all threads - memory shared by all thread
+B.1: Heap Memory  | Heap data area is used to store objects of classes and arrays. GC work on this memory to reclaim unused memory from objects
+B.2: Method Area | Part of Heap Memory, It includes the method data, method and constructor code, run-time constant pool
+B.3: Run-time Constant Pool | Part of Memory Area ,  created by JVM when a class or interface is created
+
+
+#Java Class Loader:
+ClassNotFound exception comes because of this
+Java ClassLoader loads a java class file into java virtual machine.
+
+Types:
+Bootstrap Class Loader | It loads java’s core classes like java.lang, java.util
+Extensions Class Loader |  loads classes from ext folder i.e. JAVA_HOME/jre/lib/ext. Location contains some more non core classes
+System Class Loader | It loads classes from java classpath
+
+
+# HashMap Internal Working
+nice video: https://www.youtube.com/watch?v=c3RVW3KGIIE
+
+
+********************************************************************************************
+#JVM architecture
+https://www.youtube.com/watch?v=ZBJ0u9MaKtM
+
+A. Class Loader : It reads and load various .class file into JVM
+B. Runtime data areas i.e. Memory
+C. Execution Engine : It executes the bytecode present in .class file
+
+
+JVM has 5 memory area:
+1. Method area : class data like default values of int boolean
+metaspace introduced in java 8 earlier we have to increase space by setting param. now metaspace take as much as OS allowed
+2. Heap area: For objects
+
+#Following three memory are present per thread
+3. PC Register : For threads, prog counter , what operation to perform next
+4. Java Stack : For methods, method details loads here
+5. Native method stack : Check what native libraries to use
+
+#Execution Engine
+1. Interpreter : Take bytecode and and execute native operations
+2. JIT : execute repeated task no interpretor require , speed up the process
+3. Hotspot : Do some analysis and help JIT
+4. GC: Clean up objects
+
+
+********************************************************************************************
+
+# Cyclomatic Complexity:
+https://www.youtube.com/watch?v=xsvCmEnXXgM
+
+CC = Predicate + 1     | predicate: no. of decision block  | most simple formula
+CC = No. of unique path
+CC = No. of region    | see video to under stand region
+CC = Edges - Node + 2
+
+
+
+#Time Complexity
+https://www.youtube.com/watch?v=V42FBiohc6c
+
+Time ~ n  |   O(n)
+Time ~ sqrt(n)   | O(sqrt n)
+
+
+
+#Big O
+https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/
+
+O(1)  : code will execute once irrespective of input data
+O(N)  : time to execute code will linearly increase with increase in data    t ~ n   | t:time, n: no. of data
+O(N2) : time is proportional to square of data |  e.g. two for loop in each other for{  for {}  }
+O(N3) : three for loop ... and soon
+O(2N) : algo who growth doubles with every input, here we get exponential graph
+
+
+
+Logarithms
+
+Binary Search:
+Used to search value in a sorted data. Pick middle data from list and compare with i/p data and keep performing same steps till we get i/p data
+
+Algo and data structures - high level
+https://www.youtube.com/watch?v=aGjL7YXI31Q&list=PLEbnTDJUr_IeHYw_sfBOJ6gk5pie0yP-0
+
+
+#Data Structures:
+http://www.studytonight.com/data-structures/introduction-to-data-structures
+
+#Sorting:
+https://www.youtube.com/watch?v=pkkFqlG0Hds&index=1&list=PL2_aWCzGMAwKedT2KfDMB9YA5DgASZb3U
+
+Points to be remember while sorting
+1. Time Complexity  - time taken as data grows
+2. Space/Memory Complexity - memory taken as data grows
+3. Stability - not to unnecessary sort equal elements
+4. Internal or External Sort - internal: If data is in RAM, external: if data is in some tapes/hard disk etc
+5. Recursive or Non Recursive
+
+1. Selection Sort(Non in place):
+A = [2,7,4,1,5,3]
+B = [0,0,0,0,0,0]
+step 1: pick minimum from A (add random large no in empty space like 2^31-1) and put in B
+...keep doing step 1
+step 2: later after sorting copy B into A
+
+As data grow , memory req will be grow
+Not a "In place" sorting algo, in "In Place" constant amount of memory required
+
+
+Selection Sort(In Place)
+A = [2,7,4,1,5,3]
+
+Here we dont req second empty array
+Step 1: pick mimimum no. and swap with A[0]
+Step 2: pick 2 and place at A[1]
+so on
+
+This is 'in place' as we need fixed memory for data
+
+
+Selection sort is an slow algo
+T(n) = O(n2)
+
+
+2. Bubble Sort
+A = [2,7,4,1,5,3]
+
+Compare  A[0] with A[1]  :  If A[0] is large, both value will be swapped
+next compare A[1] with A[2]
+so on
+So After one loop 7 will be popup and get saved at last location
+
+Its a slow sort
+T(n) = O(n2)
+
+
+3. Insertion Sort
+A = | [2,7,4,1,5,3]
+Here we assume right side of pipe is unsorted and other is sorted
+A = [2,| 7,4,1,5,3]
+Now we pick 7 and compare with 2
+Now we pick 4 and compare with 7 and lower will be inserted into left side
+A = [2,4,7|1,5,3]
+
+
+read: http://www.studytonight.com/data-structures/introduction-to-data-structures
+T(n) = O(n)
+
+
+4. Merge Sort
+T(n) = O(n log n) | faster
+
+
+
+
+*****************************************************************************************
+#Type of Inner classes
+
+Member class/ Non Static
+Static class
+Anonymous Class
+
+
+*****************************************************************************************
+
+Spring short desc
+https://www.youtube.com/watch?v=Jjp_EYEn4bc
+
+
+SOLID design principles
+
+static sync vs sync on method vs sync block https://www.youtube.com/watch?v=yj-BWXGruXA
+
+
+
+

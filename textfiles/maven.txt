@@ -1,0 +1,299 @@
+#Basics:
+1. Maven has 3 life cycles: Default, Clean and Site
+2. Each life cycles has multiple phases
+	Default: validate, compile, test, package, integration-test, verify, install, deploy
+	Clean: pre-clean, clean , post-clean
+	Site: pre-site, site, post-site, site-deploy
+	
+default: this has 23 phases	altogeteher. It helps in project deployement.
+clean: To clean the previous build artifacts. Project Cleaning.
+site:  This phase generates documentation under target/site . project's Site Documentations.
+
+#Default Life Cycle phases:
+	validate: simply validate the project
+ 	compile: compile the source code of the project.
+	test: run tests using a suitable unit testing framework.
+	package: take the compiled code and package it in its distributable format like JAR.
+	integration-test: deploy the package into an environment where integration tests can be run.
+	verify: run any checks to verify the package is valid and meets quality criteria.
+	install: install the package into the local repository
+	deploy:  copies the final package to the remote repository generally in production env
+
+	
+3. Each phase tied up with some default goals.
+	whenever phase get run respective attached plugin:goal will run automatically
+	if same goal attached to more phases then goal will run every time the phases runs
+	e.g.
+	compile compile:compile
+	package jar:jar
+	test surefire:test
+	
+4. Goals <plugin_name>:<goal_name>
+	plugin_name is the plugin which provides the particular goal tasks/functions
+5. Goals and Phases can be run together
+	mvn clean dependency:copy-dependencies package  |  it will clean the project, copy dependencies and package the project
+
+6. Project can be packaged using <packaging>jar</packaging> keword in pom.xml	
+	values: ear, jar, war, pom .  jar is default if not mentioned
+
+7. Plugins
+    one plugin can have multiple goals
+	using plugins we can add some goals/tasks which we want in our projects
+	original goal run first and then extra goals defined in pom.xml
+	Further goal execution order can be decided by <execution> keyword 
+	
+
+
+
+
+#Maven
+1. Build tool like Ant
+2. Project management tool - reporting, dependency
+
+mvn compile | it will compile the code and download all dependencies
+mvn package | it will run all junit test cases if any inside src/test/java and create a project jar inside target folder
+
+To run jar and code
+java -cp target/jarname.jar com.pro.Abc.java
+
+
+#Central Maven has two things:
+1. Archtype Info (Architecture Type) - Details about diff type of project and there folder structures. e.g. spring, j2ee, simple, web application etc
+2. Dependency Info - List of all jars in its repo + which jar depend on what jar.
+
+#Local Maven:
+Maven has a local repo on local machine. Before downloading any dependencies maven look in local repo.
+
+artifact id - name of output of project like war, jar file. If web app archtype then generated jar name will be same as artifact id
+group id  - to group all multiple artifact ids. In big project we have multiple artifact id.
+package - name of package where src code saved, all java classes assign to this package
+
+#Maven Coordinates
+Maven uses combination of foll 3 tag to identify any archtype in its repo:
+<groupId>, <artifactId>, <version>
+groupid is at highest level can have mult artifactId
+
+#scope : when to use above maven cordinates or dependencies
+default scope is <scope>compile</scope>
+test: normally used in junit dependencies
+provided:
+
+#Maven main and test folder
+src/main : maven assume all application code to be present here and this part get added when we package a project in jar, war etc
+src/test : maven assume all junit test code is present here and this part does not included when we package a project. But whenever we
+			package code all test run automatically
+
+#Maven Build Lifecycle
+#Phase
+Validate - check all thing in order, pom location etc
+Compile - compile all .java in src/main and place all .class file in target/classes folder
+Test - run all test cases in src/test
+package - package output a jar, war file etc. Place jar into target folder
+install - it install package into local maven repo not inside tomcat or on servers etc
+[Any other project can now pull this jar from maven local repo]
+[local repo:  home > sheetal > .m2 > repo > projectname > 1.0 snapshot > jarname.jar ]
+deploy - it publish our package on central maven repo, so that other people outside company can use
+[does not deploy on to tomcat or server etc]
+
+Note: running any phase automatically runs all previous phases, if passed only then run current phase
+
+mvn clean :  delete target folder and all data .classed files inside it
+
+Binaries?
+Surefire plugin?			
+			
+			
+#Plugins
+maven-compiler-plugin			
+Java compiler is a plugin in Maven. This plugin is default for a java projects whether specified in pom or not
+mvn compile : when we run this command, maven called compiler plugin internally and this plugin compile the java files
+
+
+When we create a web application type archtype maven project then <build> added into pom automatically
+<source> : specify which jvm require to run code. Java 1.5 is default no need to specify configuration tag
+
+<dependencies> are used by the code for its working
+<build> is used by maven for building project
+
+#structure
+<build>
+	<plugins>
+		<plugin>
+			<groupId></groupId>
+			<artifactId></artifactId>
+			<version></version>
+			<congiguration>
+				<source>1.5</source>
+				<target>1.5</target>
+			</congiguration>
+		</plugin>
+	</plugins>
+</build>
+
+
+#
+mvn plugin-name:purpose
+1. mvn jetty:run  |  it will download jetty(container) and run it
+2. mvn eclipse:eclipse  |  for this we dont require any setting in pom.mxl. Maven check for eclipse in central repo and download required plugins.
+.classpath and .project two file will be added in project root directory. Now we can open maven project in Eclipse.
+
+
+#For reporting
+We have reporting plugin for reports just like we have <build> tag for building project
+<reporting>
+	<plugins>
+		<plugin>
+			<reportSets>
+				<reportSet>
+					<configuration></configuration>
+				</reportSet>
+			</reportSets>
+		</plugin>
+	</plugins>
+</reporting>
+
+
+#Maven surefire plugin
+maven-surefire-plugin is designed for running unit tests and if any of the tests fail then it will fail the build immediately.
+This plugin has only one goal surefire:test
+
+It generates reports in two different file formats:
+Plain text files (*.txt)
+XML files (*.xml)
+By default, these files are generated at ${basedir}/target/surefire-reports.
+
+<project>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.19</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>  
+</project>
+ 
+Surefire plugin usage with TestNG 
+http://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html 
+
+
+
+******************************************************************************************************
+******************************************************************************************************
+
+
+#Fork vs Parallel
+http://maven.apache.org/surefire/maven-surefire-plugin/examples/fork-options-and-parallel-execution.html
+Basically, there are two ways in maven-surefire-plugin to achieve parallel test execution.
+1. Parallel
+2. Fork
+
+Parallel:
+The concurrency happens within the same JVM process. That is efficient in terms of memory and execution time
+But you may be more vulnerable towards race conditions or other unexpected and hard to reproduce behavior.
+
+
+#Profile	
+mvn -P abc
+Multiple profile can be created inside pom.xml and while running maven we can chose which profile to run.
+profile tag may contains plugins or any other settings
+profile can be set default run by using activated
+
+
+#Settings.xml
+https://www.benchresources.net/apache-maven-settings-xml-explanation/
+
+@imp tags:
+localRepository
+interactiveMode
+offline
+pluginGroups
+proxies
+servers
+mirrors
+profiles
+activeProfiles
+
+
+
+
+******************************************************************************************************
+******************************************************************************************************
+
+# Adding jar in Nexus using pom.xml
+https://www.baeldung.com/maven-deploy-nexus
+
+1. Install Nexus as service, nexus should be running al time
+2. Login as admin in nexus site http://localhost:8081/nexus/
+3. Update conf.xml with nexus user/password
+	<server>
+      <id>nexus-snapshots</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
+4. Add nexus path in distributionManagement tag
+	for <version>0.0.1-SNAPSHOT</version> it will go in nexus snapshot. snapshot need to remove to go into release 
+5. Add maven-deploy-plugin inside pom.xml 
+6. Pom structure child project
+mvn clean package  |   with maven-assembly-plugin plugins   will create a jar in target
+mvn clean deploy -Dmaven.test.skip=true  |    create jar and upload it into nexus repo automatically
+<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+
+			<!-- 3.0.0-M1 -->
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.1</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+</build>
+<distributionManagement>
+		<!-- For snapshot jar only -->
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+
+		<!-- 
+		<repository> 
+			<id>releases</id> 
+			<url>http://192.168.0.1:8081/nexus/content/repositories/releases/</url> 
+		</repository> 
+		-->
+</distributionManagement>		
+
+
+7. Runner in Parent project
+@CucumberOptions(
+		features = {"classpath:src/main/resources/features","src/test/resources/featurefiles"},
+		glue = {"classpath:step_defs","step_defination"}, 
+
+
+******************************************************************************************************
+******************************************************************************************************
+
+
+
+
+

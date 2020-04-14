@@ -1,0 +1,66 @@
+#JS
+
+https://github.com/sheetal0123/JSWay
+
+
+#XHTML
+XHTML stands for EXtensible HyperText Markup Language.
+XHTML was developed by World Wide Web Consortium (W3C) to help web developers make the transition from HTML to XML
+XHTML is almost identical to HTML 4.01 with only few differences
+XHTML take advantages of HTML + XML
+
+#Syntax
+1. Doctype declaration:
+there are 3 types of Doc type:
+Strict - If we use more CSS tag + less XHTML tag
+Transitional - less CSS + More XHTML tags  | (mostly used)
+Frameset - HTML frames used in browser to partition browser in multiple frame
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+2. case sensitive and tags should be in lower case
+invalid: <A Href="/xhtml/xhtml_tutorial.html">XHTML Tutorial</A>
+valid: <a href="/xhtml/xhtml_tutorial.html">XHTML Tutorial</a>
+
+3. Closing Tag: Each and every XHTML tag should have an equivalent closing tag
+invalid:  <img src="/images/xhtml.gif" >
+valid: <img src="/images/xhtml.gif" />
+valid: <p>This paragraph is not written according to XHTML syntax.</p>
+
+4. All attribute value should be inside double quote
+invalid: <img src="/images/xhtml.gif" width=250 height=50 />
+valid: <img src="/images/xhtml.gif" width="250" height="50" />
+
+5. The id attribute replaces the name attribute
+invalid: <img src="/images/xhtml.gif" name="xhtml_logo" />
+valid: <img src="/images/xhtml.gif" id="xhtml_logo" />
+
+6. Language Attribute
+The language attribute of the script tag is deprecated.
+invalid:
+<script language="JavaScript" type="text/JavaScript">
+   document.write("Hello XHTML!");
+</script>
+
+valid:
+<script type="text/JavaScript">
+   document.write("Hello XHTML!");
+</script>
+
+7. Nesting should be proper
+
+*********************************************************************************************************
+
+#Java Script:
+https://www.youtube.com/watch?v=yQaAGmHNn9s&list=PL46F0A159EC02DF82
+-Used to make broser more interactive
+
+Why JS:
+Every browser understand foll 3 things:
+1. HTML to define the content of web pages
+2. CSS to specify the layout of web pages
+3. JavaScript to program the behavior of web pages
+
+Add JS code inside tag for older browser who dont understand js code, old browser wil ignore this code  <!--     js code here   //-->

@@ -1,0 +1,231 @@
+#Integrat WebDriver With Jenkin
+
+sheetalrepo git token for jenkin  | 912260dd7116443154d14bf1f976f474cb38c44a
+
+
+#Jenkin setup as a Service  | sheetalsingh / xebia@123
+mac: https://medium.com/@ved.pandey/setting-up-jenkins-on-mac-osx-50d8fe16df9f
+
+To start stop Jenkin Server
+sudo launchctl load /Library/LaunchDaemons/org.jenkins-ci.plist
+sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+freeport 8080
+
+http://localhost:8080/exit
+http://localhost:8080/restart
+http://localhost:8080/reload
+
+
+
+#Jenkin setup as a War file  | ADMIN: sheetal/ xebia@123
+download jenkin war file  | https://updates.jenkins-ci.org/download/war/
+java -jar jenkins.war     | to start jenkin
+
+run http://localhost:8080
+java -jar jenkins.war --version
+
+This may also be found at: /Users/sheetalsingh/.jenkins/secrets/initialAdminPassword  (d3fac4c5b9be435784c24fbeebfc3e46)
+
+
+
+#imp links:
+http://www.guru99.com/maven-jenkins-with-selenium-complete-tutorial.html
+http://pkg.jenkins-ci.org/debian/
+
+git path: https://github.com/sheetal0123/WebdriverJenkin2.git
+pom path: /home/xebia/workspace/WebdriverJenkin2/pom.xml
+restart jenkin: http://localhost:8080/safeRestart
+
+
+#Steps for Ubuntu | Webdriver + TestNG + Maven + Jenkin
+1. create a mvn project and create webdriver test
+2. run test from different location just to confirm test is fine
+eclipse> run as > mvn test
+run as testng.xml
+run from cmd line : mvn test
+3. install sudo apt-get install xvfb   | note down installation directory
+which Xvfb  =  /usr/bin/Xvfb
+4. add project on git  | https://github.com/sheetal0123/WebdriverJenkin2
+5. download jenkin  | http://pkg.jenkins-ci.org/debian/
+6. manage jenkin > manage plugins > available plugins:  add plugins in jenkin : maven, xvfb ,email notification
+7. create a job in jenkin | New Item > Maven project(good for reporting) or Freestyle project(reporting is not good)
+8. configure jenkin specify jdk, git path, pom path will be pom.xml etc
+
+
+#Jobs:
+WebdriverJenkin2 : working + maven job + xvfb   - preferred
+WebdriverJenkin3 : working + free style job
+
+#What can be done in Jenkin:
+1. email notification on build status -- smtp config req
+2. timer can set eg. 15min , every 15min jenkin wil poll git and see if there is any new commit, if yes job will run on new code
+
+
+******************************************************************************
+# we can add project inside jenkin folder so that jenkin can find pom
+not recommended, good solution will be to read project directly from git
+/var/lib/jenkins/workspace/WebdriverJenkin# cp -r /home/xebia/workspace/WebdriverJenkin/. .
+chown -R jenkins:jenkins .
+
+******************************************************************************
+#Jenkin setup for Windows machine
+Note: Maven + webdriver + cucumber project
+1. Download Git | https://git-scm.com/download/win   |  path: C:\Program Files\Git\bin\git.exe
+2. Download JDK
+3. Download Maven
+4. Checkout code into GitHub
+5. Download Jenkin http://jenkins-ci.org/
+http://localhost:8080/
+
+C:\Program Files (x86)\Jenkins
+install using .msi file | jenkin admin password path: C:\Program Files (x86)\Jenkins\secrets\initialAdminPassword  e.g. e986323d378745c09a7441eb17e2ee20
+admin / above password
+
+
+6. Jenkin: Manage jenkin > manage plugins > available plugins:  add plugins in jenkin
+cucumber-reports
+GitHub plugin
+Maven Integration plugin   - already installed
+Xvfb plugin
+
+7. Jenkin: Manage Jenkins > Configure System
+Note: Mention local system path for maven and jdk else jenking job will take too much time to load and install them
+Git :  path to git executable=C:\Program Files\Git\bin\git.exe  |  tick 'install automatically' checkbox
+Maven: MAVEN_HOME=C:\Users\sheetalsingh\Downloads\apache-maven-3.3.3-bin\apache-maven-3.3.3  | dont tick 'install automatically'
+
+8. Jenkin > New Item > create Maven project
+9. Jenkin > select job > Configure
+Source code mgmt > Git > url = https://github.com/sheetal0123/CucumberJenkin.git | no need to give user,pass as it is an open repo
+Build env > tick 'Start Xvfb before the build, and shut it down after.'
+Build > root pom=pom.xml  |  Goals = clean test -Ddriver=firefox -Dcucumber.options="--tags @yahoo"
+10. run the job and it will generate cucumber pie chart report
+
+
+http://www.seleniumframework.com/continuous-test-automation/implement-continuous-test-automation-pattern/
+http://www.seleniumframework.com/continuous-test-automation/cucumber-jenkins-plugins/
+http://www.guru99.com/maven-jenkins-with-selenium-complete-tutorial.html
+
+
+
+mvn clean test -Ddriver=firefox -Dcucumber.options="--tags @yahoo"
+
+
+mvn clean test -Dcucumber.options="--tags @yahoo"
+mvn clean test
+
+
+
+#admin part
+Jenkins > Configure Global Security
+http://localhost:8080/cli/
+command to delete job using cli jar  |   java -jar jenkins-cli.jar -s http://localhost:8080/ -auth admin:e986323d378745c09a7441eb17e2ee20  delete-job test123
+
+
+proxy issue: 
+Manage Jenkins >> Configure Global Security >> Plugin Manager >> Tick the check-box for "Use browser for metadata download" option
+http://www.mastertheboss.com/cool-stuff/jenkins/solving-jenkins-sslhandshakeexception
+
+******************************************************************************
+
+jenkin mac path
+
+/Users/Shared/Jenkins/Home/workspace/cucumber/
+sudo su - jenkins    | to switch to jenkin user
+
+******************************************************************************
+
+CICD Process:
+
+SQL shd be part of code and shd checked into src code
+CICD shd test SQL queries and its rollback automatically
+
+few DB for CICD:
+https://flywaydb.org/getstarted/
+http://www.datical.com/solution/
+http://www.liquibase.org/tutorial-using-oracle
+
+
+go to downloads
+./ngrok http 8080
+
+
+
+#Jenkin Git Push Setup (on every commit jenkin job should trigger)
+0. add repo into git
+1. go to https://github.com/settings/tokens  > click generate token
+2. add some token name "mygittoken" and save generated token
+
+3. download ngrock exe and double click on it | https://ngrok.com/download
+4. open new tab > go to download folder where exe present
+./ngrok http 8080             |  it will generate a public url
+https://cda01df8.ngrok.io     | public url, git will communicate to this URL
+note: git req a public url to communicate else on any commit git will not be able to locate jenkin url
+
+5. Go to Jenkin Global Configuration | http://localhost:8080/configure
+Git hub API URL: https://api.github.com
+Credential: mygittoken
+Jenkin Location: https://cda01df8.ngrok.io/
+
+Global variables:
+Name: M2_HOME
+/Users/sheetalsingh/Downloads/apache-maven-3.3.9/bin
+
+note: ngrok will give new url every time we restart it, hence when we add new Jenkin Location > Jenkin Url
+click "re-register hooks for all jobs" button inside GitHub section
+
+6. go to Jenkin > Global Tool Config http://localhost:8080/configureTools/
+JDK : Install automatically
+Maven: Install automatically
+
+7. Job config:
+- Src code mgmt: specify project .git path
+- Build trigger: check "Build whenever a SNAPSHOT dependency is built" and "GitHub hook trigger for GITScm polling"
+- Build   pom: pom.xml  | goals: clean test
+
+8. Commit something into git and job shd auto start
+
+
+
+# Jenkin Multi-Pipeline setup
+It automatically create job for every branch in repor and job will get auto delete as soon as that particular branch get delete
+So for every branch we have a job. We need to create only one job for master branch
+It keeps a watch on repo and its different branch, when ever a commit happen, corresponding branch job will get triggered
+
+1. Note maven name given under http://localhost:8080/configureTools/
+Maven > Name filed e.g. maven3
+2. Create new "multibranch pipeline"
+3. give
+git path : https://github.com/sheetalrepo/tryout.git    (repo has two branch)
+build config : Jenkinfile
+scan multibranch pipeline trigger : 1 minute
+
+note: repo should have multibranch
+every branch should have "Jenkinfile" in it at root location
+Inside jenkinfile mention maven as     def mvnHome = tool 'maven3'   | maven3 shd match with what given in jenkin global config
+
+plugins required: jacoco plugin, blue ocean, html publisher,
+
+JenkinFile > maven3 name shd be given
+
+html publisher
+http://localhost:4516/#/
+
+
+
+
+#Running Jenkin on different nodes (physical machines)
+If we want to run suites on different phisical machine then master node can be setup
+
+#steps:
+1. install jenkin on main machine i.e. master
+2. open jenkin link in node computer
+3. create a node under jenkin > node
+4. Now we need to up node, there are two approach via jnlp or running agent.jar
+5. In node jenkin page "Launch" button is present which connect node to master via JNLP
+   In node jenkin page, complete jar path is given simply copy and paste in cmd where agent.jar is present
+6. Once done node will be seen as up and running
+7. Now from any where master, node or any other machine we can execute job on particular node
+8. While creating a new job, node name need to be given 
+	New Job > General tab > give node name inside "Restrict where this project can be run" text box
+
+

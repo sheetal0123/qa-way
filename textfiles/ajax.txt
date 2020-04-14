@@ -1,0 +1,62 @@
+AJAX
+Asynchronous JavaScript and XML
+
+-Request data from a server - after the page has loaded 
+-Receive data from a server - after the page has loaded
+-Update a web page without reloading the page
+-Send data to a server - in the background
+
+-AJAX is a technique for creating fast and dynamic web pages.
+-AJAX allows web pages to be updated asynchronously by exchanging small amounts of data with the server behind the scenes. This means that it is possible to update parts of a web page, without reloading the whole page.
+-Classic web pages, (which do not use AJAX) must reload the entire page if the content should change.
+-Examples of applications using AJAX: Google Maps, Gmail, YouTube, and Facebook.
+
+Steps:
+1. Normal page load complete
+2. Some event occurs inside page like button click
+3. XMLHttpRequest object created and sent to Web Server
+4. Web Server process request and sent back response to Client
+5. Response processed by JavaScript and particular page part get updated
+
+Note:
+AJAX was made popular in 2005 by Google, with Google Suggest.
+Google Suggest is using AJAX to create a very dynamic web interface: When you start typing in Google's search box, a JavaScript sends the letters off to a server and the server returns a list of suggestions.
+
+#Code
+All modern browsers(IE7+ etc) have a built-in XMLHttpRequest support
+variable = new XMLHttpRequest();               - create a object
+xhttp.open("GET", "ajax_info.txt", true);       - create a request, true=asynchronous or false=synchronous
+xhttp.send();                                  - send to server
+
+GET is simpler and faster than POST, and can be used in most cases.
+However, always use POST requests when:
+-To update a file or database on the server
+-Sending a large amount of data to the server (POST has no size limitations).
+-Sending user input, sensitive data (POST is more robust and secure than GET)
+
+
+<!DOCTYPE html>
+<html>
+<body>
+<div id="demo"><h2>Let AJAX change this text</h2></div>
+<button type="button" onclick="loadDoc()">Change Content</button>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("demo").innerHTML = xhttp.responseText;
+    }
+  }
+  xhttp.open("GET", "ajax_info.txt", true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>
+
+
+
+

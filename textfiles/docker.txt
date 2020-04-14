@@ -1,0 +1,207 @@
+
+
+
+###imp links###
+https://labs.play-with-docker.com/
+
+https://github.com/wsargent/docker-cheat-sheet
+https://docs.docker.com/engine/reference/builder/
+https://hub.docker.com/search?q=&type=image                for all the images
+
+https://www.youtube.com/watch?v=wi-MGFhrad0&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK  nice videos series  | todo
+https://testdetective.com/selenium-grid-with-docker/
+
+
+
+
+
+### Basic docker commands ###
+Note: put winpty infront of docker in all command if not working properly
+docker --version
+docker version
+docker info				| all details abt docker running on system
+docker --help           
+docker <name> --help    | help related to tag like images
+winpty docker login			| to login into docker   |   sheetal0123  |  K...@2_
+docker search abc   	| search all images with name abc
+docker image ls 		| list of all downloaded images in our machine
+docker ps -a  			| list down all containers
+
+docker pull <imagename> 									|  to pull latest image
+docker history <imagename> 									|  to get history info of image
+docker run --name <ContainerName> -it <imagename>			|  to create a container and pull image and start container
+docker run --name MyUbuntu -it ubuntu						|  Container "MyUbuntu" will get create and ubuntu will be installed in it	
+winpty docker run --name MyUbuntu -it ubuntu				|  if using window containers or window m/c
+
+docker start <ContainerName>								|  container will start
+docker stop <ContainerName>									|  container will stop |   unable to reuse stopped container ??? need to chk
+docker pause <ContainerName>								|  container will be paused and no action will be done on it
+docker unpause <ContainerName>								|  container will resume again
+docker top <ContainerName>									|  to get process id
+docker stats <ContainerName>								|  to get cpu/memory usage etc
+docker attach <ContainerName>								|  to go open container in same cmd
+exit														|  to exit and come out of container, container will be stopped on exit
+docker rm <ContainerName>									|  to remove container from list
+docker kill <ContainerName>									|  to kill container 
+	
+
+	
+### Jenkins Setup ###
+docker run --name <ContainerName> -it <imagename>						|  create a container and add image in it
+
+
+#style 1
+docker pull jenkins/jenkins
+docker run --name MyJenkins -p 8080:8080 -p 50000:50000 -v C:\Users\e075583\Documents\myworkspace\dockers_jenkin_home:/var/jenkins_home   jenkins/jenkins						|   firewall issue in office with this command
+
+once abv command finished we will get jenkin admin pwd e.g.
+admin pwd generated: e572fe592168467794e28aadca35822c    path: /var/jenkins_home/secrets/initialAdminPassword
+	
+#if firewall block folder access, run from powershell
+Set-NetConnectionProfile -interfacealias "vEthernet (DockerNAT)" -NetworkCategory Private
+
+
+# style 2
+docker pull jenkins/jenkins									|  https://hub.docker.com/_/jenkins
+docker run -p 8080:8080 -p 50000:50000 jenkins/jenkins		|  to start container and jenkin in it, here jenkin home is not set on localpc	
+.                                                              enter generated pwd in localhost:8080
+
+
+
+
+
+
+
+
+	
+	
+### Dockerfile ###
+We use this file to create all images and what commands to run on top of them 
+It has no extension and name has to be like that only
+..\qa way\devops\dockerpro\Dockerfile
+
+#to run this file
+docker build <path_to_docker_file>				|   
+docker build .									| use "build ." if we are in same folder where file is present 
+docker build -t myubuntuimgfromfile:1.0 .		| to tag our img so that it will be easy to identify img lateron. name shd be in smallcase.
+docker images 									| it will list all images in my repo including the one just created
+docker run <image_name>:<version>				| to run image e.g. docker run myubuntuimgfromfile:1.0
+
+
+
+### Docker Compose ###
+Used to manage multiple container
+docker-compose -v
+
+#steps:
+1. create a file 'docker-compose.yml' | ..\qa way\devops\dockerpro\Dockerfile
+2. add version and serives to be required. version has to be the latest from https://docs.docker.com/compose/compose-file/
+3. to verify if file is correct, run 
+	docker-compose config	
+4. run the compose file
+	docker-compose up -d			| -d is to run in detached mode
+	docker-compose down				| to down the complete services
+	docker-compose ps				| to chk status	
+	docker ps -a		   			| to chk status
+
+5. to scale up any component		| supose we need 4 DB rather 1
+docker-compose --help
+docker-compose down					| down service, chk file and scale up
+docker-compose config
+docker-compose up -d --scale mydatabase=4			|   'mydatabase' is service name, all images under it will be scaled up to 4
+docker-compose ps
+	
+	
+	
+### Docker Volume ###
+https://www.youtube.com/watch?v=VOK06Q4QqvE	
+	
+	
+### Docker Swarm ###
+To manage 100s of container(worker machines/slaves) using single manager machine(master node)
+https://www.youtube.com/watch?v=bU2NNFJ-UXA&list=PLhW3qG5bs-L99pQsZ74f-LC-tOEsBp2rK&index=15
+
+
+docker-machine -v
+
+install virtualbox in windows before running following command | any one command can be used
+docker-machine create --driver <name_of_driver> <name_of_machine>  	|  sample command
+docker-machine create --driver virtualbox manager1	| to create a machine using virtual box
+docker-machine create --driver hyperv manager2		| to create a machine using hyperv
+
+docker-machine env manager1							| details of manager1 like ip etc
+docker-machine ls									| details of manager1 like ip etc
+docker-machine create --driver virtualbox worker1	| one new machine will be created which will be treated as worker
+docker-machine create --driver virtualbox worker2	| another new machine will be created which will be treated as worker
+docker-machine ls
+
+
+docker-machine ssh manager1							| go inside manager1 , run in new tab
+docker-machine ssh worker1							| go inside worker1 , run in new tab
+docker-machine ssh worker2							| go inside worker2 , run in new tab
+	
+docker-machine ip manager1							| it will give ip of machine	
+
+docker swarm init --advertise-addr <ip_of_manager1>	| run this command from inside manager1 machine tab, now manager1 actually becomes 	.                                                     manager machine, rest machine will be default worker now.
+
+docker node ls										| worker list will be empty as of now -> run from manager m/c
+docker swarm join-token worker						| on mgr m/c . it will return a command, copy that and run on each worker to join mgr
+docker node ls										| now all master/node will be shown
+
+
+docker info											| mgr
+docker swarm										| mgr -> to get all command list
+
+docker service create --replicas 3 -p 80:80 --name myweb nginx		|  mgr 
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+### Docker with Selenium ### Xebia ###
+	
+docker run -d --name GridContainer selenium/hub  | to create a container and add image in it
+docker ps         | to check status
+docker ps -a -q   | to quit all running container
+
+
+
+#steps to setup grid
+docker run -d --name MyNewGridContainer -p 4444:4444 selenium/hub   | pull image "selenium/hub" and add into container "MyNewGridContainer"
+docker run -d -P --link MyNewGridContainer:hub selenium/node-firefox | pull firefox image and add into same container
+docker run -d -P --link MyNewGridContainer:hub selenium/node-chrome  | same as above
+
+#alternatively create a single .yml which contains all info and run that file i.e docker-compose.yml
+
+docker-compose up -d  | run below docker-compose.yml
+
+MyContainer:
+  image: selenium/hub
+  ports:
+    - 4444:4444
+
+firefoxnode:
+  image: selenium/node-firefox
+  ports:
+    - 5900
+  links:
+    - MyContainer:hub
+
+chromenode:
+  image: selenium/node-chrome
+  ports:
+    - 5900
+  links:
+    - MyContainer:hub

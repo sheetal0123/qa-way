@@ -1,0 +1,158 @@
+//https://www.timroes.de/2015/06/28/groovy-tutorial-for-java-developers-part3-collections/
+//https://groovy-playground.appspot.com/
+
+//Basic Groovy Commands
+println "Hello World"
+
+//data type can be changed on the fly
+def x=10
+println x.getClass()
+x="abc"
+println x.getClass()
+
+//Strings
+def y="Martin"
+def z="Luther"
+println "$y"
+println "Hello ${y[0]} $z"
+println "----------------------"
+def str=""" This is 
+a multi line
+string"""
+println "$str"
+println "----------------------"
+
+//If var is not null then it will always br true
+def var="a"
+if(var){
+    println "True" 
+}else{
+    println "False"
+}
+
+def patter = ~/a slash must be escaped \/ but backslash, like in a digit match \d does not/
+println "$patter"
+
+//String can also be defined inside double slash / ...str...   /
+// ~ used to for reg ex
+def pat = ~/Reg \/ Expression/
+println pat
+
+println "----------------------"
+
+//#closure
+
+def func={
+    println "Hello"
+}
+
+func() //accessing a closure i.e. function
+
+
+//parameterized closure
+def func2 = { int m, int n ->                                                
+    println "$m and $n"
+    return m*n
+}
+
+println func2(10,20)
+
+//
+
+def func3 = { anything ->
+    println anything
+}
+
+func3("abc")
+
+
+// default paramerter - 'it'
+// no param still we can pass param
+def func4 = {
+    println it
+}
+
+func4("groovy")
+
+
+// no param closure, we cannot pass param in this case ->
+
+def func5 = { ->
+    println "No pram closure"
+}
+
+func5()   
+
+
+println "----------------------"
+
+
+//Optional return, using implicit 'it' parameter
+def sqre ={
+    it * it
+}
+
+println sqre(4)
+
+
+def funcMango = { name ->
+  return {
+    def day = new Date().getDay()
+    if (day == 0 || day == 1) {
+      println "Nice Weekend, $name"
+    } else {
+      println "Hello, $name"
+    }
+  }
+}
+def greetWorld = funcMango("Mango")
+print "$greetWorld"
+
+println "----------------------"
+
+
+
+//Collections
+
+//List
+def ls=[10,20,30,40,50,51,53]
+println ls[0]   //10
+println ls[-1]  // 53, -ve start from back side
+
+if(30 in ls){
+    println "30 is present in list"
+}
+
+//iteration
+ls.each{
+    print it +", "    //10, 20, 30, 40, 50, 51, 53
+}
+
+println ""
+
+//filtering
+def even= ls.findAll {it % 2 == 0}
+println even  //[10, 20, 30, 40, 50] return a list
+
+def odd= ls.findAll {it % 2 == 1}
+println odd  //[51, 53] return a list
+
+
+//
+def squaredList = ls.collect { it * it }
+println squaredList  // [100, 400, 900, 1600, 2500, 2601, 2809]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

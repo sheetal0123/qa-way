@@ -1,0 +1,255 @@
+#Ubuntu Installations steps:
+
+#Hipchat setup
+copy and paste foll 5 step (copy 2nd step as it is):
+Refer: https://www.hipchat.com/downloads#linux-install
+sudo su
+echo "deb http://downloads.hipchat.com/linux/apt stable main" > \
+  /etc/apt/sources.list.d/atlassian-hipchat.list
+wget -O - https://www.hipchat.com/keys/hipchat-linux.key | apt-key add -
+apt-get update
+apt-get install hipchat 
+apt-get --fix-missing update   |  if error comes
+
+
+#Chrome Installation
+Refer: http://askubuntu.com/questions/510056/how-to-install-google-chrome-on-ubuntu
+download google-chrome-stable_current_amd64.deb file
+double click on downloaded .deb file
+click install open window
+
+
+#Sublime:
+Refer: http://ubuntuhandbook.org/index.php/2013/12/install-sublime-text-3-ubuntu-14-04-trusty/
+sudo add-apt-repository -y ppa:webupd8team/sublime-text-3
+sudo apt-get update; sudo apt-get install -y sublime-text-installer
+
+
+#Skype
+http://askubuntu.com/questions/488053/how-to-install-skype-4-3
+sudo apt-get remove skype skype-bin:i386 skype:i386
+sudo apt-get install sni-qt:i386
+rm -rf ~/.Skype
+sudo dpkg --add-architecture i386
+sudo apt-get update
+sudo apt-get install gdebi
+wget download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
+sudo gdebi skype-ubuntu-precise_4.3.0.37-1_i386.deb
+
+
+#WorkBench
+download mysql-workbench-community-6.3.4-1ubu1404-amd64.deb from http://dev.mysql.com/downloads/workbench/#downloads
+double click downloaded .deb pkg
+
+
+#To check md5 checksome if download is correct
+go to download folder in terminal
+md5sum <downloaded folder>
+o/p will be :  7fc733fc97d4237efba03b4cdbec18f6  <download folder>
+match this checksome with given checksome 
+
+
+#Eclipse
+http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/lunar
+
+7fc733fc97d4237efba03b4cdbec18f6 eclipse-jee-luna-R-linux-gtk-x86_64.tar.gz
+
+
+#JMeter
+http://jmeter.apache.org/download_jmeter.cgi
+Binaries > .zip file
+
+#vim
+sudo su
+apt-get install vim
+
+
+#Java
+https://www.digitalocean.com/community/tutorials/how-to-install-java-on-ubuntu-with-apt-get
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java7-installer                |  for Java 7
+sudo apt-get install oracle-java8-installer                |  for Java 8
+
+
+#To set JAVA_HOME path refer: http://askubuntu.com/questions/175514/how-to-set-java-home-for-java
+update-alternatives --config java          |  to find java installed path e.g. /lib/jvm/java-7-oracle/jre/bin/java
+gksudo gedit /etc/environment       | open env file
+add following two lines > save > exit
+	JAVA_HOME=/usr/lib/jvm/java-7-oracle
+	export JAVA_HOME
+. /etc/environment   | reload the system PATH 
+echo $JAVA_HOME         | o/p will be /usr/lib/jvm/java-7-oracle
+
+
+Also add following in bashrc file
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle
+
+#To set JAVA_HOME inside PATH variable i.e. $PATH shd show java_home path
+to set java_home  https://www.youtube.com/watch?v=bEaWqHIuc4w  : not done yet
+
+
+
+#Maven
+sudo apt-get install maven
+
+
+#VPN
+download vpnsetup.sh (taken from guy)
+run file e.g.   sh vpnsetup.sh
+
+#Git
+sudo apt-get install git
+
+
+#Tsung / SSHD
+apt-get install erlang gnuplot libtemplate-perl
+sudo wget http://tsung.erlang-projects.org/dist/tsung-1.5.1.tar.gz
+tar zxvf tsung-1.5.1.tar.gz
+cd tsung-1.5.1
+./configure && make && make install           | login as root if permission issue comes
+
+verify installation by using : tsung -v , it should show: Tsung version 1.5.1
+
+also install sshd server:
+
+sudo apt-get install openssh-client
+sudo apt-get install openssh-server
+
+//make copy of sshd file so that backup can be restore
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.original
+sudo chmod a-w /etc/ssh/sshd_config.original
+
+Note: It’s recommended to disable password authentication unless you have a specific reason not to.
+Go to /etc/ssh/sshd_config > set “PasswordAuthentication” as  no
+
+
+#Filezilla
+get from ubuntu software center
+
+
+#Virtual box setup 
+https://help.ubuntu.com/community/VirtualBox/Installation
+https://www.virtualbox.org/wiki/Linux_Downloads
+sudo sh -c "echo 'deb http://download.virtualbox.org/virtualbox/debian '$(lsb_release -cs)' contrib non-free' > /etc/apt/sources.list.d/virtualbox.list" && wget -q http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add - && sudo apt-get update && sudo apt-get install virtualbox-5.0
+
+
+
+
+
+#Appium
+
+Step 1: Install appium
+http://ubuntubegin.blogspot.in/2015/07/how-to-setup-appium-in-ubuntu.html
+
+sudo apt-get install build-essential curl git m4 ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+
+brew update
+brew install node
+brew link node
+
+npm install -g appium
+npm install wd
+
+appium     | to start appium
+
+
+If error comes:
+try:https://groups.google.com/forum/#!searchin/appium-discuss/linux$20installation/appium-discuss/sqf8qoX8FBE/259wuZC6TSEJ
+sudo apt-get update
+sudo apt-get install -y python-software-properties python g++ make
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update                 
+sudo apt-get install nodejs
+
+npm -v
+node --version	
+
+
+Step 2: Install Android SDK Manager  | it will install required packages for development
+http://www.seleniumtests.com/2015/05/appium-and-android-setup.html
+http://developer.android.com/sdk/index.html#Other
+
+1) download sdk file + unzip it and place in a directory | android-sdk_r24.3.4-linux.tgz
+2) /home/xebia/Documents/qa/appium/android-sdk-linux
+3) go to /home/xebia/Documents/qa/appium/android-sdk-linux/tools
+4) ./android &
+5) SDK Manager will open; download following pkgs:
+	Tools > Android SDK Tools + Android SDK Platform Tools + Android SDK Build Tools
+	Android 6.0(latest)  > SDK Platform + Android TV ARM EABI v7a System Image
+	Extras > Android Support Repository + Android Support Library
+6) Click install 7 packages and accept licence on next page
+
+
+Step 3: To Add Device:
+1) Maximize SDK Manager 
+2) Menu > Tools > Manage AVDs > Device Defination tab 
+   Select Google Nexus 5 device > Create AVD button
+3) Now added device will visible in AVD Manager > Android virtual devices tab
+4) Select device and click start
+Note: If device opens a black screen then again select device > edit > Emulation option > select Use GPU Host
+and start again, this will increase the speed also
+
+
+Step 4: Setup ANDROID HOME
+export ANDROID_HOME=/home/xebia/Documents/qa/appium/android-sdk-linux
+export PATH=$PATH:/home/xebia/Documents/qa/appium/android-sdk-linux/tools
+source ~/.bashrc
+
+Step 5: Install ADB Android Debug Bridge
+sudo apt-get install android-tools-adb
+
+adb devices  | to see attached devices
+
+
+*****************
+#Set path:
+go to ubuntu home folder
+cntr H    to show hidden files
+.bashrc  shd be visible here
+add following code at the end
+export PATH=$PATH:'/home/xebia/Documents/qa/appium/android-sdk-linux/platform-tools':'/home/xebia/Documents/qa/appium/android-sdk-linux/tools'
+export ANDROID_HOME="/home/xebia/Documents/qa/appium/android-sdk-linux"
+
+now open terminal and type
+adb  : it shd show all adb commands and version Android Debug Bridge version 1.0.31
+android  : shd open android sdk manager
+uiautomatorviewer : to open UI Automator tool which help to find id and xpath of mobile apps
+
+
+
+#Summary:
+appium
+
+/home/xebia/Documents/qa/appium/android-sdk-linux/tools
+./android &
+
+adb devices
+adb install /home/xebia/Documents/qa/appium/apkdir/Chrome.apk
+
+uiautomatorviewer
+
+
+
+#XVFB
+#Installing xvfb in linux server:
+1. Add firefox      
+sudo add-apt-repository ppa:mozillateam/firefox-stable
+sudo apt-get update
+sudo apt-get install firefox
+
+2. install xvfb	
+sudo apt-get install xvfb
+sudo Xvfb :10 -ac             |  xvfb screen will open at 10th screen 
+export DISPLAY=:10            |  created a global variable 'display' and assigned 10th screen to variable, now anyone can access global var
+firefox                       |  start firefox on this , not require just to check, code will open firefox from code itself
+sudo ps -ef | grep Xvfb       |  to verify that xvfb is runnning properly on 10th screen
+
+
+

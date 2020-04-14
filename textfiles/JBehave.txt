@@ -1,0 +1,172 @@
+JBehave
+
+Final project which sent to client:
+C:\Users\sheetalsingh\Documents\GitHub\JbehaveProject
+
+orig: imdbpro - abhinav credential are coming
+
+
+todo:
+Path to chrome driver is hard coded - mention in mail
+login > login_home  - done
+remove spring config from pom  - done
+spring from pom properties section - done
+
+
+flipkart project has been modified with name  --  imdbproject
+
+
+1. In case of two precondition
+Given 
+Given
+can be replaced with
+Given 
+And
+
+2.CandidateSteps -  method in step files
+
+3. Embeddable/Configuration concept ?
+ConfigurableEmbedder: allows the specification of the Configuration and CandidateSteps.
+InjectableEmbedder: allows the injection of a fully specified Embedder.
+
+4. StepTypes:  @Given, @When and @Then are called step types
+Same story text can be used in different step type and both will call different method in step files
+@Given("the stock is traded at $price")
+public void method1(double price) {
+    // ...
+}
+@When("the stock is traded at $price")
+public void method2(double price) {
+    // ...
+}
+
+@Given  - precondition
+@When - action taken
+@Then - verification step
+@Alias - textual story can be phrased differently 
+@Aliases - multiple aliases can be given
+@Pending - methods in step file can be marked as pending means method still not implemented and respective story line will not be executed
+
+@BeforeScenario   - method to run before every scenario
+@AfterScenario
+@BeforeStory   - method to run before every story
+@AfterStory
+@BeforeStories   - method to run before collection of stories
+@AfterStories
+
+@Named - ?
+
+#Configuration annotations:
+@AsParameterConverter
+@Configure
+@UsingEmbedder
+@UsingSteps
+@UsingGuice
+@UsingNeedle
+@NeedleInjectionProvider
+@UsingPico
+@UsingSpring
+
+
+
+
+To implement config file
+https://blog.codecentric.de/en/2012/06/jbehave-configuration-tutorial/
+
+//		String repoFilePath="C:\\Users\\sheetalsingh\\workspace\\IMDb\\src\\test\\resources\\IMDbRepo.xml";
+
+
+
+
+
+from net:
+
+to generate index.html
+https://github.com/wakaleo/thucydides-jbehave-showcase/blob/master/pom.xml
+
+
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-site-plugin</artifactId>
+            <version>3.0-beta-3</version>
+            <configuration>
+                <reportPlugins>
+                    <plugin>
+                        <groupId>net.thucydides.maven.plugins</groupId>
+                        <artifactId>maven-thucydides-plugin</artifactId>
+                        <version>0.9.275</version>
+                    </plugin>
+                </reportPlugins>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
+
+
+
+	<dependency>
+		<groupId>net.thucydides</groupId>
+		<artifactId>thucydides-report-resources</artifactId>
+		<version>0.9.275</version>
+	</dependency>
+	<dependency>
+		<groupId>net.thucydides.maven.plugins</groupId>
+		<artifactId>maven-thucydides-plugin</artifactId>
+		<version>0.9.275</version>
+	</dependency>
+
+
+
+
+ 
+ 
+ 
+ 
+<build>  
+<plugins>
+  <plugin>
+    <groupId>net.thucydides.maven.plugins</groupId>
+    <artifactId>maven-thucydides-plugin</artifactId>
+    <version>0.9.275</version>
+              
+    <executions>
+     <execution>
+      <id>thucydides-reports</id>
+      <phase>post-integration-test</phase>
+      <goals>
+       <goal>aggregate</goal>
+      </goals>
+     </execution>
+    </executions>
+   </plugin>
+  </plugins>
+  </build> 
+ 
+ 
+#Initial story with common And 
+Given user is on url <url> 
+When user searched for <searchString> on page
+And user clicks on <link1> on the page
+And user clicks on  <link2> on the page
+Then user sees <message1> and <message2> on the page
+ 
+#Original XML
+<Object_Repository>
+	<PageNode name="HomePage">
+		<Object_Node name="SearchBox" locator_type="Id" locator="navbar-query"></Object_Node>
+		<Object_Node name="SearchBoxButton" locator_type="Id" locator="navbar-submit-button"></Object_Node>
+	</PageNode>
+	<PageNode name="SearchPage">
+		<Object_Node name="StarWar1Title" locator_type="LinkText" locator="Star Wars: Episode I - The Phantom Menace"></Object_Node>
+	</PageNode>
+	<PageNode name="ProductPage">
+		<Object_Node name="SeeFullCastLink" locator_type="Xpath" locator=".//div[@id='titleCast']/div/a"></Object_Node>
+		<Object_Node name="ThanksCrewName" locator_type="Xpath" locator=".//div[@id='fullcredits_content']/table[29]/tbody/tr/td[1]"></Object_Node>
+		<Object_Node name="ThanksCrewRole" locator_type="Xpath" locator=".//div[@id='fullcredits_content']/table[29]/tbody/tr/td[3]"></Object_Node>
+	</PageNode>
+</Object_Repository> 
+ 
+ 

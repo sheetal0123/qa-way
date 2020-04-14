@@ -1,0 +1,53 @@
+cucumber info:
+http://xebee.xebia.in/index.php/2014/07/31/cucumber-jvm-all-you-need-to-know-about-cucumberoptions/
+http://xebee.xebia.in/index.php/2015/01/23/cucumber-jvm-all-you-need-to-know-about-tags-and-hooks/
+
+
+Todos:
+1. Dependencies Injection using Pico container https://www.youtube.com/watch?v=upgTg_JiNbY
+
+
+Cucumber doubts:
+title not correct still test case pass
+@positive argument given in run class is not working
+mult keyword scenario not working
+
+Tutorial:
+https://www.youtube.com/watch?v=pD4B839qfos
+cucumber java selenium framework
+
+chap 14:
+https://www.youtube.com/watch?v=x5Ru0f8uOqw    - implement as per this
+
+
+#Tags
+#Updated commands from cucumber 4.7
+mvn clean install -Dcucumber.filter.tags="@fk"                   
+mvn clean install -Dcucumber.filter.tags="@fk or @amazon"	
+mvn clean install -Dcucumber.filter.tags="@fk and @amazon"	
+
+
+mvn test -Dcucumber.options="--tags @yahoo"
+mvn test "-Dcucumber.options= --tags @abc --tags @xyz"     AND
+mvn test "-Dcucumber.options= --tags @abc,@xyz"            OR
+
+
+
+**************************************************************************************************
+**************************************************************************************************
+
+# To use step file from different project
+
+sol 1: 
+- create jar file (maven-assembly-plugin) of child project and add that jar as external jar in parent pro
+- window > preference > cucumber > user setting > add packagr name which contains all steps of child project
+e,g com.step_defs, step_defs etc
+
+problem: 
+	all child feature lines will be visible to parent feature file
+	child step code will also get executed
+	child source code not visible
+	
+
+
+

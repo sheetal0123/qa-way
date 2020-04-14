@@ -1,0 +1,61 @@
+#EggPlant Functional
+
+#Info
+Developed by - Redstone 
+Redstone acquired by - TestPlant
+Language - SenseTalk (english type)
+Turbo Capture - recording tool which generate captured images + SenseTalk code
+
+# Functionality:
+- It can be used for mobile testing, cross platform testing, rich internet application testing, and performance testing
+- eggPlant uses Virtual Network Computing (VNC) to “look at” the SUT and send mouse and keyboard commands to it. 
+- Uses image matching technology
+
+
+#Adv:
+Doesnot matter what technology is used to develop application
+Selenium does not work on window based app and flash based 
+independent of platform like ubuntu, window, mac etc
+This allows it to test across all kinds of different interfaces, platforms, browsers, and devices, including mobile, desktop, and mainframe
+
+#Products:
+eggPlant Functional
+eggPlant Performance
+eggPlant Network
+eggPlant Manager
+eggCloud
+eggIntegration
+
+
+todo:
+http://www.sqaforums.com/forums/testplant-eggplant/
+
+
+#EggOn  - For mobile
+
+http://docs.testplant.com/?q=content/connecting-eggon-android
+http://docs.testplant.com/?q=content/eggOn/
+
+C:\Program Files\RealVNC\VNC Server   | licence : D6H74-2HR5U-CRE34-A4BGU-B8QSA
+https://www.realvnc.com/products/vnc/documentation/5.3/installing-removing/windows
+
+
+4y0e-slp3-c50h-zglx-wiyb-9e
+
+#Egg Functional - For Web
+C:\Program Files (x86)\eggPlant
+
+
+Release Notes:
+C:\Program Files (x86)\eggPlant\Eggplant.app\Resources\WindowsDocumentation\eggPlant Release Notes
+
+
+#EggMan
+http://docs.testplant.com/?q=eggMan
+
+
+#Basic Syntax
+http://www.testplant.com/support/tutorials
+http://www.testplant.com/support/training-videos/
+http://www2.testplant.com/tuts/eptut1.html
+

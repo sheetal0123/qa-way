@@ -1,0 +1,19 @@
+Cross-site scripting (XSS) 
+
+XSS is a type of computer insecurity vulnerability typically found in Web applications (such as web browsers through breaches of browser security) that enables attackers to inject client-side script into Web pages viewed by other users. A cross-site scripting vulnerability may be used by attackers to bypass access controls such as the same origin policy. Cross-site scripting carried out on websites accounted for roughly 80.5% of all security vulnerabilities documented by Symantec as of 2007.
+
+#Types
+
+There is no single, standardized classification of cross-site scripting flaws, but most experts distinguish between at least two primary flavors of XSS: non-persistent and persistent. Some sources further divide these two groups into traditional (caused by server-side code flaws) and DOM-based (in client-side code).
+
+#Non-persistent
+Non-persistent XSS vulnerabilities in Google could allow malicious sites to attack Google users who visit them while logged in.[9]
+The non-persistent (or reflected) cross-site scripting vulnerability is by far the most common type.[10] These holes show up when the data provided by a web client, most commonly in HTTP query parameters or in HTML form submissions, is used immediately by server-side scripts to generate a page of results for that user, without properly sanitizing the request
+
+#Persistent
+A persistent cross-zone scripting vulnerability coupled with a computer worm allowed execution of arbitrary code and listing of filesystem contents via a QuickTime movie on MySpace.[13]
+The persistent (or stored) XSS vulnerability is a more devastating variant of a cross-site scripting flaw: it occurs when the data provided by the attacker is saved by the server, and then permanently displayed on "normal" pages returned to other users in the course of regular browsing, without proper HTML escaping. A classic example of this is with online message boards where users are allowed to post HTML formatted messages for other users to read.
+
+#Traditional versus DOM-based vulnerabilities
+Before the bug was resolved, Bugzilla error pages were open to DOM-based XSS attack in which arbitrary HTML and scripts could be injected using forced error messages.
+Traditionally, cross-site scripting vulnerabilities would occur in server-side code responsible for preparing the HTML response to be served to the user. With the advent of web 2.0 applications a new class of XSS flaws emerged: DOM-based vulnerabilities. DOM-based vulnerabilities occur in the content processing stages performed by the client, typically in client-side JavaScript. The name refers to the standard model for representing HTML or XML contents which is called the Document Object Model (DOM). JavaScript programs manipulate the state of a web page and populate it with dynamically-computed data primarily by acting upon the DOM.

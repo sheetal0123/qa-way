@@ -1,0 +1,125 @@
+#Manual testing concepts:
+
+Q: Difference b/w Smoke and sanity
+#what is Smoke Testing?
+-Smoke Testing is performed after software build to ascertain that the critical functionalities of the program is working fine.
+-It is executed "before" any detailed functional or regression tests are executed on the software build.The purpose is to reject a badly broken application, so that the QA team does not waste time installing and testing the software application.
+-In Smoke Testing, the test cases chosen cover the most important functionality or component of the system. The objective is not to perform exhaustive testing, but to verify that the critical functionalities of the system is working fine.
+For Example a typical smoke test would be - Verify that the application launches successfully, Check that the GUI is responsive, check software can be installed ... etc.
+-Generally done on build no 1, 2,3 etc
+
+#what is Sanity Testing?
+-After receiving a software build, with minor changes in code, or functionality, Sanity testing is performed to ascertain that the bugs have been fixed and no further issues are introduced due to these changes
+-The goal is to determine that the proposed functionality works roughly as expected. 
+-Generally done on build no 30, 31, 32 etc
+-When there are some minor issues with software and a new build is obtained after fixing the issues then instead of doing complete regression testing a sanity is performed on that build. You can say that sanity testing is a subset of regression testing.
+-Sanity testing is done after thorough regression testing is over, it is done to make sure that any defect fixes or changes after regression testing does not break the core functionality of the product. It is done towards the end of the product release phase.
+
+Q: What is the most challenging situation you had during testing?
+A: Be realistic and don’t overstress the situation.
+
+Q: Documents used
+Testing Methodology
+Test Strategy
+Testing Effort Estimation
+Testing Glossary
+QA Roles & Responsibilities
+Test Plan
+Testing Checklist
+Requirements Traceability Matrix
+Test Cases
+Test Scripts (Automated/Performance)
+Performance Questionnaire
+Testing Progress Report
+Defect Log
+Testing Completion Report (aka Findings Report)
+Lessons Learned
+
+
+Q: Difference between Requirements and Specification
+#Requirements
+They outline “what” the software must do
+They outline the software from the end-user , business and stakeholder perspective.
+
+Related Docs:    
+	BRD - Business Requirement Document
+	SRD - System Requirement Document
+
+#Specification
+They outline “how” the software will be created
+They outline the software from the technical team perspective.
+
+Related Docs:
+	BRS - Business Requirement Specification
+	SRS - System Requirement Specifications
+    FRS - Functional Requirement Specifications
+    CRS - Compatibility Requirements Specifications
+    PRS - Performance Requirements Specifications
+    RRS - Reliability Requirements Specifications
+    CRS - Configurations Requirements Specification
+
+
+Q: Difference between BRS, SRS and FRS
+http://www.guru99.com/brs-vs-srs-the-myth-busted.html
+
+Business Requirements Specification (BRS)
+-This document is called as high level document includes the entire requirement demanded by the client. Ideally, this document simply includes all the requirements should be part of proposed system
+-It is derived from client interaction and requirements and BA creates this and doesnot include uses cases
+
+Business Requirements Specification Contents
+•	The purpose of the project
+•	The Client, the Customer, and other stakeholders
+•	Users of the product
+•	The scope of the work
+•	The scope of the product
+•	Features and Functionalities
+•	Usability and Humanity Requirements
+•	Performance Requirements
+
+SRS - System Requirement Specification
+-Derived from BRS
+-It describes entire system flow, how data is going to flow into the system and overall functionality of the system. SRS says brief about each module's functionality and doesn't include in-depth functionality of each page and module.
+-SRS documentation includes a set of use cases that explain all the interactions the users will have with the software. Use cases are also known as functional requirements. 
+-SRS also contain non-functional requirements e.g. hardware interfaces, communication interfaces
+-System technical architect creates this and include use cases
+
+
+FRS - Functional Requirement Specification
+-FRS can be derived from the SRS
+-dev, qa creats this and does not include use cases
+-we describe the particular functionalities of   every single page in detail from start to end
+
+
+Q: Difference between GUI Testing and Usability Testing
+GUI
+-test front end design to see whether its meets the client requirements or not.
+-concerned with look and feel, appearance
+-Example includes colors, fonts, font sizes, buttons, links, icons, placement of data labels and fields etc. are displayed as specified or not.
+
+Usability
+-tests that whether the application is user friendly or not by checking how easily user can access the application.
+-concerned with easiness and user friendliness of the application 
+- tab button + keyboard shortcuts shd switch fields properly
+
+
+Q: Difference between QA and QC
+Quality Assurance
+QA is process oriented and focuses on defect prevention
+QA is a set of activities for ensuring quality in the processes 
+QA is a proactive quality process.
+Everyone on the team involved in developing the product is responsible for QA
+
+Quality Control 
+QC is product oriented and focuses on defect identification
+QC is a set of activities for ensuring quality in products
+QC is a reactive process.
+QC is usually the responsibility of testing team that tests the product for defects
+
+
+Q: Usecase vs Testcase
+Usecase
+Prepared by BA from BRS
+
+
+Testcase
+Test case is prepared by test engineer 

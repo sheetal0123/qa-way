@@ -1,0 +1,37 @@
+C#
+
+package
+debug
+class 
+namespace 
+imp plugins
+
+
+
+
+
+
+
+Primitive types (except strings), enumerations, tuples, and structures are value types. Classes, strings, interfaces, arrays, and delegates are reference types. Every type has a default value. Reference types are created on the Heap. The lifetime of the reference type is managed by the .NET framework. The default value for reference types is null reference. Assignment to a variable of a reference type creates a copy of the reference rather than a copy of the referenced value. Value types are created on the stack. The lifetime is determined by the lifetime of the variable. Assignment to a variable of a value type creates a copy of the value being assigned. Value types have different default values. For example, boolean default value is false, decimal 0, string an empty string "".
+
+
+
+C# Data Types:
+1. Value types 
+2. Reference types 
+
+Value types
+Primitive types, enumerations, tuples, and structures
+Create on Stack
+Assignment to a variable of a value type creates a copy of the value being assigned
+
+Reference types :
+Classes, strings, interfaces, arrays, and delegates
+Create on Heap
+Default value is "null"
+Assignment to a variable of a reference type creates a copy of the reference rather than a copy of the referenced value
+
+
+
+
+

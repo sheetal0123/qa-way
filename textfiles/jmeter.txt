@@ -1,0 +1,274 @@
+#To remove certain extension to get recorder use -      .*\.extension eg-    .*\.jpeg,.*\.png etc
+
+
+#Imp Links:
+http://jakarta.apache.org/jmeter/index.html
+http://code.google.com/p/jmeter-plugins/
+
+https://blog.codecentric.de/en/2014/01/automating-jmeter-tests-maven-jenkins/
+1. download plugin for reporting: http://a.blazemeter.com/jmdownload.php
+2. http://sourceforge.net/projects/jmeterforwindows/?source=navbar
+3. http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html
+
+download:
+http://jmeter-plugins.org/downloads/file/JMeterPlugins-WebDriver-1.2.0.zip
+http://jmeter-plugins.org/downloads/file/JMeterPlugins-Standard-1.2.0.zip
+
+try this eg:
+https://www.dunnsolutions.com/content/application-development-blog/-/blogs/integrating-selenium-scripts-with-jmeter
+
+http://koushikarvapelli.blogspot.in/2014/05/selenium-integration-with-jmeter.html
+https://www.dunnsolutions.com/content/application-development-blog/-/blogs/integrating-selenium-scripts-with-jmeter
+http://blazemeter.com/blog/jmeter-webdriver-sampler
+http://stackoverflow.com/questions/20211732/how-to-integrate-jmeter-with-selenium-webdriver-for-load-testing
+
+http://jmeter-plugins.org/wiki/WebDriverTutorial/
+http://jmeter-plugins.org/wiki/WebDriverSampler/
+
+http://www.tutorialspoint.com/jmeter/jmeter_quick_guide.htm
+http://jmeter-plugins.org/wiki/WebDriverSampler/?utm_source=jmeter&utm_medium=helplink&utm_campaign=WebDriverSampler
+
+#Understanding JMeter (from manual)
+http://jmeter.apache.org/usermanual/get-started.html
+1. Settings
+1.1 Jmeter Classpath:
+JMETER_HOME/lib        |  used for utility jars e.g. jdbc etc
+JMETER_HOME/lib/ext    |  used for JMeter components and plugins
+
+
+1.2 Order of Execution
+Configuration elements
+Pre-Processors
+Timers
+Sampler
+Post-Processors (unless SampleResult is null)
+Assertions (unless SampleResult is null)
+Listeners (unless SampleResult is null)
+
+For these to run we need at least one sampler
+
+
+2. Non UI Mode
+2.1 Jmeter in non ui mode
+jmeter -n -t my_test.jmx -l log.jtl
+for load testing jmeter should run in non ui mode and else actual result will never come
+
+
+3. Thread group
+3.1 Basics
+thread = 50
+ramp up = 100 sec
+loop = 1
+100/50 = 2 i.e every 2 sec a new thread will get generate and in 100 sec all thread will be up
+make sure first thread is live when last thread start to get max load
+
+total http request = 50 * 1 = 50 in 100 sec
+
+3.2 Running load for a specified time
+http://jmeter-tips.blogspot.in/2010/02/tip-5-how-to-run-test-plan-for-certain.html
+specify load thread=100, ramp= 1sec > chk forever > chk scheduler > duration: 600 sec > delay=0
+
+
+4. Timer
+4.1 Test Action Sampler
+If we want all sampler run sequentially and then wait for 5 min rather wait 5 min after every request sent
+http://www.mportal.com/tips-on-how-to-use-jmeters-test-action-sampler-to-ensure-your-app-can-support-real-user-traffic/
+
+
+
+
+
+todo: chap 4  http://jmeter.apache.org/usermanual/build-web-test-plan.html
+
+
+
+
+****************************************************************************************************************
+
+#Testing Terms
+
+1. Difference between Baseline and Benchmark
+https://www.quora.com/Performance-Testing-Difference-between-baseline-and-benchmark
+
+Baseline:
+It is done to verify our application performance with new changes deployed
+We have some set of matrix, once we deploy new build then we compare new results with our old baseline
+
+run one case with one user i.e. sanity test
+
+
+Benchmark:
+It is done to compare our application performance with other competitors
+
+2. Endurance Testing or Soak Testing
+Testing an application with a high load for long time to get issues like memory leak etc
+
+3. Load Testing
+Testing an application with load keep increasing
+
+****************************************************************************************************************
+
+#Manjeet - Day 1
+
+#CONTENT
+A: High level understanding
+
+1. Performance Type: Server and Client Side
+>Server Side(95% used):
+server shd not crash  95% use this
+
+>Client Side(5% used):
+US person accessing india site
+mobile app, browser is client
+how client is behaving on different browser, mobile devices with diff config e.g. ,
+ samsung, lg, 2gb , 4gb ram, processor type
+
+2. Get Non func req like performace criteria, security, acceptable error rate%, page load time etc
+
+3. performance testing use cases:
+>find SLA - response time, error rate, throughput   -- differ company to company
+>Goal need to be achieved by performance testing:
+what part working poorly, find peek app use hours,
+business critical area in application, complete checkout process of a user
+max used area - home page, srp
+min used area - no need to test
+find user pattern - e.g. if sale for 1 day , most keywords searched in site etc
+
+4. Performance test strategy
+>define benchmark - expected performance
+>how dev design impact perf
+> get load test env - replica of prod as close as possible
+> what will be test monitoring system
+1. server side monitoring - error%, transacting time
+2. local test execution performance monitoring - error, first user last user
+> what is application architecture
+
+
+5. Performance type
+1. perf testing : req sent by jmeter and measure result and report
+2. perf engineering : analysis of issues, perf tuning, server level n/w level db level monitoring and solving if any issue
+    ,code issue, code review, design review etc
+
+
+
+6. Application type : Existing Application/ Newly Created Application
+#common for both application:
+performance workload model: load pattern, transaction pattern, peek load time etc
+work load model
+performance test plan: entry, exit, covered area, test data, monitoring strategy etc
+SLA: scalability, stability, transaction rate hardware used, throughput, acceptance criteria, future growth
+
+>Existing Application
+get prod status :  page hit /sec, which page use most, high time, total user count, avg session time/user etc
+
+>Newly Created Application(not on production)
+estimated initial load, industry std, competitor hits etc
+
+
+7. Definitions:
+>load test:
+test with peek load test e.g. 100 user/sec
+which area get max hits, test that area with load
+
+>stress level: double the load and test
+
+>endurance test: normal test run for 8 hr, 1 day, 2 day and then gradually increase load, chk peak load for 5 , 8 hr, 1 day etc
+e.g. testing for if a sale for 2 week then chk stability
+
+>benchmarking:
+run baseline test once with one use with all script
+one user for 30min : decide bench marking i.e. how system is performing
+
+
+8. Points to be keep in mind
+> our n/w capacity: 100MB/sec, wifi, or LAN or testing on cloud, bandwidth issues etc
+> server monitoring tools: DB logs, memory use, connection pooling , very slow transaction,
+know issue in app, memory leak, highest utilization etc
+> DB monitoring: locking mechanism - row ,column or table locking. table locking is worst
+sql query - too much joins, query time, bad query design
+> perf testing framework: high load test 10k/hour in distributed mode master- many node model
+our m/c config type 4gb 8gb etc
+
+
+Strategy:
+> same test running in two day will give different result because of caching, retesting of test etc
+> bottleneck in application : disk usage, cpu
+> 3rd party component used: how to handle performance of 3rd party component
+if 3rd party can handle lesser load than our application
+
+
+9. Plug-ins
+Jeter 2.13: grafna influxdb can be integrated for result graphs
+Plugins can be downloaded from here: https://jmeter-plugins.org/wiki/PluginsManager/
+
+
+
+
+B: RECORDING SCRIPTS
+
+1. How to record a script
+Jmeter > File > Template > Recording
+Firefox > preference > adv > network > setting > manual proxy > add localhost 8888 and check 'use this proxy for all protocols'
+Workbench > Start Recording
+open site and record calls
+
+After recording script, do cleaning
+> delete unnecessary samplers
+> rename all samplers
+> for one click there can be two genuine samplers, generally happens when 1st url redirect to 2nd url
+> place all sampler under thread group
+> remove server name from each samplers and place that inside "HTTP req default"
+> Use Aggregate report > 90% line : gives better stats
+
+note: Http cookie manager is must at test plan level other wise Jmeter will ignore all cookie and all req will share same cookies
+which is applicable to most of tests
+
+
+http://www.yepme.com/products.aspx?searchtext=mens%20shoes&searchquery=true&autosuggest=false
+http://www.yepme.com/Deals1.aspx?CampId=128390
+http://www.yepme.com/Checkout.aspx
+place order
+
+2. Testing a REST call
+
+
+3. Testing a SOAP call
+
+
+
+#todo:
+use variables
+recording - done
+rest
+soap
+
+
+#issues:
+
+# practice_yepme_recording_1.jmx
+1. in script samplers coming inside recording heading, if we run case then 6 hit go rather 3
+
+# prctice_yepme_2.jmx
+1. "place order"(post) button gives same url as "buy now"(get) http://www.yepme.com/Checkout.aspx
+
+
+
+#C 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.

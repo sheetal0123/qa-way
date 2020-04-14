@@ -1,0 +1,131 @@
+JUNIT 4:
+
+In Junit 4, Harness class doesnot req to extend "Test Case" and no need to start junit method with "test" eg testAddition, testFoo() etc. 
+Simply add "@Test" anotation in begin of methods.
+
+
+Structure 1: Junit 4 running w/o using TestSuite class i.e with Harness Class only
+
+import org.junit;
+public class HarnessClass {
+
+@Before public void setUp() {  }      //used to create objects of classes which are getting used in Junit
+@After  public void tearDown(){ }     //used to close objects created in setUp EG OBJ=NULL;
+@Test public void additionMethodTesting(){}    //Junit method , no need to start method with "test" in Junit 4. Annotation @Test is must
+                                                //Else that particular method wont run rest will get run.       
+
+}
+
+
+Structure 2: junit 4 running with test suite.
+
+import org.junit;
+public class HarnessClass extends TestCase {
+public HarnessClass(String name){super(name);}   //call to super constructor is mandatory. 
+@Before public void setUp() {  }      
+@After  public void tearDown(){ }     
+@Test public void additionMethodTesting(){}   
+}
+
+import junit.framework;
+public class HarnessSuite extends TestSuite {
+public static Test suite(){
+		TestSuite suite = new TestSuite();
+
+		suite.addTest(new HarnessClass("testaddNumbers"));           //Benift is we are tunning specific methods only
+		suite.addTest(new HarnessClass("testMultipleNumbers"));
+		
+		return suite;
+		}
+	
+}
+	
+	
+# Different JUnit Methods:	
+"assert""XXX" -"CONDITION"
+assertTrue: I assume that COND shd be True if not give error.         
+assertFalse: I assume that COND shd be false if not give me error.     eg for 30<10 no error shd come as i am asserting False that 30 is less than 10 
+assertEquals : I assume that COND shd be True if not gv me error. 
+
+1.assertEquals(expected, actual)
+2.assertEquals(message, expected, actual)
+3.assertEquals(expected, actual, delta)                
+4.assertEquals(message, expected, actual, delta)
+Note:
+delta: error margin means expected can be correct up to error value
+eg expected=100, actual=90 
+Now if delta=10, error will come    ,as 100-90=10 = delta 
+But if delta=10.1 , error wont come and assert will get pass   100-90=10 < delta
+
+
+5.assertFalse(condition)
+6.assertFalse(message, condition)
+Note:
+Used when we want to detect some unwanted cond eg: a=100, b=20 c=a*b;
+And i dont want someone make b=0,-10 etc and "c" get fail.
+assertFalse("Errro: wrong parameter passed",b<=0);
+If cond become true means smthing wrong happen hence thro error
+
+7.assertTrue(condition)
+8.assertTrue(message, condition)	
+
+9.AssertNull(object)          
+10.AssertNotNull(object)
+11.AssertNull(message, object)
+12.AssertNotNull(message, object)
+Note:
+Class obj=new Class();
+AssertNotNull(obj);      //This will run w/o error as i know obj is not null
+AssertNull(obj); //I am asserting obj as NULL but actually its not hence error.
+
+
+
+13.AssertSame(expected, actual)
+14.AssertNotSame(expected, actual)
+15.AssertSame(message, expected, actual)
+16.AssertNotSame(message, expected, actual)
+Note:
+ClassOne one=new ClassOne();
+ClassTwo two=new ClassTwo();
+assertNotSame(one,two);  // It will Pass.
+assertSame(one,two);   //It will fails
+
+
+
+
+#Annotation:
+@Before : Run before every method and can be written any no of time , normally used to initialize object
+@After  : Run after every method and can be written any no of time, normally used to regain memory from object using obj=null
+@Test   : For methods to be included in junit
+@Ignore : If written then that method will not get executed
+@Ignore("Message can be provided")
+@BeforeClass   : First method to run in class, normally used to initialise DB connections etc and can be written any no of times.
+@AfterClass    : Last method to get run, to shutdown DB connections etc and can be written any no of times.
+@Test(timeout=1000)        : If method take more than time specified i.e. 1 sec in this case then junit will
+                             get fail.Normally used to test some query which fetch data from DB.
+@Test (expected=NumberFormatException)   : If we are sure of a exception. Junit will execute sucessfully if method thro exception and error will come if there is no exception eg
+
+@Test (expected=NumberFormatException.class)
+	public void illegalNum(){
+		Integer i1=new Integer("xas");         //Junit run fine as i am already expecting a exception
+		Integer i2=new Integer("123");         //Junit fails as this code runs fine and no exception will get thrown.
+		}
+
+		
+		
+		
+#Adv of JUNIT 4
+-Droped strict naming convention
+-Inheritance hierarchy has been removed.
+
+#NEW IN JUNIT
+• Parametric tests - Simply pass parameters and same test runs multiple times chk HarParameterizedJunit2.java class
+• Exception tests
+• Timeout tests
+• Flexible fixtures
+• An easy way to ignore tests
+• A new way to logically group tests
+
+
+
+

@@ -1,0 +1,28 @@
+http://www.protractortest.org/#/
+
+Test case can be written in any IDE which understand JS
+Paid: WebStorm
+
+
+#imp links:
+https://www.3pillarglobal.com/insights/using-the-protractor-automation-tool-to-test-angularjs-applications
+
+
+#angular based site
+http://juliemr.github.io/protractor-demo/
+
+
+******************************************************************************************
+#setup mac
+npm install -g protractor
+webdriver-manager update
+webdriver-manager start
+
+#create two files:
+todo-spec.js  | contains test cases
+conf.js  | specify where test case file is
+
+#to run case:
+protractor conf.js
+
+******************************************************************************************

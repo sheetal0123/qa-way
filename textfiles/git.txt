@@ -1,0 +1,525 @@
+﻿********************************************************************************************
+GitHub | sheetal0123@gmail.com | 23j@...
+********************************************************************************************
+
+#To update GIT password
+Control Panel -> Credential Manager -> Windows Credentials
+
+
+java: 8
+c#:
+
+# add local repo into github
+1. create a repo on github site
+2. go inside local workspace folder e.g. /home/xebia/workspace/OceanWay/
+3. run following commands:
+
+git init              | initialize folder with git
+git add .             | add all file
+git commit -m "first commit"
+git remote add origin https://github.com/sheetal0123/OceanWay.git
+git push -u origin master
+
+********************************************************************************************
+
+# download remote project into local
+git clone https://github.com/sheetal0123/CucumberDBExcelNew.git
+
+********************************************************************************************
+
+
+git checkout abc.java   |  it will replace local changed abs.java with last committed (HEAD) abc.java, used if you changed smthing and need orig file
+
+#If we want to ignore all local changes and commits
+git fetch origin
+git reset --hard origin/master
+
+
+
+git checkout Fix4Multithreading
+git pull --rebase origin Fix4Multithreading
+
+git checkout <filename>  : to remove our changes in <filename>
+
+#Pull
+git stash       | delete local changes and save somewhere
+git pull �rebase origin Fix4Multithreading            | resolve if any changes
+git stash apply          | reapply deleted local changes
+
+git stash
+git fetch -all
+git checkout sanity
+git pull �rebase origin sanity
+
+
+$ git remote -v
+origin  https://github.com/bulletproofnetworks/persuit-testing.git (fetch)
+origin  https://github.com/bulletproofnetworks/persuit-testing.git (push)
+
+$ git remote
+origin
+
+git remote set-url origin https://github.com/ONEOKI/browser-automation.git
+
+
+
+
+********************************************************************************************
+#Terminology:
+origin: The name of our remote repo  is `
+master: default local branch name is master
+HEAD: head is a pointer which always points to our last commit
+
+staged: Files are ready to be committed.
+
+unstaged: Files with changes that have not been prepared to be committed.
+
+untracked: Files aren't tracked by Git yet. This usually indicates a newly created file.
+
+deleted: File has been deleted and is waiting to be removed from Git.
+
+add all: You can also type "git add -A ."  | where the dot stands for the current directory, so everything in and beneath it is added. The -A ensures even file deletions are included.
+
+git reset: You can use git reset <filename> to remove a file or files from the staging area.
+
+Staging Area: A place where we can group files together before we "commit" them to Git.
+
+Commit
+A "commit" is a snapshot of our repository. This way if we ever need to look back at the changes we've made (or if someone else does), we will see a nice timeline of all changes.
+
+More useful logs:
+Use git log --summary to see more information for each commit. You can see where new files were added for the first time or where files were deleted. It's a good overview of what's going on in the project.
+
+git stash:
+Sometimes when you go to pull you may have changes you don't want to commit just yet. One option you have, other than commiting, is to stash the changes.
+git stash | to stash your changes
+git stash apply  |  to re-apply your changes after your pull
+stash meaning: to hide something secretly somewhere
+
+git stash apply
+git stash show      |  show stashed changes
+git stash show -p   |  show detailed stash changes with code
+
+
+??? try : L1 L2 L3 which file get stashed and how to get them back
+
+********************************************************************************************
+
+#Commands:
+git init  | initializes project with git
+git status  | check current git status
+git add filename.java    | added filename.java into staging area
+git rm --cached <file>   | to unstage added files
+git add '*.txt'   |  to add files in bulk
+git commit -m "first commit"   | commits in our local repo i.e. inside master
+git pull origin master   |  to get others code from origin to master
+git push -u origin master  |  push code to origin repo from master repo , -u is to remember these repo name,
+							next time we can simply use "git push"
+
+
+git diff HEAD  | we can see difference b/w our last commit(i.e. head) and new code coming because of pull
+git add abc.java   | added a file in stage for test
+git diff --staged  | we can see the difference b/w last commit and new staged code i.e. code changed after we did "git add abc.java"
+git reset abc.java   | remove file from staging area
+
+git checkout -- <target>   | to take back code to the 'target' commit, as we have hotch potch with code
+git branch mycode  |  to create a new branch 'mycode', commits on this branch and when feature is ready we can merge it with master
+git checkout mycode  | to switch to newly created branch
+git checkout -b mycode  |  same as above two commands i.e. create a branch 'mycode' and switch to it
+
+git rm '*.java'  |  to remove all files from local, as we are on mycode branch hence safe to use else no
+git rm -r webdriver  | to remove folder
+git commit -m "I removed all the codes from mycode branch"   | commit removed related changes
+
+git checkout master  | back to master branch
+git merge mycode   | to merge 'mycode' into master branch
+git branch -d mycode  | to remove created branch, all code in mycode should have been merged into master
+git branch -d -f mycode  | to remove created branch forcefully, case where some code added into mycode branch but not required now and 							we havenot merged it into master.
+
+
+********************************************************************************************
+#git repo
+https://github.com/swtestacademy   | awesome repo for selenium, testng, api etc
+https://github.com/shekhargulati
+https://github.com/ngoyalx
+https://github.com/deepakautomation | deepak sood
+https://github.com/rathore4u
+https://github.com/HemaSundarPenugonda
+https://github.com/abhinavxebia
+https://github.com/vipuljain33
+https://github.com/XI-Abhishek-Yadav
+https://github.com/abhinavxebia
+https://github.com/shailendraprsingh   | bitbucket: spsingh
+https://github.com/Xebia-Sumit-Soman
+https://github.com/saranshjain1989
+https://github.com/ashishjuyal/TDD-XTR
+https://github.com/anujpathak999
+
+********************************************************************************************
+sheetalrepo  	|  	sheetal0123@yahoo.com  	| 23j@
+sheetal0123		|		sheetal0123@gmail.com		|	23j@
+
+#Git repo info
+.. : downloaded in local workspace
+
+] : checked in
+[ : local workspace
+
+
+[1] AllureTestNG | checkedin | 100% complete | all about allure feature + jetty server implemented
+[2] AppiumApp | checkedin | 70% | page object model + testng + extent reporting(partially) + page factory not used + grindr app
+[3] AppiumWay | checkedin | 20% | for general appium practice
+[4] CucumberPicoDI | checkedin | 90% | demo to show how cucumber pico container dependency injection works , mvn error coming in running project
+[4A] CucumberJabong | checkedin | 100% | cucumber dummy project, refer to see how locators can be fetched from xml using xml parser
+[5] CucumberJenkin | checkedin |  100% | webdriver + cucumber + jenkin demo project to see how to run on jenkin  - need to try
+[6] CucumberMySQLExcel  | checkedin |  100% | POC project for pantha, Reading MySQL and saving data into MS Excel
+[7] CucumberPageFactory | checkedin | 10% | POC for page factory + cucumber + selenium  | sheetalrepo | youtube
+[8] CucumberParallel | checkedin | 100% | running feature in parallel
+[9] CucumberWay | chekedin | 100% | All features of Cucumber, small small cases, given xke on this project
+[10] DesignPatterns | checkedin | 40% | Added 4 patterns from head first book
+[11] elixirway | checkedin | 100% | demo small small commands of elixir for practice
+[11A] galen-sample-java-tests | 100%| checkedin (sheetalrepo) | forked and committed in my repo | POC
+[12] GraphWalker | checkedin  | 20% | need to complete, refer GraphWalkerSir
+[12] GraphWalkerSir | not checkedin  | 100% | shailendra's xke project, not working, some class missing
+[13] Grid Demo | checkedin | working code, need to verify once | For Selenium Web Parallel Cases using TestNG, Java, Grid
+[14] Grid Demo Appium | checkedin | working code - dec 2016 | For Android Appium Parallel Testing using TestNG, Java, Appium, Grid ,JSON
+[15] JBehaveDBExcel | checkedin | 100% | similar to CucumberMySQLExcel
+[16] JbehaveProject | checkedin | 100% | jbehave + xml parser, poc project for pantha
+[16A] JSWay | checkedin | 50% | js practice from udemy course
+[17] KeywordWay | checkedin | 30% complete | keyword framework which read cases from csv and execute on web
+[18] OceanWay | checkedin | working code | to practice java, selenium etc  | todo: take out webdriver
+[19] PersuitPageFactoryModel | checkedin | 20% | tried page factory+ testng + sel project for pantha > not completed | can be deleted once CucumberPageFactory completed
+[20] RestAssured | checkedin | 80% , for small small sample code for training, learning etc | High level func pending, POST eg missing
+[21] RestAssuredDemo | checkedin | 80% | RA keyword driven framework developed for an interview(monotype) | original git: sheetalsingh / forked by sheeta0123 + remote url changed to sheetalrepo
+[22] RestAssuredPOC | nitin's project, similar to RestAssuredDemo https://github.com/ngoyalx/RestAssurredPOC
+[23 *SpiceJet_Mobile | not checkedin | no idea whos project is this, refer util package for coding knowledge
+[24 *Spicejet-Q400-SCAP-Automation | not checkedin | sumit soman spicejet tribune type framework
+[25] SZWebdriver_2.0 | 100% | Shopzilla framework | My 1st framework
+[26] TestNG | checkedin | 60% | For TestNG learning , listners, custom reporting pending, send report
+[27] Document > qa> textfiles | checkedin | contains all major personal txt files
+[28] WebDriverPageFactory | checkedin(sheetalsingh/sheetal0123) | 95% | selenium + testng + allure + pagefactory + jetty server | ready to use framework | original git: sheetalsingh / forked by sheeta0123(contains all branches) + remote url changed to sheetalrepo(only master branch)
+[29] WebDriverPageFactoryDemo | checkedin(sheetalrepo) | 80% |  selenium + testng+ pagefactory+ for you tube| workspace2 | report missing, try jenkin
+[30] WebDriverWay | checkedin | 10% | to practice selenium commands
+
+
+
+] : checked in
+[ : local workspace
+#Not in My Github | Present in local workspace folder
+[1 automationtestingframework | created by shailendra | backup taken in desktop
+[2 browser-automation | cucumber pom based framework used in pantha | created by me | task: create similar demo and checked in into git
+
+
+
+********************************************************************************************
+
+#Git Hooks ???
+
+#if we have some code which is still not finished and we have to pull code then do foll:
+git stash > git pull > git stash apply
+
+********************************************************************************************
+???
+Message come when we take a pull
+Please enter a commit message to explain why this merge is necessary,especially if it merges an updated upstream into a topic branch
+
+http://stackoverflow.com/questions/19085807/please-enter-a-commit-message-to-explain-why-this-merge-is-necessary-especially
+1. type some message;
+2. "Ctrl+C+O";
+3. type the file name(such as "Merge_feature01") and press Enter;
+4. "Ctrl+X" to exit;
+
+
+
+******************************************************************
+#XKE - Shekhar Gulati
+
+https://github.com/shekhargulati/git-the-missing-tutorial
+
+#for all repo generic
+git config --global user.name "Sheetal singh"
+git config --global user.email "sheetal@abc.com"
+
+#for specific repo
+git config --local user.name "Sheetal singh"
+git config --local user.email "sheetal@xke.com"
+
+.gitconfig  file contains this details
+ignorecase= true  | ignore file name
+bare= false
+---
+
+Dont need central server
+No internet required
+DSC - Distributed/Decentralized VCS
+
+SVN - centralized server
+
+apart from git push no command req internet
+
+echo "#Git Play" >> Readme.md
+
+git help add
+git status -s   | show if files are tracked or not   |   ?? Not tracked,  A  tracked
+
+
+git add "modified file"
+git commit -am "second commit"    |   -am worked only to a tracked file i.e. after add command
+  -am will not work on new file
+
+
+git log
+git log --oneline
+git log --oneline --decorate
+git log --oneline --grep "first"
+git log --oneline --author Sheetal
+git log --oneline  --graph
+
+.gitignore file have to be added manually
+
+
+git diff HEAD~1..HEAD   | to compare commited files  HEAD is last commit
+git diff HEAD~3..HEAD
+
+
+#To find current branch
+git branch               		|	* will appear in front of current branch
+
+#To create and switch branch
+git branch feature1
+git checkout feature1
+git checkout -b feature 1  | create and switch to created branch
+
+
+
+git is a graph manipulated   -- goolge it
+
+
+#To delete local branch
+git branch -d local_branch    |  delete branch, branch must me merged completely
+git branch -D local_branch     |  shrcut for -d -f   i.e. delete branch forcefully evenif not merged
+
+#To delete remote branch
+git push origin --delete remote_branch
+
+
+git merge feature3
+esc  :q
+
+
+git up  |  ??
+
+
+git rebase  |  better sol to git merge
+git merge is not linear it creats graph
+rebase allow commit linear
+
+
+
+git cherry-pick
+git cherry-pick 9932232
+
+to apply any particular commit into master w/o using merge or rebase
+
+
+added some randome code which i dont want to remove and commit both
+git stash  |  working on code and dont want to commit it
+git stash apply		| apply most recent stashed code
+
+
+git alias  | to make our own shortcut for a git command
+
+git help everyday   | guide
+git help -g  | list of all guide
+
+
+***********************************************************************
+#Rajesh Mail:
+
+1. Generate a ssh key
+        https://help.github.com/articles/generating-ssh-keys/
+				https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/
+
+Generating SSH keys - User Documentation
+help.github.com
+SSH keys are a way to identify trusted computers, without involving passwords. The steps below will walk you through generating an SSH key and adding the public key ...
+
+2. To get the code on local machine initially
+git clone git@github.com:xebia/Tribune.git
+
+3. Ask team on which branch they are currently working (e.g. sanity). Move to this branch
+git checkout sanity
+
+4. Get the latest changes of sanity branch
+git pull --rebase origin sanity
+
+5. Do your work and commit it.
+git commit -am "Commit message"
+
+6. Take the latest changes from Remote
+a. Get the latest changes before pushing your work.
+git pull �rebase origin sanity
+
+        b. Check if the changes are automatically resolved
+        git status
+
+b. If the changes are not resolved then resolve the changes and add the changed files
+git add <Path of file>  (To only add a specific file)
+        or
+        git add . (To add all changed files)
+
+c. Continue the rebase till all changes are resolved (You can check when rebase is done by git status)
+        git rebase --continue
+
+7. Make sure the test cases are running fine locally before you push any changes.
+
+8. Push your changes
+git push origin sanity
+
+9. Ask team mates to take the pull by following step 4.
+
+Note: Make sure you have rebased before you push any changes and the work you are about to push is locally tested.
+
+
+Issues while using push in Window:
+https://stackoverflow.com/questions/20370294/could-not-resolve-host-github-com-error-while-cloning-remote-repository-in-git
+git config --global --unset http.proxy
+
+In iOS
+Go to keychain access > remove git related files
+
+*********************************************************************************
+#Git process for rebase, merge
+https://www.atlassian.com/git/tutorials/merging-vs-rebasing
+
+git checkout master  	| go to master
+master> git pull							|	pull latest code from remote master
+master> git branch abc				| cut new branch from master
+master> git checkout abc			| switch to abc
+
+abc> git add allfiles.java
+abc> git commit -m ""
+abc> git push  or  git push origin abc 		|  push local changes into remote abc
+
+abc> git checkout master			| go to master to see if any new chnages
+master> git pull							| pull latest master from remote again
+master> git checkout abc			| again go to abc
+
+#now do rebase/merge
+abc> git rebase master				| merging abc code with master code
+-- conflict will come, resolve them
+abc> git add conflict file		|  no commit is req here, only add files
+abc> git rebase --continue		| again resolve conflict and keep running this command
+-- repeat above two steps till all conflict get resolved
+abc> git rebase master 				| just to confirm if all is ok
+
+abc> Now raise PR from bitbucket
+Note: If comment come on PR, fix them and push changes in same branch. No need to raise PR again
+
+
+#MERGE PROCESS
+abc> git branch mybranch
+abc> git checkout mybranch
+mybranch> git merge abc --squash	| to get one commit out of all commit
+mybranch> git add allfiles
+mybranch> git commit -m "one common message"
+mybranch> git push or git push origin mybranch
+
+
+git merge --abort
+
+
+
+************************************************************************************************************
+
+git fetch && git checkout remote_branch
+
+
+
+git rebase
+dont take pull if no code is present in remote
+if taken by mistake
+git reset --hard <hashcode_of_last_commit>
+git push -f origin <child_branch>    hard push
+
+************************************************************************************************************
+#To clean untracked file | use when checkout branch is not working because of untracked file
+
+You can try command to clear the untracked files from the local
+
+git clean  -d  -fx ""
+where -d can be replace with following:
+
+-x means ignored files are also removed as well as files unknown to git.
+-d means remove untracked directories in addition to untracked files.
+-f is required to force it to run.
+
+
+************************************************************************************************************
+#How to update remote origin  | change remote origin
+https://help.github.com/articles/changing-a-remote-s-url/
+Note: need to change project (seleniumcode) from one repo (/user1) into another repo (/user2)
+
+0. create a project with same name in /user2 hithub
+1. go to current project folder : git remote -v
+https://github.com/user1/seleniumcode.git
+2. git remote set-url origin https://github.com/user2/seleniumcode.git
+4. git remote -v
+https://github.com/user2/seleniumcode.git
+5. git push origin master
+it will push all code into new repo
+
+
+git remote set-url origin https://github.com/sheetalrepo/WebDriverPageFactory.git
+
+************************************************************************************************************
+git push -u origin develop            |  it will make develop to visible in remote
+
+git config --global http.sslVerify false
+
+
+git clean -f   | to delete untracked files
+git reset <filename>  |  
+
+
+
+
+
+https://git.epam.com/help/ssh/README
+#to chk if SSH key pair
+cat ~/.ssh/id_rsa.pub
+
+#to generate sshkey, press enter two times
+ssh-keygen -t rsa -C "sheetal_singh@epam.com" -b 4096
+note: key get saved in default path: /c/Users/Sheetal_Singh/.ssh
+
+The key fingerprint is:
+SHA256:6SaAKhjNEyCbrbblAUwjkVzjXYrnU3HddMS9dqUzeyc sheetal_singh@epam.com
+
+#copy key to clip board
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDNmBtOV61y3ef3fGbtc26EWHaPkos1NEe+qe4rY0PqalW4oUa8JgOIOrpnEiRDrgJ1/CSlY8B8eMgzwJmel//ABQz9w50D5tQeyZrjUH6Uj0/1aOK7GdYbv1oYaszvh3w1scnWMoAiP3pUAA0x0Nca/AH+BxeMh7Qpu3MhR8lkdvBmUOxtf9m4AcaGyCyxUjiCkuGA9w1GFGrwEBBaetJ+qARGxL5CSsIg6ChJmiPKJqB0jB+8jeI7ZU4abH9PRgLb8PSC8a4yY96D1SapOGjtmMeo092cHT7YJMPy683p2i3OKFg4UBRmD7T7BHDHOweG7RYimL6EWzZSk0n4aG6IBQRTPrNnpca8dKuiviIi3qafTyuz/RX3RJ5vQDCHQl/dnQfslVt59p6qTG4/WSO214dKZEE85vL7HKNIeTWjMz87lyUz5sy3Yybj71ykGF2qmgA5t93wdkY0fHD0Fq+5cLrYUHCjvOxizuMipKrOhTReGLu/3yMa1FC4Ogue3wyqyAfCVxnF7wOkqjYMU18Ee10+TcnoBrYn7DlbhgEmTekINFrnphaHqAfCiLdsNm4AFKBYQGch7Qm1G4AKw48ZUz+q7RHbmLy3WjUNdxsCzR2G2CUFOJ+NNOkGkRB6ovAYbA3uLrkDjbTkjWpvYelbv+X1IDiZIGttY+OILRG1xQ== sheetal_singh@epam.com
+
+#copy public key into github account > ssh key section
+
+
+
+#git reset --hard master@{"10 minutes ago"}			|    to rollback all command based on time    |  ref: https://stackoverflow.com/questions/1223354/undo-git-pull-how-to-bring-repos-to-old-state 
+
+
+
+#To kill process in window/ open cmd
+netstat -ano | findstr :9999
+taskkill /PID 7024 /F        	7024: is task associated with 9999
+
+taskkill //PID typeyour_task_id_here //F 				 This will do forcefully
+
+
+
+
+
+
+
+
+
+#to remove all my changes in particular file
+mybranch> git checkout master abc.java

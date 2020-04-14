@@ -1,0 +1,7 @@
+#English
+
+
+#Part of Speach
+1. Verb 
+Only verb have tenses - present, past, future
+Shows Action/State/situation
