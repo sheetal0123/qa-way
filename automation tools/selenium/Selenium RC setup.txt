@@ -1,0 +1,169 @@
+Selenium RC Setup:
+
+Steps:
+1. Setup eclipse (Version: Helios Service Release 2).
+2. Add foll reference libraries:
+   path:  Eclipse IDE > Build path > Configure build path > Libraries > Add External Jars
+   junit-dep-4.10.jar    [from : C:\Users\letsbuy061\Downloads\eclipse-java-helios-SR2-win32-x86_64\eclipse\selenium-2.11.0\libs]
+   selenium-server-1.0.3.jar   [from: C:\Users\letsbuy061\Downloads\eclipse-java-helios-SR2-win32-x86_64\eclipse] 
+   selenium-java-client-driver-1.0.1.jar   [from: C:\Users\letsbuy061\Downloads\eclipse-java-helios-SR2-win32-x86_64\eclipse]
+   
+download jars from :http://www.java2s.com/Code/Jar/s/Downloadseleniumserver20b2jar.htm   
+   
+3. Add foll jar under Junit folder : junit.jar, org.hamcrest.core...
+   
+4.Create a package seleniumLetsbuy;
+5.Create three classes serverSelenium, class1 , searchPage [code given below]
+   
+***************************************************************************************************************************************
+   seleniumServer class format   
+*********************<starts>****************************
+/**
+ * 
+ */
+package seleniumLetsbuy;
+import org.openqa.selenium.server.SeleniumServer;
+import com.thoughtworks.selenium.*;
+import junit.framework.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+/**
+ * @author letsbuy061
+ * This is the main server class
+ * which run selenium server and then stop it
+ * 
+ *
+ */
+
+
+@SuppressWarnings("deprecation")
+public class serverSelenium extends SeleneseTestCase{
+
+	 private SeleniumServer seleniumServer;
+
+		@Before
+		public void setUp() throws Exception {
+			selenium = new DefaultSelenium("localhost", 4444, "*firefox C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe", "http://www.letsbuy.com/");
+			seleniumServer = new SeleniumServer();
+			seleniumServer.start();
+			selenium.start();
+			selenium.windowFocus();
+			selenium.windowMaximize();
+		}
+
+		@Test
+		public void testserverSelenium() {
+			try{
+				class1 class1obj=new class1();
+				class1obj.display(selenium);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			try{
+				searchPage class2obj=new searchPage();
+				class2obj.searchPage(selenium);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
+		@After
+		public void tearDown() throws Exception {
+			selenium.stop();
+			seleniumServer.stop();
+
+		}
+
+}
+
+
+*******************<ends>*****************************   
+
+
+
+***************************************************************************************************************************************
+   class1 class format   
+*********************<starts>****************************
+/**
+ * @author letsbuy061
+ *This class simply check that 
+ *selenium RC has been set or not 
+ *
+ */
+
+
+package seleniumLetsbuy;
+
+import com.thoughtworks.selenium.Selenium;
+
+public class class1 {
+
+	
+	public void display(Selenium selenium){
+		
+		System.out.print("*************Hello Selenium code **********************************");
+	}
+	
+	
+	public static void main(String args[]){
+		class1 class1obj=new class1();
+		Selenium selenium = null;
+		class1obj.display(selenium);
+		
+		
+	}
+	
+	
+	
+}
+
+
+*********************<ends>****************************
+
+
+
+***************************************************************************************************************************************
+   searchPage class format   
+*********************<starts>****************************
+
+/**
+ * @author sheetal Singh
+ *
+ *This class wnt to letsbuy.com
+ *and click on different tabs/categories
+ */
+
+
+package seleniumLetsbuy;
+
+import com.thoughtworks.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import java.util.regex.Pattern;
+
+@SuppressWarnings("deprecation")
+public class searchPage extends SeleneseTestCase {
+
+	@Test
+	public void searchPage(Selenium selenium) throws Exception {
+		System.out.println("letsbuy class 2");
+		//following code has been taken from selenium IDE in Junit 4 rc fromat
+		selenium.open("/");
+		selenium.click("css=img[alt=\"Home\"]");
+		selenium.waitForPageToLoad("90000");
+		selenium.click("link=Mobile Phones");
+		selenium.waitForPageToLoad("90000");
+		selenium.click("link=Electronics");
+		selenium.waitForPageToLoad("90000");
+		selenium.click("link=Toys");
+		selenium.waitForPageToLoad("90000");
+	}
+
+
+}
+
+*********************<ends>****************************
