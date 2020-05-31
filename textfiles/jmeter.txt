@@ -253,22 +253,23 @@ soap
 
 
 
-#C 
+
+**********************
+# JMeter Dashboard GUI Reports
+
+https://www.youtube.com/watch?v=L7Ou6ju6x9c
+
+C:\Users\Sheetal_Singh\Downloads\apache-jmeter-5.2.1\apache-jmeter-5.2.1\bin
+
+Demo1.jmx
+Demo1_results.csv
+
+jmeter -n -t path_test.jmx -l path_abc.csv -e -o html_report_path
+
+open cmd in bin
+C:\Users\Sheetal_Singh\Downloads\apache-jmeter-5.2.1\apache-jmeter-5.2.1\bin>
+jmeter -n -t C:\Users\Sheetal_Singh\Downloads\apache-jmeter-5.2.1\apache-jmeter-5.2.1\bin\Demo1\script1.jmx -l C:\Users\Sheetal_Singh\Downloads\apache-jmeter-5.2.1\apache-jmeter-5.2.1\bin\Demo1\log4.csv -e -o C:\Users\Sheetal_Singh\Downloads\apache-jmeter-5.2.1\apache-jmeter-5.2.1\bin\Demo1\htmlreport\report4
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-.

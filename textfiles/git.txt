@@ -430,7 +430,7 @@ git merge --abort
 
 
 
-************************************************************************************************************
+******************************************************************************************
 
 git fetch && git checkout remote_branch
 
@@ -448,6 +448,8 @@ git push -f origin <child_branch>    hard push
 You can try command to clear the untracked files from the local
 
 git clean  -d  -fx ""
+git clean  -d  -f
+git clean -f
 where -d can be replace with following:
 
 -x means ignored files are also removed as well as files unknown to git.

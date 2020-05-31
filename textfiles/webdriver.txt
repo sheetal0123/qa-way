@@ -115,6 +115,17 @@ JavascriptExecutor js = (JavascriptExecutor) driver;
 js.executeScript(Script,Arguments);
 js.executeAsyncScript(Script,Arguments);
 
+
+string query = "window.scrollBy("+ x +", "+ y +")";
+IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+js.ExecuteScript(query);
+			
+			
+
+#Enter Keys from Keyboard
+<WebElement>.SendKeys(Keys.Enter);  c#  // pipeline fixed
+			
+
 ********************************************************************************************************************************
 
 #Interview Questions:
@@ -169,7 +180,8 @@ A. General Xpath
 //td[text()='UserID']
 //li[contains(@class, 'myclassname')]/span
 
-//td[text()='Location was successfully updated']
+
+
 
 B. dynamic xpaths | used when on every refresh id of elements are changing
 //*[starts-with(@id,'yui_3_12_0_1_144585')]/a

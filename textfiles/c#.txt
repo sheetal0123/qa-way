@@ -7,7 +7,8 @@ namespace
 imp plugins
 
 
-
+#VS Code editor shorcuts
+Cntr Shift P   : to get all commands
 
 
 
@@ -30,7 +31,6 @@ Classes, strings, interfaces, arrays, and delegates
 Create on Heap
 Default value is "null"
 Assignment to a variable of a reference type creates a copy of the reference rather than a copy of the referenced value
-
 
 
 
