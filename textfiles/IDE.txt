@@ -1,0 +1,43 @@
+
+ ========== * ========== * ========== * ========== * ========== * ==========  
+#Java paths
+
+C:\Program Files\Java\jdk1.8.0_251\jre
+JAVA_HOME  C:\Program Files\Java\jdk1.8.0_251
+JAVA_HOME  C:\Program Files\Java\jdk-11.0.8
+Path: C:\Program Files (x86)\Common Files\Oracle\Java\javapath
+%JAVA_HOME%\bin
+
+ ========== * ========== * ========== * ========== * ========== * ==========  
+
+#Intellij
+
+Ctrl Shf F
+Ctrl Shf N
+
+File > Project Setting > Project/SDK > C:\Program Files\Java\jdk1.8.0_251
+File > Setting > maven
+
+# Regenerated folder : .idea  .iml   target
+
+#Maven plugin
+Use maven plugin > top right side
+
+#Interface methods impl code : Ctrl Alt Click on method name
+
+
+ ========== * ========== * ========== * ========== * ========== * ========== 
+#Eclipse
+
+mvn eclipse:eclipse
+
+ ========== * ========== * ========== * ========== * ========== * ========== 
+# Maven 
+
+mvn clean install -DskipTests=true -Djib.skip=true
+
+D:\apache-maven-3.6.3-bin\apache-maven-3.6.3\conf\settings.xml
+C:\Users\sheetal_singh\.m2\settings.xml
+ 
+ 
+ 

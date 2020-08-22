@@ -1,4 +1,4 @@
-
+DOCKER
 
 
 ###imp links###
@@ -76,7 +76,7 @@ docker run -p 8080:8080 -p 50000:50000 jenkins/jenkins		|  to start container an
 	
 	
 ### Dockerfile ###
-We use this file to create all images and what commands to run on top of them 
+We use this file to create all images at once and what commands to run on top of each image 
 It has no extension and name has to be like that only
 ..\qa way\devops\dockerpro\Dockerfile
 

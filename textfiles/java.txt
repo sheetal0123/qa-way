@@ -178,9 +178,244 @@ Spring short desc
 https://www.youtube.com/watch?v=Jjp_EYEn4bc
 
 
-SOLID design principles
+#static sync vs sync on method vs sync block https://www.youtube.com/watch?v=yj-BWXGruXA
 
-static sync vs sync on method vs sync block https://www.youtube.com/watch?v=yj-BWXGruXA
+---------------
+#Spring Dependency Injection 3 types Explained:
+https://www.youtube.com/watch?v=If1Lw4pLLEo  | Telusko | Naveen Reddy
+To remove the hardcoding in code, we add object of dependent classes from outside using spring.
+Laptop class depend upon SamsungHDD but in future it can be SeagateHDD.
+
+1. Xml Based (xml req)
+2. Component Based (xml req + @Component)
+3. Annotation Based (@Configuration class req + @Component @Bean annotation req)
+
+
+#Style 1: using xml beans
+ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml");
+Vehicle obj = (Vehicle)context.getBean("vehicle"); //vehicle is id in xml for class Car
+
+spring.xml:
+<bean id="vehicle" class="com.Car"></bean>
+
+---------------
+
+#Style 2: using component tag
+ApplicationContext context = new ClassPathXmlApplicationContext("spring.xml"); //read xml
+Vehicle obj = (Vehicle)context.getBean("car"); //car is smallcase name of "Class Car"
+
+Also add @Component on top of classes whos dependency need to be injected
+@Component
+public class Car{
+
+}
+
+spring.xml: component style
+<context:component-scan base-package="com"></context:component-scan>
+
+
+
+#Member injection: Also members inside class can also be initialized/injected from xml bean
+Class Car{
+	String color;
+	getter/setters..
+}
+
+<bean id="vehicle" class="com.Car">
+	<property name="color" value="red"></property>  //for this to work setter method is mandatory
+</bean>
+
+
+#Constructor Injection
+Class Car{
+	String color;
+	Car(string color){
+		this.color = color;
+	}
+}
+
+<bean id="vehicle" class="com.Car">
+	<contructor-arg value="red"></constructor-arg>
+</bean>
+
+
+---------------
+# Autowiring
+@Component
+Class Car{
+	
+	@Autowired
+	Tyre tyre;
+
+	//tyre methods can be called
+}
+
+@Component
+Class Tyre{
+	//tyre need to be declared as component as we are using component style in xml rather bean
+}
+
+spring.xml: component style
+<context:component-scan base-package="com"></context:component-scan>
+---------------
+
+#Style 3: using Annotation Config class
+Here we dont use spring.xml file rather creating a class with @Configuration tag
+
+@Configuration
+public class AppConfig{
+	@Bean
+	public Samsung getSamg(){  //method name is not getting used anywhere just return type
+		return new Samsung();
+	}
+}
+
+psvm(String[] args){
+	ApplicationContext factory = ApplicationConfigApplicationContext(AppConfig.class);
+	Samsung s = factory.getBean(Samsung.class); // obj initialization
+}
+---------------
+
+#Style 4: using Annotation Config class + @ComponentScan
+No need to define @Bean inside AppConfig class
+@ComponentScan will scan all @Component classes
+
+@Configuration
+@ComponentScan(basePackages ="com")
+public class AppConfig{
+	//all bean code removed, it will be picked using @Component tag over all classes
+}
+
+psvm(String[] args){
+	ApplicationContext factory = ApplicationConfigApplicationContext(AppConfig.class);
+	Samsung s = factory.getBean(Samsung.class); // obj initialization
+}
+---------------
+
+#Other anotations:
+@Primary
+In case two @Component class clashes, then we can add @Primary tag on top of default choice class
+
+@Component
+@Primary
+class Car{
+}
+
+@Component
+class Bike(){
+}
+
+@Autowired
+Vehicle vehicle;
+
+
+---------------
+
+@Qualifier
+In case @primary tag not mentioned then at the time of declaration of object we can specify which class to consider
+
+@Autowired
+@Qualifier("car")
+Vehicle vehicle;
+
+
+---------------
+
+@Required
+Generally used for getter/setter. If specified then that property need to be initialized in xml config file. Otherwise bean initialization error comes
+
+---------------
+@PreDestroy
+Called just before a bean to be destroyed or removed from spring container
+
+@PostConstruct
+
+@Resources
+
+---------------
+@Component : Generic Type annotation 
+Under component we have 3 specific types: @Service, @Repository, @Controller
+
+@Service
+All classes which implement Business logic
+public class RunnableImpl implements Runnable{
+	//class defining business logic
+}
+
+
+@Repository
+All classes which implement DB related logics
+public class CompanyDAOImpl implements CompanyDAO{
+	//DB logics
+}
+
+
+@Controller
+
+
+
+---------------
+By default Scope value is Singleton. To override default behaviour speficiy some val
+
+@Scope("prototype")
+public class Abc{
+	//DB logics
+}
+---------------
+@Value tag:
+To assign default value to property
+Value will always be string. But in case of boolean,int they get autoconverted by Spring
+https://www.journaldev.com/21448/spring-value-annotation
+
+@Value("mango")
+private String fruit;
+
+@Value("true")
+private boolean defaultBoolean;
+
+@Value("10")
+private int defaultInt;
+
+#Value can also be picked from spring property file
+@Value("${KEY_IN_PROPERTY_FILE}")
+private String defaultAppName;
+Note: In case key is missing then value will be "${KEY_IN_PROPERTY_FILE}" string which is useless
+
+To avoid above case we give some "Default" string in case key is missing in property
+@Value("${APP_NAME_NOT_FOUND:Default}")
+private String defaultAppName;
+
+
+#Spring also read all local system env properties
+@Value("${java.home}")
+private String javaHome;
+
+@Value("#{systemProperties['java.home']}")
+private String javaHome;
+	
+@Value("${HOME}")
+private String homeDir;
+
+
+#@Value in methods
+@Value("Test")
+public void printValues(String s, String v){} //both 's' and 'v' values will be 'Test' 
+
+@Value("Test")
+public void printValues(String s, @Value("Data") String v){}// s=Test, v=Data
+
+
+
+
+
+
+---------------
+@Component
+@Getter
+@Setter
+
+
+  
 
 
 
